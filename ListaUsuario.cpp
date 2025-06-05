@@ -1,4 +1,5 @@
 #include "ListaUsuario.h"
+#include <iostream>
  
 ListaUsuario::Nodo::Nodo(Usuario* us, Nodo* sig):usuario(us), next(sig){}
 ListaUsuario::Nodo* ListaUsuario::Nodo::getNext(){
@@ -48,3 +49,18 @@ void ListaUsuario::imprimirUsuarios(){
     }
 }
 
+Usuario* ListaUsuario::verificador(const string& respuestaUs,const string& respuestaPass){
+    Nodo* actual = head;
+    if(actual == nullptr){
+        cout << "\033[31m"<<"La lista no contiene ningun usuario"<<"\033[0m" << endl;
+    }
+    while (actual != nullptr){
+
+        if(actual->getUsuario()->getNomUs() == respuestaUs && actual->getUsuario()->getContra() == respuestaPass){
+            return actual->getUsuario();
+            break;
+        }
+        actual = actual->getNext();
+    }
+    return nullptr;
+}

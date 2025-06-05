@@ -2,10 +2,11 @@
 #include "ContribuidorI.h"
 #include "Manager.h"
 #include "ListaUsuario.h"
+#include "Interaccion.h"
 int main(){
     ListaUsuario lista;
-    Usuario* m = new Manager("Ana", "111", "ana_m", "pass123", &lista);
-    Usuario* c = new ContribuidorI("Luis", "222", "luis_c", "pass456", &lista);
+    Interaccion i(&lista);
+    i.ejecutar();
     lista.imprimirUsuarios();
     return 0;
 }

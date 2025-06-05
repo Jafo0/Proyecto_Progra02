@@ -3,12 +3,9 @@
 #include "ListaUsuario.h"
 
 Manager::Manager(string nom, string ced, string nomUs, string pass,ListaUsuario* lista)
-    :Usuario(nom,ced,nomUs,"Manager",pass){
-        if(lista) {
-        registrar(lista);
-    }
-}
-
+    :Usuario(nom,ced,nomUs,"Manager",pass){}
+    
+//esto ya no es necesario
 void Manager::registrar(ListaUsuario* lista){
     if(!lista) return;
     lista->agregarUsuario(this);

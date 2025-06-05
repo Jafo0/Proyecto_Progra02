@@ -18,6 +18,8 @@ public:
     virtual void imprimir()=0;
     virtual void registrar(ListaUsuario*)=0;
     string obtenerInfo() const;
+    string getNomUs() const;
+    string getContra() const;
     
 };
 #endif

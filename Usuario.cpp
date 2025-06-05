@@ -8,3 +8,5 @@ Usuario::~Usuario(){}
 string Usuario::obtenerInfo() const{
     return nombre + "," + cedula + "," + nomUsuario + "," + puesto + "," + contrasena;
 }
+string Usuario::getNomUs() const{return nomUsuario;}
+string Usuario::getContra() const{return contrasena;}

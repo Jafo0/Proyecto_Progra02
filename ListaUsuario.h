@@ -22,6 +22,9 @@ public:
     void agregarUsuario(Usuario*);
     bool guardarEnArchivo();
     void imprimirUsuarios();
+    Usuario* verificador(const string&,const string&); 
+//este metodo es exclusivo para interaccion, me indica si los valores 
+//ingresados estan en la lista y me devuelve el ususario al que pertenecen
 
 };
 #endif
