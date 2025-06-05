@@ -2,28 +2,25 @@
 #include <iostream>
  
 ListaUsuario::Nodo::Nodo(Usuario* us, Nodo* sig):usuario(us), next(sig){}
-ListaUsuario::Nodo* ListaUsuario::Nodo::getNext(){
-    return this->next;
-}
-Usuario* ListaUsuario::Nodo::getUsuario(){
-    return this->usuario;
-}
+
 ListaUsuario::Nodo::~Nodo(){delete this->usuario;}
 
 ListaUsuario::~ListaUsuario(){
     while(this->head != nullptr){
         Nodo* aux = this->head;
-        this->head = this->head->getNext();
+        this->head = this->head->next;
         delete aux;
     }
 }
-void ListaUsuario::agregarUsuario(Usuario* us){
-    if (this->head ==nullptr){
-       this->head = new Nodo(us,nullptr);
+
+bool ListaUsuario::vacia(){
+    if(!this->head){
+        return true;
     }else{
-        this->head = new Nodo(us, this->head);
+        return false;
     }
 }
+
 bool ListaUsuario::guardarEnArchivo() {
     ofstream archivo("ArchivoUsuarios.txt");
     if (!archivo.is_open()) {
@@ -31,21 +28,28 @@ bool ListaUsuario::guardarEnArchivo() {
     }
     Nodo* aux = this->head;
     while(aux != nullptr) {
-        archivo << aux->getUsuario()->obtenerInfo() << "\n";  // Agregar salto de línea
-        aux = aux->getNext();
+        archivo << aux->usuario->obtenerInfo() << "\n";  // Agregar salto de línea
+        aux = aux->next;
     }
     archivo.close();  
     return true;  
 }
-
+void ListaUsuario::agregarUsuario(Usuario* us){
+    if (!this->head){   //Lista vacía
+       this->head = new Nodo(us,nullptr);
+    }else{  //La lista no está vacía
+        this->head = new Nodo(us, this->head);  //Se agregan en forma de pila
+    }
+    this->guardarEnArchivo();
+}
 void ListaUsuario::imprimirUsuarios(){
     if(this->head == nullptr){
         return;
     }
     Nodo* actual = head;
     while(actual != nullptr){
-        actual->getUsuario()->imprimir();
-        actual = actual->getNext();
+        actual->usuario->imprimir();
+        actual = actual->next;
     }
 }
 
@@ -56,11 +60,11 @@ Usuario* ListaUsuario::verificador(const string& respuestaUs,const string& respu
     }
     while (actual != nullptr){
 
-        if(actual->getUsuario()->getNomUs() == respuestaUs && actual->getUsuario()->getContra() == respuestaPass){
-            return actual->getUsuario();
+        if(actual->usuario->getNomUs() == respuestaUs && actual->usuario->getContra() == respuestaPass){
+            return actual->usuario;
             break;
         }
-        actual = actual->getNext();
+        actual = actual->next;
     }
     return nullptr;
 }

@@ -2,17 +2,12 @@
 #include <iostream>
 #include "ListaUsuario.h"
 
-Manager::Manager(string nom, string ced, string nomUs, string pass,ListaUsuario* lista)
+Manager::Manager(string nom, int ced, string nomUs, string pass)
     :Usuario(nom,ced,nomUs,"Manager",pass){}
     
-//esto ya no es necesario
-void Manager::registrar(ListaUsuario* lista){
-    if(!lista) return;
-    lista->agregarUsuario(this);
-    lista->guardarEnArchivo();
-}
 
 void Manager::imprimir(){
-    cout<<"Soy un Manager"<< "\nMi nombre es: "<<nombre<<"  cedula: "<< cedula
-    <<"\nNombre de usuario: "<<nomUsuario<<"  contrasenna: "<< contrasena<<endl;
+    cout<<"-------------------------------------------------------------------------"<<endl;
+    cout<<"Datos Persona: "<<"Puesto: Manager"<<"\t|"<<"Nombre: "<<nombre<<"\t|"<<"Cedula: "<<cedula<<endl;
+    cout<<"Datos Usuario: "<<"Nombre usuario: "<<nomUsuario<<"\t|"<<"Contrasenna: "<<contrasena<<endl;
 }

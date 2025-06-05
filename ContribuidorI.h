@@ -4,9 +4,8 @@
 
 class ContribuidorI : public Usuario{
     public:
-    ContribuidorI(string,string,string,string,ListaUsuario*); 
+    ContribuidorI(string,int,string,string); 
     //~ContribuidorI() override = default;
-    void registrar(ListaUsuario*) override;
     void imprimir() override;
 };
 #endif

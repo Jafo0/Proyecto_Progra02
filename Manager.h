@@ -4,9 +4,8 @@
 
 class Manager : public Usuario{
     public:
-    Manager(string,string,string,string,ListaUsuario*);//ListaUsuario*
+    Manager(string,int,string,string);//ListaUsuario*
     //~Manager() override = default;
-    void registrar(ListaUsuario*) override;
     void imprimir() override;
 };
 #endif
