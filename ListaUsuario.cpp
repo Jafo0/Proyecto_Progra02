@@ -53,6 +53,21 @@ void ListaUsuario::imprimirUsuarios(){
     }
 }
 
+Usuario* ListaUsuario::encontrarId(const int& idEntrada){
+    Nodo* actual = head;
+    if(actual == nullptr){
+        cout << "\033[31m"<<"La lista no contiene ningun usuario"<<"\033[0m" << endl;
+    }
+    while (actual != nullptr){
+        if(actual->usuario->getPuesto() == "Contribuidor" && actual->usuario->getId() == idEntrada){
+            return actual->usuario;
+            break;
+        }
+        actual = actual->next;
+    }
+    return nullptr;
+}
+
 Usuario* ListaUsuario::verificador(const string& respuestaUs,const string& respuestaPass){
     Nodo* actual = head;
     if(actual == nullptr){

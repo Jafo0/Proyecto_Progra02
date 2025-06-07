@@ -10,6 +10,7 @@ class Interaccion{
 private:
     ListaUsuario* lista;
     Usuario* usuarioActivo{nullptr};
+    Manager* manActivo{nullptr};    //esto me funciona para la comprobacion
 public:
     Interaccion();
     Usuario *crear_Usuario();
@@ -18,5 +19,6 @@ public:
     int menu_accion_usuario();
     //verifica que la contrasenna y el nombre de usuario este en el sistema esto va en lista
     void ejecutar();
+    bool modificar_empleados(); //modificar la lista de empleados de un manager, pide el id por agregar
 };
 #endif

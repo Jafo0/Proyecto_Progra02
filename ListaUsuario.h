@@ -22,6 +22,7 @@ public:
     void agregarUsuario(Usuario*);
     bool guardarEnArchivo();
     void imprimirUsuarios();
+    Usuario* encontrarId(const int&);
     Usuario* verificador(const string&,const string&); 
 
 //este metodo es exclusivo para interaccion, me indica si los valores 

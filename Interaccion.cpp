@@ -67,7 +67,11 @@ bool Interaccion::iniciar_sesion(){
         Usuario* aux = lista->verificador(respuestaUs,respuestaPass);
         if(aux != nullptr){
             cout<<"Inicio de sesion exitoso"<<endl;
-            usuarioActivo = aux;
+            usuarioActivo = aux; 
+            if(aux->getPuesto() == "Manager"){
+                manActivo = static_cast<Manager*>(aux); //comprobacion si el inicio de sesion fue un usuario manager
+            }else{manActivo=nullptr;}                   //casteo para que sea valido
+
             return true;
         }else{
             cout<< "\033[31m"<<"Los datos ingresados son incorrectos. Regresando al menu principal"<<"\033[0m" << endl;
@@ -88,17 +92,36 @@ int Interaccion::menu_accion_usuario(){
     cout<<"6. Ver Calendario de otros"<<endl;
     cout<<"7. Cerrar Sesion"<<endl;
 
+    //opciones solo visibles para los manager
+    if (usuarioActivo->getPuesto()=="Manager"){ 
+        cout<<"8. Modificar empleados / subalternos"<<endl;
+        cout<<"9. Ver lista de empleados / subalternos"<<endl;
+    }
 
     int respuesta{0};
     while (true){
         cout<<"Indique que accion desea realizar: ";
         cin>>respuesta;
         cout<<endl;
-
+        
+        if(usuarioActivo->getPuesto()=="Manager"){//opcion solo para los manager, tienen 1 a 9 opciones
+            if(cin.fail()){
+                cin.clear();              
+                cin.ignore(1000, '\n');
+                cout << "\033[31m"<<"Ingrese un numero valido"<<"\033[0m" << endl;
+            
+            }else if(respuesta<1 || 9<respuesta){
+                cout << "\033[31m"<<"Ingrese un numero en el rango de 1-9"<<"\033[0m" << endl;
+                continue; 
+            }else{
+                return respuesta;
+            }
+        }
         if(cin.fail()){
             cin.clear();              
             cin.ignore(1000, '\n');
-            cout << "\033[31m"<<"Ingrese un numero valido"<<"\033[0m" << endl;  
+            cout << "\033[31m"<<"Ingrese un numero valido"<<"\033[0m" << endl;
+        
         }else if(respuesta<1 || 7<respuesta){
             cout << "\033[31m"<<"Ingrese un numero en el rango de 1-7"<<"\033[0m" << endl;
             continue; 
@@ -272,6 +295,14 @@ void Interaccion::ejecutar(){
                                 case 7:
                                     cout << "Opción 7 seleccionada" << endl;
                                     break;
+                                case 8:
+                                    cout<< "Opción 8 seleccionada" << endl;
+                                    modificar_empleados();
+                                    break;
+                                case 9:
+                                    cout<< "Opción 9 seleccionada" << endl;
+                                    manActivo->listaEmp.imprimir();
+                                    break;
                                 default:
                                     salir = true;
                                     break;
@@ -292,4 +323,37 @@ void Interaccion::ejecutar(){
                 break;
         }
     }
+}
+
+bool Interaccion::modificar_empleados(){
+    int idEntrada;
+
+    while (true){
+        cout<<"Ingrese el Id de la persona que desea agregar: ";
+        cin>>idEntrada;
+        if(cin.fail()){
+            cin.clear();              
+            cin.ignore(1000, '\n');
+            cout << "\033[31m"<<"Ingrese un numero"<<"\033[0m" << endl;
+            continue;
+        }else{break;} //si la entrada es valida
+    }
+    try{
+        Usuario* aux = lista->encontrarId(idEntrada);
+        if(aux != nullptr){
+            bool flag = manActivo->listaEmp.agregarId(aux);
+            if(flag){
+                cout<<"Usuario agregado a su lista de empleados exitosamente"<<endl;
+            }else{cout<<"\033[31m"<<"Usuario que desea agregar ya estaba en su lista"<<"\033[0m"<<endl;}
+            
+            //como ListaEmpleados esta declarado como atributo publico, 
+            //entonces puedo acceder a el directamente
+            return true;
+        }else{
+            cout<< "\033[31m"<<"ID no reponden a ningun usuario o es el de un manager. Regresando al menu principal"<<"\033[0m" << endl;
+        }
+    }catch (const invalid_argument& e){
+        cout << "Error: " << e.what() << endl;
+    }
+    return false;
 }

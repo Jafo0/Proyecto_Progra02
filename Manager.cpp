@@ -3,11 +3,12 @@
 #include "ListaUsuario.h"
 
 Manager::Manager(string nom, int ced, string nomUs, string pass)
-    :Usuario(nom,ced,nomUs,"Manager",pass){}
-    
+    :Usuario(nom,ced,nomUs,"Manager",pass){
+        this->listaEmp = ListaEmpleados(); //atributo de lista empleado de manager
+}
 
 void Manager::imprimir(){
     cout<<"-------------------------------------------------------------------------"<<endl;
     cout<<"Datos Persona: "<<"Puesto: Manager"<<"\t|"<<"Nombre: "<<nombre<<"\t|"<<"Cedula: "<<cedula<<endl;
-    cout<<"Datos Usuario: "<<"Nombre usuario: "<<nomUsuario<<"\t|"<<"Contrasenna: "<<contrasena<<endl;
+    cout<<"Datos Usuario: "<<"Nombre usuario: "<<nomUsuario<<"\t|"<<"Contrasenna: "<<contrasena <<"\t|"<<"Id: "<<id<<endl;
 }

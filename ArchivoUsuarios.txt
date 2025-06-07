@@ -1,3 +1,4 @@
-ale,1,1,Contribuidor,1
-Ale,1,1,Manager,1
-Ale Guerra,1,Ale,Manager,Ale
+ka,39,isk,Contribuidor,096,3
+jaja,123,rata,Manager,456,2
+jj,11,jf,Contribuidor,123,1
+Jafet,11,jafo,Manager,125,0
