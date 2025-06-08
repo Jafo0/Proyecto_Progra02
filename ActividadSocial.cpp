@@ -4,9 +4,9 @@ ActividadSocial::ActividadSocial(struct tm _fecha_inicio, struct tm _fecha_fin) 
 
 ActividadSocial::~ActividadSocial(){}
 
-void ActividadSocial::imprimir(){
+void ActividadSocial::imprimir(int posicion){
     cout<<std::setfill('-')<<std::setw(80)<<""<<endl;
-    this->ver_fechas();
+    cout<<this->imprimir_fecha(this->fecha_inicio)<<" -> "<<this->imprimir_fecha(this->fecha_fin);
     cout<<" | "<<"Actividad Social"<<" | "<<"Sala de uso comun"<<endl;
     cout<<"Participantes: "<<"\n"<<endl;
 

@@ -1,4 +1,3 @@
-ka,39,isk,Contribuidor,096,3
-jaja,123,rata,Manager,456,2
-jj,11,jf,Contribuidor,123,1
-Jafet,11,jafo,Manager,125,0
+1,1,1,Manager,1,0
+Ale,185,afaka,Manager,usuario,0
+1,1,1,Manager,1,0

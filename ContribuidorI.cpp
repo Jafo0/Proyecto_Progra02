@@ -2,7 +2,7 @@
 #include <iostream>
 #include "ListaUsuario.h"
 
-    ContribuidorI::ContribuidorI(string nom, int ced, string nomUs, string pass)
+    ContribuidorI::ContribuidorI(std::string nom, int ced, std::string nomUs, std::string pass)
         :Usuario(nom,ced,nomUs,"Contribuidor",pass){}
         
     void ContribuidorI::imprimir(){

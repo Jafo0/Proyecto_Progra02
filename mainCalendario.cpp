@@ -3,15 +3,15 @@
 int main() {
 
     Calendario* c = new Calendario();
+    system("cls");
     
     while(true){
         c->agregarReservacion();
         c->imprimirCalendario();
         cout<<"Ingrese 1 para salir: ";
-        int salir;
-        cin>>salir;
-        cout<<endl;
-        if(salir == 1){break;}
+        std::string salir;
+        getline(cin,salir);
+        if(salir == "1"){break;}
     }
     cout<<"Llegamos al final"<<endl;
     

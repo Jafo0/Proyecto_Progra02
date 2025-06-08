@@ -2,7 +2,7 @@
 #include <iostream>
 #include "ListaUsuario.h"
 
-Manager::Manager(string nom, int ced, string nomUs, string pass)
+Manager::Manager(std::string nom, int ced, std::string nomUs, std::string pass)
     :Usuario(nom,ced,nomUs,"Manager",pass){
         this->listaEmp = ListaEmpleados(); //atributo de lista empleado de manager
 }

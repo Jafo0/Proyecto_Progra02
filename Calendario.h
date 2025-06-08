@@ -7,6 +7,8 @@
 #include "ActividadSocial.h"
 #include "EventoDiario.h"
 
+#include "Comprobacion.h"
+
 #include <cstdlib>  //Para limpiar la pantalla
 
 class Calendario {
@@ -20,15 +22,22 @@ class Calendario {
                 void setSiguiente(Nodo*);
         };
         Nodo* primera_reservacion {nullptr};
+        time_t segundos_actual;
+        struct tm fecha_actual;
+        int cantidad_reservaciones {0};
 
     public:
+        Calendario();
         ~Calendario();
-        bool choqueFechas(struct tm, struct tm);
+        int getCantidadReservaciones();
+        bool reservacion_incorrecta(struct tm, struct tm, struct tm);
         struct tm preguntarDia();
         struct tm preguntarFecha(std::string);
-        char menu_reservaciones();
-        Reservacion* crearReservacion();
-        void agregarReservacion();
+        int menu_reservaciones();
+        void crear_reservacion();
+        void acomodarReservacion(Reservacion*);
+        void eliminarReservacion(int);
+        void modificarReservacion(int);
         void imprimirCalendario();
 };
 

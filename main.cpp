@@ -5,6 +5,7 @@
 #include "ListaEmpleados.h"
 #include "Interaccion.h"
 int main(){
+    system("cls");      //Limpio pantalla
     Interaccion i;
     i.ejecutar();
     return 0;

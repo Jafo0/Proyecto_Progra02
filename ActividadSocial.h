@@ -10,7 +10,7 @@ class ActividadSocial : public Reservacion {
     public:
         ActividadSocial(struct tm, struct tm);
         ~ActividadSocial();
-        void imprimir() override;
+        void imprimir(int) override;
 };
 
 #endif  // ACTIVIDAD_SOCIAL_H

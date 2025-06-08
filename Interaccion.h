@@ -4,6 +4,8 @@
 #include "ContribuidorI.h"
 #include "Manager.h"
 #include "ListaUsuario.h"
+
+#include "Comprobacion.h"
 #include <cstdlib>
 
 class Interaccion{
@@ -17,8 +19,7 @@ public:
     int menu_entrada();
     bool iniciar_sesion(); //iniciar sesion pide contrasenna y nombre de usuario
     int menu_accion_usuario();
-    //verifica que la contrasenna y el nombre de usuario este en el sistema esto va en lista
     void ejecutar();
     bool modificar_empleados(); //modificar la lista de empleados de un manager, pide el id por agregar
 };
-#endif
+#endif  //INTERACCION_H

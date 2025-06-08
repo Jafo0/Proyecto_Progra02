@@ -5,6 +5,15 @@ ListaUsuario::Nodo::Nodo(Usuario* us, Nodo* sig):usuario(us), next(sig){}
 
 ListaUsuario::Nodo::~Nodo(){delete this->usuario;}
 
+// ListaUsuario::ListaUsuario(std::ifstream& archivo) {
+//     std::string linea;
+//     while (std::getline(archivo, linea)) {
+//         std::cout << linea << std::endl;
+//     }
+// }
+
+ListaUsuario::ListaUsuario(){}
+
 ListaUsuario::~ListaUsuario(){
     while(this->head != nullptr){
         Nodo* aux = this->head;
@@ -22,7 +31,7 @@ bool ListaUsuario::vacia(){
 }
 
 bool ListaUsuario::guardarEnArchivo() {
-    ofstream archivo("ArchivoUsuarios.txt");
+    std::ofstream archivo("ArchivoUsuarios.txt", std::ios::app); //Para no borrar lo que ya existe
     if (!archivo.is_open()) {
         return false;  // No se pudo abrir el archivo
     }
@@ -68,7 +77,7 @@ Usuario* ListaUsuario::encontrarId(const int& idEntrada){
     return nullptr;
 }
 
-Usuario* ListaUsuario::verificador(const string& respuestaUs,const string& respuestaPass){
+Usuario* ListaUsuario::verificador(const std::string& respuestaUs,const std::string& respuestaPass){
     Nodo* actual = head;
     if(actual == nullptr){
         cout << "\033[31m"<<"La lista no contiene ningun usuario"<<"\033[0m" << endl;

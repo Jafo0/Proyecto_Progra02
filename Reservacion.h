@@ -18,10 +18,11 @@ class Reservacion {
     public:
         Reservacion(struct tm, struct tm);
         ~Reservacion();
-        struct tm get_fecha_inicio();
-        struct tm get_fecha_fin();
-        virtual void imprimir() = 0;
-        void ver_fechas();
+        struct tm& get_fecha_inicio();
+        struct tm& get_fecha_fin();
+        // virtual void modificar() = 0;
+        virtual void imprimir(int) = 0;
+        std::string imprimir_fecha(const tm& fecha);
 
 };
 

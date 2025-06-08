@@ -4,7 +4,7 @@
 
 class ContribuidorI : public Usuario{
     public:
-    ContribuidorI(string,int,string,string); 
+    ContribuidorI(std::string,int,std::string,std::string); 
     //~ContribuidorI() override = default;
     void imprimir() override;
 };

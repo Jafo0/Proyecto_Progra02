@@ -8,6 +8,11 @@ Calendario::Nodo::~Nodo(){
 
 void Calendario::Nodo::setSiguiente(Nodo* _nodo_siguiente){this->nodo_siguiente = _nodo_siguiente;}
 
+Calendario::Calendario(){
+    this->segundos_actual = time(nullptr);      
+    this->fecha_actual = *localtime(&segundos_actual);  
+}
+
 Calendario::~Calendario(){
     if(this->primera_reservacion){  //Si tenemos al menos una reservacion
         while(this->primera_reservacion){    //Mientras tengamos reservaciones activas
@@ -18,63 +23,63 @@ Calendario::~Calendario(){
     }
 }
 
-bool Calendario::choqueFechas(struct tm fecha_inicio_otra, struct tm fecha_fin_otra){
-    if(this->primera_reservacion){  //Si tenemos al menos una reservacion
-        Nodo* temp = this->primera_reservacion;     //Guardamos la reservacion más próxima en nodo auxiliar
-        while(temp){    //Mientras tengamos reservaciones activas
-            struct tm fecha_inicio_uno = temp->reservacion->get_fecha_inicio();
-            struct tm fecha_fin_uno = temp->reservacion->get_fecha_fin();
-            if(mktime(&fecha_fin_uno) == mktime(&fecha_inicio_otra)){
-                cout<<"La fecha de inicio es la misma"<<endl;
-                return true;
-            }else if(mktime(&fecha_fin_uno) == mktime(&fecha_fin_otra)){
-                cout<<"La fecha de fin es la misma"<<endl;
-                return true;
-            }else{
-                temp = temp->nodo_siguiente;
-            }
-        }
-        return false;
+int Calendario::getCantidadReservaciones(){return this->cantidad_reservaciones;}
+
+bool Calendario::reservacion_incorrecta(struct tm fecha_inicio, struct tm fecha_fin, struct tm fecha_actual){
+     bool reservacion_incorrecta {true};
+    time_t segundos_inicio = mktime(&fecha_inicio);
+    time_t segundos_fin = mktime(&fecha_fin);
+    if(segundos_inicio<this->segundos_actual){
+        cout<<"\033[31m"<<"\nLa fecha de inicio no puede estar en el pasado"<<"\033[0m"<<endl;
+    }else if(segundos_fin<segundos_inicio){
+        cout<<"\033[31m"<<"\nLa fecha de fin no puede ser previa a la fecha de inicio"<<"\033[0m"<<endl;
+    }else if(segundos_fin==segundos_inicio){
+        cout<<"\033[31m"<<"\nLa fecha de fin no puede igual a la fecha de inicio"<<"\033[0m"<<endl;
+    }else{
+        reservacion_incorrecta = false;
     }
-    return false;   //Tenemos nuestro calendario vacío
+    return reservacion_incorrecta;
 }
 
 struct tm Calendario::preguntarDia(){
     cout<<"--------------Fecha del Evento Diario--------------"<<endl;
 
-    int mes {0}, dia {1};
+    std::string anno, mes, dia;    //Cadenas de texto
+    int anno_i {0}, mes_i {0}, dia_i {1};    //Valores numericos
 
-    while(true){
-        cout<<"Ingrese el numero del mes (0-11): ";
-        cin>>mes;
-        cout<<endl;
-        if(mes<0 || 11<mes){
-            cout<<"\033[31m"<<"Por favor ingrese un valor dentro del rango indicado"<<"\033[0m"<<endl;
-        }else{
+    while(true){//------------------------------------------------------------------------------------------
+        int anno_actual = this->fecha_actual.tm_year+1900;
+        cout<<"Ingrese el numero del anno ("<<anno_actual<<"<=): ";
+        getline(cin, anno);
+
+        if(numero_entero_dentro_de_rango(anno_actual, 3000, anno)){
+            anno_i = stoi(anno)-1900;
             break;
         }
     }
 
-    while(true){
+    while(true){//------------------------------------------------------------------------------------------
+        cout<<"Ingrese el numero del mes (1-12): ";
+        getline(cin, mes);  //Convertimos a entero
+        if(numero_entero_dentro_de_rango(1, 12, mes)){
+            mes_i = stoi(mes)-1;
+            break;
+        }
+    }
+
+    while(true){//------------------------------------------------------------------------------------------
         cout<<"Ingrese el numero del dia (1-31): ";
-        cin>>dia;
-        cout<<endl;
-        if(dia<1 || 31<dia){
-            cout<<"\033[31m"<<"Por favor ingrese un valor dentro del rango indicado"<<"\033[0m"<<endl;
-        }else{
+        getline(cin, dia);
+        if(numero_entero_dentro_de_rango(1, 31, dia)){
+            dia_i = stoi(dia);  //Convertimos a entero
             break;
         }
     }
 
-    system("cls");
-
-    time_t t = time(NULL);  //Obtengo tiempo actual
-    struct tm fecha = *localtime(&t);   //La convierto en fecha
-        fecha.tm_mon = mes;     //Modifico sus valores a los valores ingresados
-        fecha.tm_mday = dia;
-        fecha.tm_hour = 0;
-        fecha.tm_min = 0;
-        fecha.tm_sec = 0;
+    struct tm fecha = {};   //Fecha con todos sus valores en cero
+    fecha.tm_year = anno_i; //Modifico sus valores a los valores ingresados
+    fecha.tm_mon = mes_i;     
+    fecha.tm_mday = dia_i;
 
     return fecha;
 }
@@ -82,157 +87,199 @@ struct tm Calendario::preguntarDia(){
 struct tm Calendario::preguntarFecha(std::string mensaje){
     cout<<mensaje<<endl;
 
-    int mes {0}, dia {1}, hora {0}, min {0};
+    std::string anno, mes, dia, hora, min;    //Cadenas de texto
+    int anno_i {0}, mes_i {0}, dia_i {1}, hora_i {0}, min_i {0};    //Valores numericos
 
-    while(true){
-        cout<<"Ingrese el numero del mes (0-11): ";
-        cin>>mes;
-        cout<<endl;
-        if(mes<0 || 11<mes){
-            cout<<"\033[31m"<<"Por favor ingrese un valor dentro del rango indicado"<<"\033[0m"<<endl;
-        }else{
+    while(true){//------------------------------------------------------------------------------------------
+        int anno_actual = this->fecha_actual.tm_year+1900;
+        cout<<"Ingrese el numero del anno ("<<anno_actual<<"<=): ";
+        getline(cin, anno);
+
+        if(numero_entero_dentro_de_rango(anno_actual, 3000, anno)){
+            anno_i = stoi(anno)-1900;
+            break;
+        }
+    }
+    while(true){//------------------------------------------------------------------------------------------
+        cout<<"Ingrese el numero del mes (1-12): ";
+        getline(cin, mes);
+
+        if(numero_entero_dentro_de_rango(1, 12, mes)){
+            mes_i = stoi(mes)-1;
             break;
         }
     }
 
-    while(true){
+    while(true){//------------------------------------------------------------------------------------------
         cout<<"Ingrese el numero del dia (1-31): ";
-        cin>>dia;
-        cout<<endl;
-        if(dia<1 || 31<dia){
-            cout<<"\033[31m"<<"Por favor ingrese un valor dentro del rango indicado"<<"\033[0m"<<endl;
-        }else{
+        getline(cin, dia);
+
+        if(numero_entero_dentro_de_rango(1, 31, dia)){
+            dia_i = stoi(dia);
             break;
         }
     }
 
-    while(true){
+    while(true){//------------------------------------------------------------------------------------------
         cout<<"Ingrese la hora (0-23): ";
-        cin>>hora;
-        cout<<endl;
-        if(hora<0 || 23<hora){
-            cout<<"\033[31m"<<"Por favor ingrese un valor dentro del rango indicado"<<"\033[0m"<<endl;
-        }else{
+        getline(cin, hora);
+        if(numero_entero_dentro_de_rango(0, 23, hora)){
+            hora_i = stoi(hora);
             break;
         }
     }
 
-    while(true){
+    while(true){//------------------------------------------------------------------------------------------
         cout<<"Ingrese el minuto (0-59): ";
-        cin>>min;
-        cout<<endl;
-        if(min<0 || 59<min){
-            cout<<"\033[31m"<<"Por favor ingrese un valor dentro del rango indicado"<<"\033[0m"<<endl;
-        }else{
+        getline(cin, min);
+        if(numero_entero_dentro_de_rango(0, 59, min)){
+            min_i = stoi(min);
             break;
         }
     }
 
-    system("cls");
-
-    time_t t = time(NULL);  //Obtengo tiempo actual
-    struct tm fecha = *localtime(&t);   //La convierto en fecha
-        fecha.tm_mon = mes;     //Modifico sus valores a los valores ingresados
-        fecha.tm_mday = dia;
-        fecha.tm_hour = hora;
-        fecha.tm_min = min;
-        fecha.tm_sec = 0;
+    struct tm fecha = {};   //Fecha con todos sus valores en cero
+    fecha.tm_year = anno_i; //Modifico sus valores a los valores ingresados
+    fecha.tm_mon = mes_i;     
+    fecha.tm_mday = dia_i;
+    fecha.tm_hour = hora_i;
+    fecha.tm_min = min_i;
 
     return fecha;
 }
 
-char Calendario::menu_reservaciones(){
+int Calendario::menu_reservaciones(){
     cout<<"--------------Opciones de reservacion--------------"<<endl;
     cout<<"1. Reunion"<<endl;
     cout<<"2. Cita personal"<<endl;
     cout<<"3. Actividad social"<<endl;
     cout<<"4. Evento diario"<<endl;
     
-    int reserva {0};
+    std::string reserva;
+    int reserva_i;
     while(true){
         cout<<"Indique que tipo de reservacion desea crear: ";
-        cin>>reserva;
-        cout<<endl;
-        if(cin.fail()){     //Ingresa un string
-            cin.clear();              // Limpia el estado de error
-            cin.ignore(1000, '\n');   // Descarta la línea incorrecta
-            cout << "\033[31m"<<"Ingrese un numero valido"<<"\033[0m" << endl;
-        }else if(1<=reserva&&reserva<=4){   //Ingresa un número válido
-            return (reserva + '0'); //Convierto int a char
-        }else{  //Ingresa un número fuera del rango
-            cout << "\033[31m"<<"Ingrese un numero valido"<<"\033[0m" << endl;
+        getline(cin, reserva);
+        if(numero_entero_dentro_de_rango(1,4,reserva)){
+            reserva_i = stoi(reserva);
+            return reserva_i;
         }
     }   
 }
 
-
-Reservacion* Calendario::crearReservacion(){
+void Calendario::crear_reservacion(){
     Reservacion* reservacion {nullptr};
-    char tipo_reservacion = this->menu_reservaciones(); //Indico qué reservación quiero
+    int tipo_reservacion = this->menu_reservaciones(); //Indico qué reservación quiero
 
-    struct tm fecha_inicio, fecha_fin; 
+    struct tm fecha_inicio {}, fecha_fin {}; 
 
     //Pregunto las fechas:
-    if(tipo_reservacion == '4'){  //Si la reservación es evento diario
+    if(tipo_reservacion == 4){  //Si la reservación es evento diario
         fecha_inicio = this->preguntarDia();
         fecha_fin = fecha_inicio;
-            fecha_fin.tm_mday+=1;
+        fecha_fin.tm_mday+=1;
     }else{  //La reservación no es un evento diario
         fecha_inicio = this->preguntarFecha("--------------Datos para la fecha de inicio de la reservacion--------------");
         fecha_fin = this->preguntarFecha("--------------Datos para la fecha de final de la reservacion--------------");
     }
     
-    //Si hay choque de fechas con otro evento:
-    if(this->choqueFechas(fecha_inicio, fecha_fin)){   
-        cout<<"\033[31m"<<"Las fechas ingresadas chocan con otro evento del calendario"<<"\033[0m"<<endl;
-    }else{ //Si no hay choque de fechas:
+    if(!this->reservacion_incorrecta(fecha_inicio, fecha_fin, this->fecha_actual)){   // Reservacion correcta
         switch (tipo_reservacion){  //Creo la reservación que quiera el usuario
-            case '1':{
+            case 1:{
                 std::string lugar;
-                cout<<"Por favor ingrese el lugar de la Reunion: ";
-                cin>>lugar;
-                cout<<endl;
-                reservacion = new Reunion(fecha_inicio, fecha_fin, lugar);
+                while(true){
+                    cout<<"Por favor ingrese el lugar de la Reunion: ";
+                    getline(cin, lugar);
+                    if(texto_no_vacio_sin_espacios(lugar)){
+                        reservacion = new Reunion(fecha_inicio, fecha_fin, lugar);
+                        break;
+                    }
+                }
                 break;}
-            case '2':
+            case 2:
                 reservacion = new CitaPersonal(fecha_inicio, fecha_fin);
                 break;
-            case '3':
+            case 3:
                 reservacion = new ActividadSocial(fecha_inicio, fecha_fin);
                 break;
-            case '4':
+            case 4:
                 reservacion = new EventoDiario(fecha_inicio, fecha_fin);
                 break;
             default:
                 break;
         }
     }
-    return reservacion;
+    this->acomodarReservacion(reservacion);
 }
 
-
-void Calendario::agregarReservacion(){
-    Reservacion* nueva_reservacion = crearReservacion();
-    
+void Calendario::acomodarReservacion(Reservacion* nueva_reservacion){
     if(nueva_reservacion){
         if(!this->primera_reservacion){     //Si no tenemos reservaciones
         this->primera_reservacion = new Nodo(nueva_reservacion, nullptr);
         }else{  //Tenemos por lo menos una reservacion
             Nodo* temp = this->primera_reservacion;     //Guardamos la reservacion más próxima en nodo auxiliar
-            while(temp->nodo_siguiente){    //Mientras tengamos una reservación siguiente 
-                temp = temp->nodo_siguiente;
+            time_t segundos_nueva_reservacion = mktime(&nueva_reservacion->get_fecha_inicio()); //Segundos de nueva reservacion
+            time_t segundos_reservacion_primera_reservacion = mktime(&(this->primera_reservacion->reservacion->get_fecha_inicio()));
+                
+            if(!temp->nodo_siguiente){  //Solo hay una reservacion
+                if(segundos_nueva_reservacion<=segundos_reservacion_primera_reservacion){   //Si la nueva reservacion es previa a la existente
+                    this->primera_reservacion = new Nodo(nueva_reservacion, this->primera_reservacion);
+                }else{
+                    this->primera_reservacion->setSiguiente(new Nodo(nueva_reservacion, nullptr));
+                }
+            }else{  //Tenemos más de una reservación
+                if(segundos_nueva_reservacion<=segundos_reservacion_primera_reservacion){   //Si la nueva reservacion es previa a la primera reservacion
+                    this->primera_reservacion = new Nodo(nueva_reservacion, this->primera_reservacion);
+                }else{
+                    while(temp->nodo_siguiente){    //Mientras tengamos una reservación siguiente 
+                        time_t segundos_reservacion_siguiente = mktime(&(temp->nodo_siguiente->reservacion->get_fecha_inicio()));
+                        if(segundos_nueva_reservacion<=segundos_reservacion_siguiente){   //Si la nueva reservacion es previa a la siguiente
+                            temp->setSiguiente(new Nodo(nueva_reservacion, temp->nodo_siguiente));
+                            this->cantidad_reservaciones++;
+                            return;
+                        }
+                        temp = temp->nodo_siguiente;
+                    }
+                    temp->setSiguiente(new Nodo(nueva_reservacion, nullptr));
+                }
             }
-            temp->setSiguiente(new Nodo(nueva_reservacion, nullptr));
         }
+        this->cantidad_reservaciones++;
     }    
+}
+
+void Calendario::eliminarReservacion(int posicion){
+    if(this->primera_reservacion && posicion <= this->cantidad_reservaciones){  //Tenemos al menos una reservación y la posición es posible
+        Nodo* temp = this->primera_reservacion;     //Guardamos la reservacion más próxima en nodo auxiliar
+        int i = 1;
+        while(i < posicion-1){
+            temp = temp->nodo_siguiente;
+            i++;
+        }
+        Nodo* aux = temp->nodo_siguiente;
+        temp->setSiguiente(temp->nodo_siguiente->nodo_siguiente);
+        delete aux;
+    }
+}
+
+void Calendario::modificarReservacion(int posicion){
+    if(this->primera_reservacion && posicion <= this->cantidad_reservaciones){  //Tenemos al menos una reservación y la posición es posible
+        this->eliminarReservacion(posicion);
+        this->crear_reservacion();  //Se crea y se agrega en el orden que le corresponde
+    }
 }
 
 void Calendario::imprimirCalendario(){
     if(this->primera_reservacion){  //Si tenemos al menos una reservacion
         Nodo* temp = this->primera_reservacion;     //Guardamos la reservacion más próxima en nodo auxiliar
+        int contador = 1;
         while(temp){    //Mientras tengamos reservaciones activas
-            temp->reservacion->imprimir();
+            temp->reservacion->imprimir(contador);
             temp = temp->nodo_siguiente;
+            contador++;
         }
+    }else{
+        cout<<"\033[33m"<<"Su calendario esta vacio..."<<"\033[0m"<<endl;
     }
 }
+

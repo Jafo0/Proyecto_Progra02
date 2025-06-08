@@ -4,9 +4,10 @@ Reunion::Reunion(struct tm _fecha_inicio, struct tm _fecha_fin, std::string _lug
 
 Reunion::~Reunion(){}
 
-void Reunion::imprimir(){
+void Reunion::imprimir(int posicion){
     cout<<std::setfill('-')<<std::setw(80)<<""<<endl;
-    this->ver_fechas();
+    cout<<"Reservacion #"<<posicion<<": "<<endl;
+    cout<<this->imprimir_fecha(this->fecha_inicio)<<" -> "<<this->imprimir_fecha(this->fecha_fin);
     cout<<" | "<<"Reunion"<<" | "<<this->lugar<<endl;
     cout<<"Participantes: "<<"\n"<<endl;
 }

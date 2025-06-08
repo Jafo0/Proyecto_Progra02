@@ -4,8 +4,9 @@ EventoDiario::EventoDiario(struct tm _fecha_inicio, struct tm _fecha_fin) : Rese
 
 EventoDiario::~EventoDiario(){}
 
-void EventoDiario::imprimir(){
+void EventoDiario::imprimir(int posicion){
     cout<<std::setfill('-')<<std::setw(80)<<""<<endl;
-    this->ver_fechas();
+    cout<<"Reservacion #"<<posicion<<": "<<endl;
+    cout<<this->imprimir_fecha(this->fecha_inicio)<<" -> "<<this->imprimir_fecha(this->fecha_fin);
     cout<<" | "<<"Evento Diario"<<"\n"<<endl;
 }

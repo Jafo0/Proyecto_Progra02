@@ -6,7 +6,7 @@
 class Manager : public Usuario{
     public:
     ListaEmpleados listaEmp; //pongo atributo en public
-    Manager(string,int,string,string);//ListaUsuario*
+    Manager(std::string,int,std::string,std::string);//ListaUsuario*
     void imprimir() override;
 };
 #endif

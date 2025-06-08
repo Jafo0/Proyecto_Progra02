@@ -7,7 +7,8 @@ Interaccion::Interaccion(){
 }
 
 int Interaccion::menu_entrada(){
-    int respuesta{0};
+    std::string respuesta;   //Respuesta en std::string
+    int respuesta_i{};    //Respuesta en int
     while (true){
         cout<<"--------------Bienvenido a CalendarPro--------------"<<endl;
         cout<<"1. Crear Usuario" <<endl;
@@ -15,68 +16,49 @@ int Interaccion::menu_entrada(){
         cout<<"3. Salir" <<endl;
         cout<<"4. Ver Usuarios existentes" <<endl;
         cout<<"Indique que accion desea realizar: ";
-        cin>>respuesta;
-        cout<<endl;
-        if(cin.fail()){
-            cin.clear();              
-            cin.ignore(1000, '\n');
-            cout << "\033[31m"<<"Ingrese un numero valido"<<"\033[0m" << endl;
-            continue; //Vuelve al inicio del while
-        }else if(respuesta<1 || 4<respuesta){
-            cout << "\033[31m"<<"Ingrese un numero en el rango de 1-3"<<"\033[0m" << endl;
-            continue; 
-        }else{
-            return respuesta;
+
+        getline(cin,respuesta);
+        if(numero_entero_dentro_de_rango(1,4,respuesta)){
+            respuesta_i = stoi(respuesta);
+            return respuesta_i;
         }
     }
 }
 
 bool Interaccion::iniciar_sesion(){
-    string respuestaUs;
-    string respuestaPass;
-    cin.ignore();       //Elimino el \n del cin anterior
+    std::string respuestaUs;
+    std::string respuestaPass;
+    system("cls");
     cout<<"--------------Inicio de sesion--------------"<<endl;
 
-    //Nombre de usuario (sin espacios):
+    //Nombre de usuario:---------------------------------------------------------------------------------------------------
     while(true){
         cout<< "Ingrese su nombre de usuario: ";
         getline(cin,respuestaUs); 
-        if(respuestaUs.empty()){
-            cout << "\033[31m"<<"Ingrese algun nombre de Usuario"<<"\033[0m" << endl;
-        }else if(respuestaUs.find(' ') != std::string::npos){   //Si encontró un espacio vacío
-            cout << "\033[31m"<<"Ingrese un nombre de Usuario sin espacios"<<"\033[0m" << endl;
-            continue; //Vuelve al inicio del while
-        }else{
-            break;  //Me salgo del while
-        }
+        if(texto_no_vacio_sin_espacios(respuestaUs)){break;}
     }
 
-    //Contraseña (sin espacios):
+    //Contraseña:---------------------------------------------------------------------------------------------------------
     while(true){
         cout<< "Ingrese la contrasenna: ";
         getline(cin,respuestaPass); 
-        if(respuestaPass.find(' ') != std::string::npos){   //Si encontró un espacio vacío
-            cout << "\033[31m"<<"Ingrese una contrasenna sin espacios"<<"\033[0m" << endl;
-            continue; //Vuelve al inicio del while
-        }else{
-            break;  //Me salgo del while
-        }
+        if(texto_no_vacio_sin_espacios(respuestaPass)){break;}
     }
 
     try{
         Usuario* aux = lista->verificador(respuestaUs,respuestaPass);
         if(aux != nullptr){
-            cout<<"Inicio de sesion exitoso"<<endl;
-            usuarioActivo = aux; 
+            system("cls");
+            cout<< "\033[32m"<<"\nInicio de sesion exitoso\n"<<"\033[0m" << endl;
+            this->usuarioActivo = aux; 
             if(aux->getPuesto() == "Manager"){
-                manActivo = static_cast<Manager*>(aux); //comprobacion si el inicio de sesion fue un usuario manager
+                this->manActivo = static_cast<Manager*>(aux); //comprobacion si el inicio de sesion fue un usuario manager
             }else{manActivo=nullptr;}                   //casteo para que sea valido
-
             return true;
         }else{
-            cout<< "\033[31m"<<"Los datos ingresados son incorrectos. Regresando al menu principal"<<"\033[0m" << endl;
+            cout<< "\033[31m"<<"\nLos datos ingresados son incorrectos. Regresando al menu principal\n"<<"\033[0m" << endl;
         }
-    }catch (const invalid_argument& e){
+    }catch (const std::invalid_argument& e){
         cout << "Error: " << e.what() << endl;
     }
     return false;
@@ -98,63 +80,39 @@ int Interaccion::menu_accion_usuario(){
         cout<<"9. Ver lista de empleados / subalternos"<<endl;
     }
 
-    int respuesta{0};
+    std::string respuesta;
     while (true){
         cout<<"Indique que accion desea realizar: ";
-        cin>>respuesta;
-        cout<<endl;
-        
+        getline(cin,respuesta);
         if(usuarioActivo->getPuesto()=="Manager"){//opcion solo para los manager, tienen 1 a 9 opciones
-            if(cin.fail()){
-                cin.clear();              
-                cin.ignore(1000, '\n');
-                cout << "\033[31m"<<"Ingrese un numero valido"<<"\033[0m" << endl;
-            
-            }else if(respuesta<1 || 9<respuesta){
-                cout << "\033[31m"<<"Ingrese un numero en el rango de 1-9"<<"\033[0m" << endl;
-                continue; 
-            }else{
-                return respuesta;
+            if(numero_entero_dentro_de_rango(1,9, respuesta)){
+                return stoi(respuesta);
             }
-        }
-        if(cin.fail()){
-            cin.clear();              
-            cin.ignore(1000, '\n');
-            cout << "\033[31m"<<"Ingrese un numero valido"<<"\033[0m" << endl;
-        
-        }else if(respuesta<1 || 7<respuesta){
-            cout << "\033[31m"<<"Ingrese un numero en el rango de 1-7"<<"\033[0m" << endl;
-            continue; 
         }else{
-            return respuesta;
+            if(numero_entero_dentro_de_rango(1,7, respuesta)){
+                return stoi(respuesta);
+            }
         }
     }
 }
 
 Usuario* Interaccion::crear_Usuario(){
-    string nom,nomUs,puesto,pass;
-    int ced, rol;
+    system("cls");
+    std::string nom, nomUs, puesto, pass, ced, rol;
+    int ced_i, rol_i;
 
-    string mensaje;     //Para desplegar en pantalla el progreso de nuestra creacion de usuario
+    std::string mensaje;     //Para desplegar en pantalla el progreso de nuestra creacion de usuario
 
     mensaje += "--------------Creacion de usuario--------------\n";
 
     cout<<mensaje;
     
-    cin.ignore();       //Elimino el \n del cin anterior
     
-    //Nombre (puede tener espacios):
+    //Nombre:------------------------------------------------------------------------------------------------
     while(true){
         cout<<"Ingrese su nombre: ";    //Puede tener espacios
-        getline(cin,nom);
-        if(nom.empty()){
-            cin.clear();              
-            cin.ignore(1000, '\n');
-            cout << "\033[31m"<<"Ingrese algun nombre"<<"\033[0m" << endl;
-            continue; //Vuelve al inicio del while
-        }else{
-            break;  //Me salgo del while
-        }
+        getline(cin,nom);  
+        if(texto_no_vacio_sin_espacios(nom)){break;}
     }
 
     //Ya con nombre valido:
@@ -162,39 +120,26 @@ Usuario* Interaccion::crear_Usuario(){
     mensaje += ("Ingrese su nombre: " + nom + "\n");
     cout<<mensaje;
 
-    //Cédula (solo número):
+    //Cédula:------------------------------------------------------------------------------------------------
     while(true){
         cout<<"Ingrese su cedula: ";    //No puede tener letras. 
-        cin>>ced;
-
-        if(cin.fail()){
-            cin.clear();              
-            cin.ignore(1000, '\n');
-            cout << "\033[31m"<<"Ingrese una cedula valida"<<"\033[0m" << endl;
-            continue; //Vuelve al inicio del while
-        }else{
+        getline(cin, ced);
+        if(numero_entero_sin_rango(ced)){
+            ced_i = stoi(ced);
             break;  //Me salgo del while
         }
     }        
-    cin.ignore();       //Elimino el \n del cin anterior
 
     //Ya con cédula valida:
     system("cls");  //Limpio pantalla
-    mensaje += ("Ingrese su cedula: " + std::to_string(ced) + "\n");
+    mensaje += ("Ingrese su cedula: " + std::to_string(ced_i) + "\n");
     cout<<mensaje;
 
-    //Nombre de usuario (sin espacios):
+    //Nombre de usuario:---------------------------------------------------------------------------------------
     while(true){
         cout<<"Cree un nombre de usuario: ";
         getline(cin,nomUs); 
-        if(nomUs.empty()){
-            cout << "\033[31m"<<"Ingrese algun nombre de Usuario"<<"\033[0m" << endl;
-        }else if(nomUs.find(' ') != std::string::npos){   //Si encontró un espacio vacío
-            cout << "\033[31m"<<"Ingrese un nombre de Usuario sin espacios"<<"\033[0m" << endl;
-            continue; //Vuelve al inicio del while
-        }else{
-            break;  //Me salgo del while
-        }
+        if(texto_no_vacio_sin_espacios(nomUs)){break;}
     }
 
     //Ya con nombre de usuario válido:
@@ -202,16 +147,11 @@ Usuario* Interaccion::crear_Usuario(){
     mensaje += ("Cree un nombre de usuario: " + nomUs + "\n");
     cout<<mensaje;
 
-    //Contraseña (sin espacios):
+    //Contraseña:---------------------------------------------------------------------------------------------------
     while(true){
         cout<<"Escriba una contrasena: ";
         getline(cin,pass); 
-        if(pass.find(' ') != std::string::npos){   //Si encontró un espacio vacío
-            cout << "\033[31m"<<"Ingrese una contrasenna sin espacios"<<"\033[0m" << endl;
-            continue; //Vuelve al inicio del while
-        }else{
-            break;  //Me salgo del while
-        }
+        if(texto_no_vacio_sin_espacios(pass)){break;}
     }
 
     //Ya con contraseña valida:
@@ -220,35 +160,28 @@ Usuario* Interaccion::crear_Usuario(){
     cout<<mensaje;
 
 
-    //Rol (Solo 1 o 2):
+    //Rol (Solo 1 o 2):-------------------------------------------------------------------------------------------
     while(true){
         cout<<"Ingrese su tipo de rol:\n (1)Manager (2)Contribuidor: ";
-        cin>>rol;
+        getline(cin,rol); 
 
-        if(cin.fail()){
-            cin.clear();              
-            cin.ignore(1000, '\n');
-            cout << "\033[31m"<<"Ingrese un numero valido"<<"\033[0m" << endl;
-            continue; //Vuelve al inicio del while
-        }else if(rol != 1 && rol != 2){
-            cout << "\033[31m"<<"Ingrese una opcion correcta"<<"\033[0m" << endl;
-            continue; 
-        }else{
-            break;  //Me salgo del while
+        if(numero_entero_dentro_de_rango(1,2,rol)){
+            rol_i = stoi(rol);
+            break;
         }
     }
 
     //Ya con rol válido:
     system("cls");  //Limpio pantalla
-    mensaje += ("Ingrese su tipo de rol:\n (1)Manager (2)Contribuidor: " + std::to_string(rol) + "\n");
+    mensaje += ("Ingrese su tipo de rol:\n (1)Manager (2)Contribuidor: " + std::to_string(rol_i) + "\n");
     cout<<mensaje;
 
     Usuario* usuario_nuevo;
 
-    if(rol == 1){
-        usuario_nuevo = new Manager(nom,ced,nomUs,pass);
-    }else if(rol ==2){
-        usuario_nuevo = new ContribuidorI(nom,ced,nomUs,pass);
+    if(rol_i == 1){
+        usuario_nuevo = new Manager(nom,ced_i,nomUs,pass);
+    }else if(rol_i ==2){
+        usuario_nuevo = new ContribuidorI(nom,ced_i,nomUs,pass);
     }   
 
     system("cls");
@@ -267,7 +200,7 @@ void Interaccion::ejecutar(){
                 break;}
             case 2:{//iniciar sesion
                 if(this->lista->vacia()){
-                    cout << "\033[31m"<<"No puede iniciar sesion ya que no existen usuarios"<<"\033[0m" << endl;  
+                    cout << "\033[31m"<<"\nNo puede iniciar sesion ya que no existen usuarios\n"<<"\033[0m" << endl;  
                 }else{
                     if(this->iniciar_sesion()){
                         bool salir {false};
@@ -275,25 +208,44 @@ void Interaccion::ejecutar(){
                             int accion_usuario = menu_accion_usuario();
                             switch (accion_usuario) {
                                 case 1:
-                                    cout << "Opción 1 seleccionada" << endl;
+                                // system("cls");
+                                    this->usuarioActivo->getCalendario()->imprimirCalendario();
                                     break;
                                 case 2:
-                                    cout << "Opción 2 seleccionada" << endl;
+                                    cout<<"2. Ver invitaciones pendientes"<<endl;
                                     break;
                                 case 3:
-                                    cout << "Opción 3 seleccionada" << endl;
+                                    // system("cls");
+                                    this->usuarioActivo->getCalendario()->crear_reservacion();
                                     break;
-                                case 4:
-                                    cout << "Opción 4 seleccionada" << endl;
+                                case 4:{
+                                    std::string posicion;
+                                    while(true){
+                                        cout<<"Ingrese el numero de reservacion que desea eliminar (<"<<this->usuarioActivo->getCalendario()->getCantidadReservaciones()<<"): ";
+                                        getline(cin,posicion);
+                                        if(numero_entero_dentro_de_rango(1,this->usuarioActivo->getCalendario()->getCantidadReservaciones(), posicion)){
+                                            this->usuarioActivo->getCalendario()->eliminarReservacion(stoi(posicion));
+                                            break;
+                                        }
+                                    }
                                     break;
-                                case 5:
-                                    cout << "Opción 5 seleccionada" << endl;
+                                }case 5:{
+                                    std::string posicion;
+                                    while(true){
+                                        cout<<"Ingrese el numero de reservacion que desea modificar (<"<<this->usuarioActivo->getCalendario()->getCantidadReservaciones()<<"): ";
+                                        getline(cin,posicion);
+                                        if(numero_entero_dentro_de_rango(1,this->usuarioActivo->getCalendario()->getCantidadReservaciones(), posicion)){
+                                            this->usuarioActivo->getCalendario()->modificarReservacion(stoi(posicion));
+                                            break;
+                                        }
+                                    }
                                     break;
-                                case 6:
-                                    cout << "Opción 6 seleccionada" << endl;
+                                }case 6:
+                                    cout<<"6. Ver Calendario de otros"<<endl;
                                     break;
                                 case 7:
-                                    cout << "Opción 7 seleccionada" << endl;
+                                    cout<<"\033[33m"<<"Cerrando sesion..."<<"\033[0m"<<endl;
+                                    salir = true;   //Cerrar sesion
                                     break;
                                 case 8:
                                     cout<< "Opción 8 seleccionada" << endl;
@@ -304,7 +256,6 @@ void Interaccion::ejecutar(){
                                     manActivo->listaEmp.imprimir();
                                     break;
                                 default:
-                                    salir = true;
                                     break;
                             }
                         }
@@ -312,6 +263,7 @@ void Interaccion::ejecutar(){
                 }
                 break;}
             case 3:{ //salir
+                system("cls");
                 cout<<"\033[33m"<<"Saliendo del Programa..."<<"\033[0m"<<endl;
                 flag=false;
                 break;}
@@ -352,8 +304,9 @@ bool Interaccion::modificar_empleados(){
         }else{
             cout<< "\033[31m"<<"ID no reponden a ningun usuario o es el de un manager. Regresando al menu principal"<<"\033[0m" << endl;
         }
-    }catch (const invalid_argument& e){
+    }catch (const std::invalid_argument& e){
         cout << "Error: " << e.what() << endl;
     }
     return false;
 }
+

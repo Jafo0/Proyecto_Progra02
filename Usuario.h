@@ -3,28 +3,32 @@
 
 #include "Calendario.h"
 #include <string>
-using namespace std;
+using std::cout;
+using std::endl;
 
 class Usuario{
 protected:
-    string nombre;
+    std::string nombre;
     int cedula;
-    string nomUsuario;
-    string puesto;
-    string contrasena;
-    Calendario calendario;
+    std::string nomUsuario;
+    std::string puesto;
+    std::string contrasena;
+    Calendario* calendario;
     int id;
     static int contadorId; //esto es estatico por tanto es el que se aumenta o
 
 public:
-    Usuario(string,int,string,string,string);
+    Usuario(std::string,int,std::string,std::string,std::string);
+    Usuario(std::string);
     virtual ~Usuario();
     virtual void imprimir()=0;
-    string obtenerInfo() const;
-    string getNomUs() const;
-    string getContra() const;
+    std::string obtenerInfo() const;
+    Calendario* getCalendario();
+    std::string getNomUs() const;
+    std::string getContra() const;
 
     int getId() const;
-    string getPuesto() const; //si su puesto es manager puede ver su lista de empleados
+    std::string getPuesto() const; //si su puesto es manager puede ver su lista de empleados
+    
 };
 #endif

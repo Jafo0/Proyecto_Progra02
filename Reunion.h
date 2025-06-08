@@ -11,7 +11,7 @@ class Reunion : public Reservacion{
     public:
         Reunion(struct tm, struct tm, std::string);
         ~Reunion();
-        void imprimir() override;
+        void imprimir(int) override;
 
 };
 

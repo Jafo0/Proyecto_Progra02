@@ -1,20 +1,30 @@
 #include "Usuario.h"
 int Usuario::contadorId = 0;
 
-Usuario::Usuario(string nom, int ced, string nomUs,string pues, string pass)
+Usuario::Usuario(std::string nom, int ced, std::string nomUs,std::string pues, std::string pass)
     :nombre(nom),cedula(ced), nomUsuario(nomUs),puesto(pues),contrasena(pass){
-        this->calendario = Calendario();
+        this->calendario = new Calendario();
         this->id = contadorId;
-        ++contadorId;}
+        ++contadorId;
+}
     
-Usuario::~Usuario(){}
+Usuario::Usuario(std::string linea){
 
-string Usuario::obtenerInfo() const{
+}
+
+Usuario::~Usuario(){
+    delete this->calendario;
+}
+
+std::string Usuario::obtenerInfo() const{
     return nombre + "," + std::to_string(cedula) + "," + nomUsuario + "," + puesto + "," + contrasena + "," + std::to_string(id);
 }
-string Usuario::getNomUs() const{return nomUsuario;}
 
-string Usuario::getContra() const{return contrasena;}
+Calendario* Usuario::getCalendario(){return this->calendario;}
+
+std::string Usuario::getNomUs() const{return nomUsuario;}
+
+std::string Usuario::getContra() const{return contrasena;}
 
 int Usuario::getId() const{return id;}
-string Usuario::getPuesto() const{return puesto;}
+std::string Usuario::getPuesto() const{return puesto;}

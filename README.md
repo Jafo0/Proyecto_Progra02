@@ -8,33 +8,21 @@ Restricciones Técnicas:
 
 Suposiciones: 
     -Se asume que el usuario ingresará un día de un mes válido para hacer las reservaciones.
-    -Se restringen las horas a horas laborales (8-17, o sea 8am-5pm)
-
-
-PENDIENTE:
-    -En el menu reservación de calendario, hacerlo a prueba de errores. Por ejemplo, que ingrese texto
-    -Que las horas no sean laborales, sino, todo el día.
-    -Al hacer una reservación, indicar hasta el minuto
-    -Explicar el Reservacion::verFechas()
-    -Try catch para la recepción de datos en calendario (menu, fechas, etc)
-    -Hacer que los eventos no choquen
-    -Hacer que los eventos se vayan agregando en orden
-    -Condición de creación de eventos: la fecha final debe ser posterior a la fecha inicial.
-
+    -El código será ejecutado en Windows. Esto ya que usamos comandos como system("cls") para poder limpiar la pantalla.
+    -No es posible eliminar usuarios.
+    -Varios managers pueden tener el mismo contribuidor
 
 
 Cambios Ale:
-    -Simplificación de ListaUsuario (Nodo en público)
-    -El guardar en archivo lo llama la función de agregar usuario de ListaUsuario.
-    -Agregué un menu_entrada a Interaccion para simplificar y le cambié el nombre a los otros porque los sentía confusos
-    -La cedula la pasé a ser un entero, porque sino deberíamos hacer una comprobación de que no se incluyen letras.
-    -Intentar usar nombres significativos y documentar el código
-    -Agregar opción de imprimir usuarios en el menu entrada
-    -Pendiente la verificación de cédula correcta
-    -No puedo iniciar sesión si la lista está vacía
-    -Cambié menu_inicio_sesion por inicio_sesion y lo saqué del while porque si no hubieran usuario o a uno se le olvida, nunca va a poder salir.
-    -Solo llamo a accion usuario si inicié sesión correctamente
-    -Los menus regresan un int
+    -Hice funciones genéricas de comprobaciones. Por ejemplo cadena vacioa, cadena con punto, de string a int, numero fuera de rango.
+    -Cambios en calendario: No puedo crear una fecha en el pasado, que termine en el pasado o que inicie y termine en el mismo momento.
+    -Ahora las reservaciones se imprimen con una posición, y se agregan en orden cronológico.
+    -Botones que funcionan:
+        1. Ver Calendario
+        3. Crear reservación
+        4. Cancelar Reservaciones
+        5. Modificar
+        7. Cerrar sesion
 
 Cambios Jafet:
      *Añado atributo a usuario de id y el contadorId como un atributo estatico para que se sume y da un id unico a cada
@@ -57,10 +45,77 @@ Pendiente:
     -Ver que las reservaciones no se choquen entre sí (Si creo una)
     -Restricción del calendario, no puedo iniciar un evento en el pasado, ni iniciarlo en el presente/futuro y terminarlo en el pasado.
 
-    -Ponerle un id a los usuarios y que se asigne de manera automática según la cantidad de usuarios (nodos) creados
+    -Ponerle un id a los usuarios y que se asigne de manera automática según la cantidad de usuarios (nodos) creados    
     -Dos managers no pueden tener el mismo empleado contribuidor. Esto lo agregamos como suposicion en el readme y como comprobacion al modificar empleados. en manager.
     -El manager tiene un atributo adicional que es de tipo ListaEmpleados (similar a ListaUsuarios), inicializa vacío y puede operar sobre este.
 
     Dejar de último:
         -El manager tiene una opción adicional en el menu que es modificar empleados.
-        -Otra opcion adicional del menu es ver la lista de empleados 
+
+Próximo Avance:
+    -Ordenar las opciones de calendario (cerrar sesión) vaya de último
+    
+
+
+    Ale:
+        -Hacer la estructura de las invitaciones
+        -Al cerrar sesión, usuario activo y manager activo en nullptr
+        -Cifrar las contraseñas.
+            Ejemplo: afaka->!irddd
+            Al iniciar sesion: Ingresa: afaka->!irddd, y luego compara !irddd con !irddd
+    Jaffet:
+        -No poder crear dos usuarios con los mismos datos. Para datos diferentes, tampoco pueden repetir nombre y contraseña. Esto lo hacemos con un verificador2 dentro de lista Usuario que es llamado en Interaccion::crear_Usuario
+        -Que al correr el programa no se borre lo que hay en la plantilla. Esto para agregar en la entrega ya ciertos empleados. Además, que la lista de usuarios siempre se cargue del .txt existente. Modificar el consrtuctor de listaUsuario para que reciba el nombre del archivo (esto no se lo pregunta la usuario). Le pregunta al usuario si lo quiere hacer. Otro constructor de Interaccion y lista usuario. La pregunta se hace en el main una única vez.
+
+
+
+
+
+
+Comando Compilacion main.cpp:
+    g++ .\Reservacion.cpp .\Reunion.cpp .\CitaPersonal.cpp .\ActividadSocial.cpp .\EventoDiario.cpp .\Calendario.cpp .\Usuario.cpp .\Manager.cpp .\ContribuidorI.cpp .\ListaUsuario.cpp .\ListaEmpleados.cpp .\Interaccion.cpp .\Comprobacion.cpp .\main.cpp
+
+Comando Compilacion mainCalendario.cpp:
+    g++ .\Reservacion.cpp .\Reunion.cpp .\CitaPersonal.cpp .\ActividadSocial.cpp .\EventoDiario.cpp .\Calendario.cpp .\Comprobacion.cpp .\mainCalendario.cpp
+
+
+
+Comprobaciones de código a prueba de errores:
+    Interaccion::menu_entrada()
+        - Valor con decimales: Listo
+        - String de entrada: Listo
+        - Número fuera del rango: listo
+        - Cadena vacía: Listo
+    1) Interaccion::crear_Usuario()
+        - Nombre:
+            -> Cadena vacía: Listo
+            -> Valores sin espacios: Listo
+        - Cedula:
+            -> Cadena vacía: Listo
+            -> Valores sin espacios: Listo
+            -> Valor con decimales: Listo
+            -> String de entrada: Listo
+        - Nombre de Usuario:
+            -> Cadena vacía: Listo
+            -> Valores sin espacios: Listo
+        - Constraseña:
+            -> Cadena vacía: Listo
+            -> Valores sin espacios: Listo
+        - Rol:
+            -> Cadena vacía: Listo
+            -> Valores sin espacios: Listo
+            -> Valor con decimales: Listo
+            -> String de entrada: Listo
+            -> Valor dentro de rango: Listo
+    2) Iniciar Sesion:
+         - Nombre de Usuario:
+            -> Cadena vacía: Listo
+            -> Valores sin espacios: Listo
+        - Constraseña:
+            -> Cadena vacía: Listo
+            -> Valores sin espacios: Listo
+
+            
+        
+
+
