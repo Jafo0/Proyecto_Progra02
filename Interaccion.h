@@ -26,5 +26,6 @@ public:
     void realizar_accion_manager();
     void ejecutar();
     bool guardar_en_archivo();
+    std::string codificar (std::string);
 };
 #endif  //INTERACCION_H

@@ -1,6 +1,2 @@
-Contribuidor,con,0,con,con,1
-Contribuidor,con2,0,con2,con2,2
-Manager,man,0,man,man,3
+Manager,man,1,man,¢–£,0
 Ids asociados,
-Manager,man2,2,man2,man2,3
-Ids asociados,2,1

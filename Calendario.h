@@ -30,14 +30,15 @@ class Calendario {
         Calendario();
         ~Calendario();
         int getCantidadReservaciones();
-        bool reservacion_incorrecta(struct tm, struct tm, struct tm);
+        bool reservacion_incorrecta(struct tm, struct tm, struct tm);   //Revisa que la fecha de fin sea mayor a la fecha inicio
+        bool choque_con_calendario(struct tm, struct tm);   //Revisa que la reserva no choque con otra del calendario
         struct tm preguntarDia();
         struct tm preguntarFecha(std::string);
         int menu_reservaciones();
-        void crear_reservacion();
+        void crear_reservacion(int);
         void acomodarReservacion(Reservacion*);
         void eliminarReservacion(int);
-        void modificarReservacion(int);
+        void modificarReservacion(int, int);
         void imprimirCalendario();
 };
 

@@ -19,11 +19,7 @@ Preguntas profe:
     -Podemos utilizar <string>.empty()?
 
 
-
-
-
     Ale:
-        -Que una nueva fecha no pueda chocar con otra.
         -Comprobar que el modificar evento sirva.
         -Que las reservaciones tengan un id de host y un id de reservacion. 
         -Modificar reunión: Hacer menu de 1: modificar fecha, 2: modificar ids.
@@ -65,8 +61,14 @@ Comando de Compilación con el CMakeLists.txt:
 Cambios Ale:
     -Ya se agregan y eliminan por id los subordinados de los managers. Un manager no puede ser jefe de otro manager.
     -Ya se escriben y cargan los subordinados del archivo de texto
+    -Ya las fechas deben ser válidas (no pueden chocar con otro evento del calendario).
 
     -Me hace falta:
         -Enviar invitaciones
         -Reestricciones al calendario para choque de fechas
         -Contraseña codificada
+
+
+
+Para Reunión y Actividad social:
+    -Hay un orgnizador/varios organizadores (ListaUsuarios)

@@ -25,8 +25,8 @@ Calendario::~Calendario(){
 
 int Calendario::getCantidadReservaciones(){return this->cantidad_reservaciones;}
 
-bool Calendario::reservacion_incorrecta(struct tm fecha_inicio, struct tm fecha_fin, struct tm fecha_actual){
-     bool reservacion_incorrecta {true};
+bool Calendario::reservacion_incorrecta(struct tm fecha_inicio, struct tm fecha_fin, struct tm fecha_actual){//Revisa que la fecha de fin sea mayor a la fecha inicio
+    bool reservacion_incorrecta {true};
     time_t segundos_inicio = mktime(&fecha_inicio);
     time_t segundos_fin = mktime(&fecha_fin);
     if(segundos_inicio<this->segundos_actual){
@@ -39,6 +39,21 @@ bool Calendario::reservacion_incorrecta(struct tm fecha_inicio, struct tm fecha_
         reservacion_incorrecta = false;
     }
     return reservacion_incorrecta;
+}
+
+bool Calendario::choque_con_calendario(struct tm fecha_inicio, struct tm fecha_fin){//Revisa que la reserva no choque con otra del calendario
+    time_t segundos_inicio = mktime(&fecha_inicio);
+    time_t segundos_fin = mktime(&fecha_fin);
+
+    Nodo* aux = this->primera_reservacion;
+    while(aux){
+        if(aux->reservacion->fecha_choca(fecha_inicio)||aux->reservacion->fecha_choca(fecha_fin)){  //Si las fechas ingresadas chocan con cualquier evento del calendario
+            cout<<"\033[31m"<<"\nLa reservacion NO pudo ser agregada ya que choca con otra fecha del calendario"<<"\033[0m"<<endl;
+            return true;
+        } 
+        aux = aux->nodo_siguiente;
+    }
+    return false;
 }
 
 struct tm Calendario::preguntarDia(){
@@ -167,7 +182,7 @@ int Calendario::menu_reservaciones(){
     }   
 }
 
-void Calendario::crear_reservacion(){
+void Calendario::crear_reservacion(int id_organizador){
     Reservacion* reservacion {nullptr};
     int tipo_reservacion = this->menu_reservaciones(); //Indico qué reservación quiero
     system("cls");
@@ -183,8 +198,10 @@ void Calendario::crear_reservacion(){
         fecha_inicio = this->preguntarFecha("--------------Datos para la fecha de inicio de la reservacion--------------");
         fecha_fin = this->preguntarFecha("--------------Datos para la fecha de final de la reservacion--------------");
     }
-    
-    if(!this->reservacion_incorrecta(fecha_inicio, fecha_fin, this->fecha_actual)){   // Reservacion correcta
+
+    system("cls");
+    //Este condicional es: La fecha tiene sentido (fin posterior al inicio) y no choca con ninguna otra
+    if(!this->reservacion_incorrecta(fecha_inicio, fecha_fin, this->fecha_actual) && !this->choque_con_calendario(fecha_inicio, fecha_fin)){   // Reservacion correcta
         switch (tipo_reservacion){  //Creo la reservación que quiera el usuario
             case 1:{
                 std::string lugar;
@@ -192,7 +209,7 @@ void Calendario::crear_reservacion(){
                     cout<<"Por favor ingrese el lugar de la Reunion: ";
                     getline(cin, lugar);
                     if(texto_no_vacio_sin_espacios(lugar)){
-                        reservacion = new Reunion(fecha_inicio, fecha_fin, lugar);
+                        reservacion = new Reunion(fecha_inicio, fecha_fin, lugar, id_organizador);
                         break;
                     }
                 }
@@ -209,10 +226,12 @@ void Calendario::crear_reservacion(){
             default:
                 break;
         }
+        system("cls");
+        cout<<"\033[32m"<<"\nLa reservacion ha sido agregada correctamente"<<"\033[0m"<<endl;     
+        this->acomodarReservacion(reservacion);
     }
-    this->acomodarReservacion(reservacion);
 }
-
+    
 void Calendario::acomodarReservacion(Reservacion* nueva_reservacion){
     this->cantidad_reservaciones++;
 
@@ -270,10 +289,10 @@ void Calendario::eliminarReservacion(int posicion){
     }
 }
 
-void Calendario::modificarReservacion(int posicion){
+void Calendario::modificarReservacion(int posicion, int id_organizador){
     if(this->primera_reservacion && posicion <= this->cantidad_reservaciones){  //Tenemos al menos una reservación y la posición es posible
         this->eliminarReservacion(posicion);
-        this->crear_reservacion();  //Se crea y se agrega en el orden que le corresponde
+        this->crear_reservacion(id_organizador);  //Se crea y se agrega en el orden que le corresponde
     }
 }
 

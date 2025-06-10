@@ -6,6 +6,7 @@
 #include <iostream>
 #include <string>
 
+
 using std::cout;
 using std::endl;
 using std::cin;
@@ -22,7 +23,8 @@ class Reservacion {
         struct tm& get_fecha_fin();
         // virtual void modificar() = 0;
         virtual void imprimir(int) = 0;
-        std::string imprimir_fecha(const tm& fecha);
+        std::string imprimir_fecha(const struct tm& fecha);
+        bool fecha_choca(struct tm);
 
 };
 

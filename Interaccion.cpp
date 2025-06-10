@@ -80,6 +80,7 @@ bool Interaccion::iniciar_sesion(){
         getline(cin,respuestaPass); 
         if(texto_no_vacio_sin_espacios(respuestaPass)){break;}
     }
+    respuestaPass = this->codificar(respuestaPass);
 
     try{
         Usuario* aux = this->usuarios_registrados->verificador(respuestaUs,respuestaPass);
@@ -138,8 +139,7 @@ void Interaccion::realizar_accion_contribuidor(){
                 break;
             case 3:
                 system("cls");
-                this->usuarioActivo->getCalendario()->crear_reservacion();
-                system("cls");
+                this->usuarioActivo->getCalendario()->crear_reservacion(this->usuarioActivo->getId());
                 break;
             case 4:{
                 system("cls");
@@ -161,7 +161,7 @@ void Interaccion::realizar_accion_contribuidor(){
                     cout<<"Ingrese el numero de reservacion que desea modificar (<"<<this->usuarioActivo->getCalendario()->getCantidadReservaciones()<<"): ";
                     getline(cin,posicion);
                     if(numero_entero_dentro_de_rango(1,this->usuarioActivo->getCalendario()->getCantidadReservaciones(), posicion)){
-                        this->usuarioActivo->getCalendario()->modificarReservacion(stoi(posicion));
+                        this->usuarioActivo->getCalendario()->modificarReservacion(stoi(posicion), this->usuarioActivo->getId());
                         break;
                     }
                 }
@@ -173,7 +173,7 @@ void Interaccion::realizar_accion_contribuidor(){
             case 7:
             system("cls");
                 cout<<"\033[33m"<<"Cerrando sesion..."<<"\033[0m"<<endl;
-                salir = true;   //Cerrar sesion
+                salir = true;   //Cerrar sesionthis
                 this->usuarioActivo = nullptr;
                 break;
             default:
@@ -222,8 +222,7 @@ void Interaccion::realizar_accion_manager(){
                 break;
             case 3:
                 system("cls");
-                this->usuarioActivo->getCalendario()->crear_reservacion();
-                system("cls");
+                this->usuarioActivo->getCalendario()->crear_reservacion(this->usuarioActivo->getId());
                 break;
             case 4:{
                 system("cls");
@@ -245,7 +244,7 @@ void Interaccion::realizar_accion_manager(){
                     cout<<"Ingrese el numero de reservacion que desea modificar (<"<<this->usuarioActivo->getCalendario()->getCantidadReservaciones()<<"): ";
                     getline(cin,posicion);
                     if(numero_entero_dentro_de_rango(1,this->usuarioActivo->getCalendario()->getCantidadReservaciones(), posicion)){
-                        this->usuarioActivo->getCalendario()->modificarReservacion(stoi(posicion));
+                        this->usuarioActivo->getCalendario()->modificarReservacion(stoi(posicion), this->usuarioActivo->getId());
                         break;
                     }
                 }
@@ -333,6 +332,7 @@ Usuario* Interaccion::crear_Usuario(){
         getline(cin,pass); 
         if(texto_no_vacio_sin_espacios(pass)){break;}
     }
+    pass = this->codificar(pass);
 
     //Ya con contraseña valida:
     system("cls");  //Limpio pantalla
@@ -418,4 +418,14 @@ bool Interaccion::guardar_en_archivo() {
     }
     return false;
 
+}
+
+std::string Interaccion::codificar(std::string contrasenna){
+    int longitud = contrasenna.length();    //Longitud de la contraseña
+    const char* arreglo_original = contrasenna.c_str(); //Función vista en clase
+    std::string contrasenna_codificada; //Contraseña codificada
+    for(int i = 0; i < longitud; i++){
+        contrasenna_codificada += arreglo_original[i] + '5'; //Hago el mapeo para que la contraseña no se vea como la ingresada por el usuario
+    }
+    return contrasenna_codificada;
 }

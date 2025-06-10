@@ -13,3 +13,10 @@ std::string Reservacion::imprimir_fecha(const tm& fecha){
     strftime(fecha_formateada, sizeof(fecha_formateada), "%d/%m/%Y %H:%M", &fecha);
     return "(" + std::string(fecha_formateada) + ")";
 }
+
+bool Reservacion::fecha_choca(struct tm fecha){
+    time_t segundos_inicio = mktime(&this->fecha_inicio);
+    time_t segundos_fin = mktime(&this->fecha_fin);
+    time_t segundos_fecha = mktime(&fecha);
+    return (segundos_inicio<=segundos_fecha && segundos_fecha<=segundos_fin)? true:false;   //Si la fecha está entre la fecha inicio y fecha final, hay choque de fechas
+}

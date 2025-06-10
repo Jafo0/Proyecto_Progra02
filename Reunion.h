@@ -6,10 +6,11 @@
 class Reunion : public Reservacion{
     private:
         std::string lugar;
-        //ListaUsuarios* participantes {nullptr};
+        // ListaUsuario* participantes {nullptr};
+        int id_organizador;
 
     public:
-        Reunion(struct tm, struct tm, std::string);
+        Reunion(struct tm, struct tm, std::string, int);
         ~Reunion();
         void imprimir(int) override;
 
