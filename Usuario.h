@@ -3,6 +3,7 @@
 
 #include "Calendario.h"
 #include <string>
+#include <fstream>
 using std::cout;
 using std::endl;
 
@@ -15,13 +16,13 @@ protected:
     std::string contrasena;
     Calendario* calendario;
     int id;
-    static int contadorId; //esto es estatico por tanto es el que se aumenta o
+    
 
 public:
-    Usuario(std::string,int,std::string,std::string,std::string);
-    Usuario(std::string);
+    static int contadorId; //esto es estatico por tanto es el que se aumenta o
+    Usuario(std::string,int,std::string,std::string,std::string, int);
     virtual ~Usuario();
-    virtual void imprimir()=0;
+    virtual void imprimir(std::string)=0;
     std::string obtenerInfo() const;
     Calendario* getCalendario();
     std::string getNomUs() const;

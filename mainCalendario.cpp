@@ -6,7 +6,7 @@ int main() {
     system("cls");
     
     while(true){
-        c->agregarReservacion();
+        c->crear_reservacion();
         c->imprimirCalendario();
         cout<<"Ingrese 1 para salir: ";
         std::string salir;

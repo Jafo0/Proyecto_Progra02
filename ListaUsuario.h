@@ -20,8 +20,11 @@ public:
     ~ListaUsuario();
     bool vacia();
     void agregarUsuario(Usuario*);
-    bool guardarEnArchivo();
-    void imprimirUsuarios();
+    void agregar_usuario_por_id(ListaUsuario*, int);
+    bool comprobar_ID(int);
+    void guardarEnArchivo(std::ofstream&);
+    void imprimir();
+    void imprimir_id();
     Usuario* encontrarId(const int&);
     Usuario* verificador(const std::string&,const std::string&); 
 

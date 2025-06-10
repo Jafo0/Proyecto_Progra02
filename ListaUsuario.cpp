@@ -30,35 +30,91 @@ bool ListaUsuario::vacia(){
     }
 }
 
-bool ListaUsuario::guardarEnArchivo() {
-    std::ofstream archivo("ArchivoUsuarios.txt", std::ios::app); //Para no borrar lo que ya existe
-    if (!archivo.is_open()) {
-        return false;  // No se pudo abrir el archivo
-    }
+void ListaUsuario::guardarEnArchivo(std::ofstream& archivo) {
+    //Primero guardamos todos los Contribuidores
     Nodo* aux = this->head;
     while(aux != nullptr) {
-        archivo << aux->usuario->obtenerInfo() << "\n";  // Agregar salto de línea
+        if(aux->usuario->getPuesto() == "Contribuidor"){
+            archivo << aux->usuario->obtenerInfo() << endl;  // Agregar salto de línea  
+        }
         aux = aux->next;
     }
-    archivo.close();  
-    return true;  
+    //Segundo, guardamos todos los Managers
+    aux = this->head;
+    while(aux != nullptr) {
+        if(aux->usuario->getPuesto() == "Manager"){
+            archivo << aux->usuario->obtenerInfo() <<endl;  // Agregar salto de línea  
+        }
+        aux = aux->next;
+    }
 }
+
 void ListaUsuario::agregarUsuario(Usuario* us){
     if (!this->head){   //Lista vacía
        this->head = new Nodo(us,nullptr);
     }else{  //La lista no está vacía
         this->head = new Nodo(us, this->head);  //Se agregan en forma de pila
     }
-    this->guardarEnArchivo();
 }
-void ListaUsuario::imprimirUsuarios(){
-    if(this->head == nullptr){
-        return;
+
+void ListaUsuario::agregar_usuario_por_id(ListaUsuario* usuarios_totales, int id){
+    if((!this->comprobar_ID(id))){    //Si NO tenemos el id en nuestra lista (para no repetir):
+        //Encuentro el usuario que quiero agregar:
+        Nodo* temp = usuarios_totales->head;
+        while(temp){ //Recorremos la lista de usuarios totales:
+            if(temp->usuario->getId() == id){
+                break;
+            }
+            temp = temp->next;
+        }
+        //En "temp" ya tenemos el usuario que queremos agregar
+        if (!this->head){   //Lista vacía
+            this->head = new Nodo(temp->usuario,nullptr);
+        }else{  //La lista no está vacía
+            this->head = new Nodo(temp->usuario, this->head);  //Se agregan en forma de pila
+        }
     }
-    Nodo* actual = head;
-    while(actual != nullptr){
-        actual->usuario->imprimir();
-        actual = actual->next;
+
+}
+
+bool ListaUsuario::comprobar_ID(int id){
+    Nodo* temp = this->head;
+    while(temp){    //Mientras no estemos en un nodo nullptr
+        if(temp->usuario->getId() == id){   //Encontramos el id
+            return true;
+        }
+        temp = temp->next;
+    }
+    return false;   //No encontramos el id
+
+}
+
+void ListaUsuario::imprimir(){
+    if(!this->head){    //No hay usuarios
+        cout<<"\033[33m"<<"No hay usuarios registrados..."<<"\033[0m"<<endl;
+    }else{
+        Nodo* actual = head;
+        int contador = 0;
+        while(actual != nullptr){
+            actual->usuario->imprimir("USUARIO: " + std::to_string(contador));
+            actual = actual->next;
+        }
+        contador++;
+    }
+}
+
+void ListaUsuario::imprimir_id(){
+    if(this->head){
+        Nodo* actual = head;
+        cout<<"\033[33m"<<"Ids asociados: ";
+        while(actual != nullptr){
+            cout<<actual->usuario->getId();
+            if(actual->next){cout<<",";}
+            actual = actual->next;
+        }
+        cout<<"\033[0m"<<endl;
+    }else{
+        cout<<"\033[33m"<<"No hay ids asociados..."<<"\033[0m"<<endl;
     }
 }
 

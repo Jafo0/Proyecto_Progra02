@@ -1,3 +1,3 @@
-1,1,1,Manager,1,0
-Ale,185,afaka,Manager,usuario,0
-1,1,1,Manager,1,0
+Contribuidor,Ale,185,alepro,alepro,2
+Contribuidor,test2,2,test2,test2,1
+Manager,test,1,test,test,0

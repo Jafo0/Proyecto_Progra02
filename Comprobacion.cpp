@@ -56,8 +56,12 @@ bool numero_entero_dentro_de_rango(int lim_inferior, int lim_superior, std::stri
             if(!cadena_con_punto(entrada)){ //Que NO tenga el punto
                 if(de_string_a_int(entrada)){   //Que pueda hacerse el stoi
                     int entrada_i = stoi(entrada);
-                    if(!numero_fuera_de_rango(lim_inferior, lim_superior ,entrada_i)){  //Que NO esté fuera del rango
+                    if((lim_inferior == lim_superior) && (entrada_i == lim_inferior)){
                         return true;
+                    }else if(numero_fuera_de_rango(lim_inferior, lim_superior ,entrada_i)){  //Que NO esté fuera del rango
+                        return false;
+                    }else{
+                       return true; 
                     }
                 }
             }

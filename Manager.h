@@ -1,12 +1,16 @@
 #ifndef MANAGER_H
 #define MANAGER_H
-#include "Usuario.h"
-#include "ListaEmpleados.h"
+
+#include "ListaUsuario.h"
 
 class Manager : public Usuario{
     public:
-    ListaEmpleados listaEmp; //pongo atributo en public
-    Manager(std::string,int,std::string,std::string);//ListaUsuario*
-    void imprimir() override;
+        ListaUsuario* listaEmp; //pongo atributo en public
+        Manager(std::string,int,std::string,std::string, int);//ListaUsuario*
+        void imprimirEmpleados();
+        void imprimir(std::string) override;
+        void agregar_empleado(ListaUsuario*);
+        void eliminar_empleado();
+        void modificar_listaEmp(ListaUsuario*);
 };
 #endif

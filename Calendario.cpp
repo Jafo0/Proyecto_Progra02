@@ -170,6 +170,7 @@ int Calendario::menu_reservaciones(){
 void Calendario::crear_reservacion(){
     Reservacion* reservacion {nullptr};
     int tipo_reservacion = this->menu_reservaciones(); //Indico qué reservación quiero
+    system("cls");
 
     struct tm fecha_inicio {}, fecha_fin {}; 
 
@@ -213,6 +214,8 @@ void Calendario::crear_reservacion(){
 }
 
 void Calendario::acomodarReservacion(Reservacion* nueva_reservacion){
+    this->cantidad_reservaciones++;
+
     if(nueva_reservacion){
         if(!this->primera_reservacion){     //Si no tenemos reservaciones
         this->primera_reservacion = new Nodo(nueva_reservacion, nullptr);
@@ -235,7 +238,6 @@ void Calendario::acomodarReservacion(Reservacion* nueva_reservacion){
                         time_t segundos_reservacion_siguiente = mktime(&(temp->nodo_siguiente->reservacion->get_fecha_inicio()));
                         if(segundos_nueva_reservacion<=segundos_reservacion_siguiente){   //Si la nueva reservacion es previa a la siguiente
                             temp->setSiguiente(new Nodo(nueva_reservacion, temp->nodo_siguiente));
-                            this->cantidad_reservaciones++;
                             return;
                         }
                         temp = temp->nodo_siguiente;
@@ -244,21 +246,27 @@ void Calendario::acomodarReservacion(Reservacion* nueva_reservacion){
                 }
             }
         }
-        this->cantidad_reservaciones++;
     }    
 }
 
 void Calendario::eliminarReservacion(int posicion){
-    if(this->primera_reservacion && posicion <= this->cantidad_reservaciones){  //Tenemos al menos una reservación y la posición es posible
-        Nodo* temp = this->primera_reservacion;     //Guardamos la reservacion más próxima en nodo auxiliar
-        int i = 1;
-        while(i < posicion-1){
-            temp = temp->nodo_siguiente;
-            i++;
+    if(this->primera_reservacion){  //Tenemos al menos una reservación
+        if(posicion == 0){  //Quiero eliminar mi primera reservacion
+            Nodo* cabeza_antigua = this->primera_reservacion;
+            this->primera_reservacion = this->primera_reservacion->nodo_siguiente;
+            delete cabeza_antigua;
+        }else{
+            Nodo* temp = this->primera_reservacion;     //Guardamos la primera reservacion en nodo temporal.
+            int i = 0;
+            while(i < posicion-1){
+                temp = temp->nodo_siguiente;
+                i++;
+            }
+            Nodo* aux = temp->nodo_siguiente;   //El nodo auxiliar es el que queremos borrar
+            temp->setSiguiente(temp->nodo_siguiente->nodo_siguiente);
+            delete aux;
         }
-        Nodo* aux = temp->nodo_siguiente;
-        temp->setSiguiente(temp->nodo_siguiente->nodo_siguiente);
-        delete aux;
+        this->cantidad_reservaciones--; 
     }
 }
 
@@ -272,7 +280,7 @@ void Calendario::modificarReservacion(int posicion){
 void Calendario::imprimirCalendario(){
     if(this->primera_reservacion){  //Si tenemos al menos una reservacion
         Nodo* temp = this->primera_reservacion;     //Guardamos la reservacion más próxima en nodo auxiliar
-        int contador = 1;
+        int contador = 0;
         while(temp){    //Mientras tengamos reservaciones activas
             temp->reservacion->imprimir(contador);
             temp = temp->nodo_siguiente;

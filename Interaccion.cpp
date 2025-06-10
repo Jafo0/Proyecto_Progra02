@@ -1,9 +1,29 @@
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include "Interaccion.h"
 
 Interaccion::Interaccion(){
-    this->lista = new ListaUsuario();
+    this->usuarios_registrados = new ListaUsuario();
+}
+
+Interaccion::Interaccion(std::ifstream& archivo){
+    this->usuarios_registrados = new ListaUsuario();
+    std::string linea_temp;
+
+    while (getline(archivo, linea_temp)) {  //Leemos cada línea a partir de la siguiente
+        std::stringstream ss(linea_temp);   //Creo un stream de la línea
+        std::string elemento;               //Cada elemento separado por coma (csv)
+        std::string elementos_csv[6];       // mi array de elementos 
+        int i = 0;
+        while (getline(ss, elemento, ',')) {        //Mientras se pueda: Leemos ss hasta la coma y guardamos en elemento
+                elementos_csv[i] = elemento;        //Guardamos en el array
+                i++;                    
+        }
+        Usuario* usuario_nuevo = leer_Usuario(elementos_csv);   //Creamos usuario con el array generado
+        this->usuarios_registrados->agregarUsuario(usuario_nuevo); //Lo agregamos a la lista
+    }
+    archivo.close();  // Cierra el archivo
 }
 
 int Interaccion::menu_entrada(){
@@ -46,7 +66,7 @@ bool Interaccion::iniciar_sesion(){
     }
 
     try{
-        Usuario* aux = lista->verificador(respuestaUs,respuestaPass);
+        Usuario* aux = this->usuarios_registrados->verificador(respuestaUs,respuestaPass);
         if(aux != nullptr){
             system("cls");
             cout<< "\033[32m"<<"\nInicio de sesion exitoso\n"<<"\033[0m" << endl;
@@ -64,8 +84,8 @@ bool Interaccion::iniciar_sesion(){
     return false;
 }
 
-int Interaccion::menu_accion_usuario(){
-    cout<<"--------------Opciones de calendario--------------"<<endl;
+int Interaccion::escoger_accion_usuario_contribuidor(){
+    cout<<"--------------Opciones de Contribuidor--------------"<<endl;
     cout<<"1. Ver Calendario"<<endl;
     cout<<"2. Ver invitaciones pendientes"<<endl;
     cout<<"3. Crear nueva reservacion"<<endl;
@@ -74,26 +94,187 @@ int Interaccion::menu_accion_usuario(){
     cout<<"6. Ver Calendario de otros"<<endl;
     cout<<"7. Cerrar Sesion"<<endl;
 
-    //opciones solo visibles para los manager
-    if (usuarioActivo->getPuesto()=="Manager"){ 
-        cout<<"8. Modificar empleados / subalternos"<<endl;
-        cout<<"9. Ver lista de empleados / subalternos"<<endl;
-    }
-
     std::string respuesta;
-    while (true){
+
+    do{
         cout<<"Indique que accion desea realizar: ";
         getline(cin,respuesta);
-        if(usuarioActivo->getPuesto()=="Manager"){//opcion solo para los manager, tienen 1 a 9 opciones
-            if(numero_entero_dentro_de_rango(1,9, respuesta)){
-                return stoi(respuesta);
-            }
-        }else{
-            if(numero_entero_dentro_de_rango(1,7, respuesta)){
-                return stoi(respuesta);
-            }
+    }while(!numero_entero_dentro_de_rango(1,7, respuesta));
+
+    return stoi(respuesta);
+}
+
+void Interaccion::realizar_accion_contribuidor(){
+    bool salir {false};
+    while(!salir){
+        int accion;
+
+        accion= escoger_accion_usuario_contribuidor();
+
+        switch (accion) {
+            case 1:
+                system("cls");
+                this->usuarioActivo->getCalendario()->imprimirCalendario();
+                break;
+            case 2:
+                system("cls");
+                cout<<"2. Ver invitaciones pendientes"<<endl;
+                break;
+            case 3:
+                system("cls");
+                this->usuarioActivo->getCalendario()->crear_reservacion();
+                system("cls");
+                break;
+            case 4:{
+                system("cls");
+                if(this->usuarioActivo->getCalendario()->getCantidadReservaciones() != -1){
+                    std::string posicion;
+                    do{
+                        cout<<"Ingrese el numero de reservacion que desea eliminar (<"<<this->usuarioActivo->getCalendario()->getCantidadReservaciones()<<"): ";
+                        getline(cin,posicion);
+                    }while(!numero_entero_dentro_de_rango(0,this->usuarioActivo->getCalendario()->getCantidadReservaciones(), posicion));
+                    this->usuarioActivo->getCalendario()->eliminarReservacion(stoi(posicion));
+                }else{
+                    cout << "\033[31m"<<"\nNo tiene reservaciones en su calendario\n"<<"\033[0m" << endl;
+                }
+                break;
+            }case 5:{
+                system("cls");
+                std::string posicion;
+                while(true){
+                    cout<<"Ingrese el numero de reservacion que desea modificar (<"<<this->usuarioActivo->getCalendario()->getCantidadReservaciones()<<"): ";
+                    getline(cin,posicion);
+                    if(numero_entero_dentro_de_rango(1,this->usuarioActivo->getCalendario()->getCantidadReservaciones(), posicion)){
+                        this->usuarioActivo->getCalendario()->modificarReservacion(stoi(posicion));
+                        break;
+                    }
+                }
+                break;
+            }case 6:
+            system("cls");
+                cout<<"6. Ver Calendario de otros"<<endl;
+                break;
+            case 7:
+            system("cls");
+                cout<<"\033[33m"<<"Cerrando sesion..."<<"\033[0m"<<endl;
+                salir = true;   //Cerrar sesion
+                this->usuarioActivo = nullptr;
+                break;
+            default:
+                break;
         }
     }
+}
+
+int Interaccion::escoger_accion_usuario_manager(){
+    cout<<"--------------Opciones de Manager--------------"<<endl;
+    cout<<"1. Ver Calendario"<<endl;
+    cout<<"2. Ver invitaciones pendientes"<<endl;
+    cout<<"3. Crear nueva reservacion"<<endl;
+    cout<<"4. Cancelar reservacion"<<endl;
+    cout<<"5. Modificar reservacion"<<endl;
+    cout<<"6. Ver Calendario de otros"<<endl;
+    cout<<"7. Modificar empleados / subalternos"<<endl;
+    cout<<"8. Ver lista de empleados / subalternos"<<endl;
+    cout<<"9. Cerrar Sesion"<<endl;
+
+    std::string respuesta;
+    do{
+        cout<<"Indique que accion desea realizar: ";
+        getline(cin,respuesta);
+    }while(!numero_entero_dentro_de_rango(1,9, respuesta));
+
+    return stoi(respuesta);
+}
+
+void Interaccion::realizar_accion_manager(){
+    bool salir {false};
+    while(!salir){
+        int accion_usuario;
+
+        accion_usuario = escoger_accion_usuario_manager();
+        
+        switch (accion_usuario) {
+            case 1:
+                system("cls");
+                this->usuarioActivo->getCalendario()->imprimirCalendario();
+                break;
+            case 2:
+                system("cls");
+                cout<<"2. Ver invitaciones pendientes"<<endl;
+                break;
+            case 3:
+                system("cls");
+                this->usuarioActivo->getCalendario()->crear_reservacion();
+                system("cls");
+                break;
+            case 4:{
+                system("cls");
+                if(this->usuarioActivo->getCalendario()->getCantidadReservaciones() != -1){
+                    std::string posicion;
+                    do{
+                        cout<<"Ingrese el numero de reservacion que desea eliminar (<"<<this->usuarioActivo->getCalendario()->getCantidadReservaciones()<<"): ";
+                        getline(cin,posicion);
+                    }while(!numero_entero_dentro_de_rango(0,this->usuarioActivo->getCalendario()->getCantidadReservaciones(), posicion));
+                    this->usuarioActivo->getCalendario()->eliminarReservacion(stoi(posicion));
+                }else{
+                    cout << "\033[31m"<<"\nNo tiene reservaciones en su calendario\n"<<"\033[0m" << endl;
+                }
+                break;
+            }case 5:{
+                system("cls");
+                std::string posicion;
+                while(true){
+                    cout<<"Ingrese el numero de reservacion que desea modificar (<"<<this->usuarioActivo->getCalendario()->getCantidadReservaciones()<<"): ";
+                    getline(cin,posicion);
+                    if(numero_entero_dentro_de_rango(1,this->usuarioActivo->getCalendario()->getCantidadReservaciones(), posicion)){
+                        this->usuarioActivo->getCalendario()->modificarReservacion(stoi(posicion));
+                        break;
+                    }
+                }
+                break;
+            }case 6:
+                system("cls");
+                cout<<"6. Ver Calendario de otros"<<endl;
+                break;
+            case 7:
+                system("cls");
+                this->manActivo->modificar_listaEmp(this->usuarios_registrados);
+                break;
+            case 8:
+                system("cls");
+                manActivo->imprimirEmpleados();
+                break;
+            case 9:
+                system("cls");
+                cout<<"\033[33m"<<"Cerrando sesion..."<<"\033[0m"<<endl;
+                salir = true;   //Cerrar sesion
+                this->usuarioActivo = nullptr;
+                this->manActivo = nullptr;
+                break;
+            default:
+                break;
+        }
+    }
+}
+
+Usuario* Interaccion::leer_Usuario(std::string elementos[]){
+    std::string puesto = elementos[0];
+    std::string nombre = elementos[1];
+    int cedula = stoi(elementos[2]);
+    std::string nom_usuario = elementos[3];
+    std::string contrasenna = elementos[4];
+    int id = stoi(elementos[5]);
+
+    Usuario* usuario_nuevo;
+
+    if(puesto == "Contribuidor"){
+        usuario_nuevo = new Contribuidor(nombre, cedula, nom_usuario, contrasenna, id);
+    }else{
+        usuario_nuevo = new Manager(nombre, cedula, nom_usuario, contrasenna, id);
+    } 
+
+    return usuario_nuevo;
 }
 
 Usuario* Interaccion::crear_Usuario(){
@@ -179,9 +360,9 @@ Usuario* Interaccion::crear_Usuario(){
     Usuario* usuario_nuevo;
 
     if(rol_i == 1){
-        usuario_nuevo = new Manager(nom,ced_i,nomUs,pass);
+        usuario_nuevo = new Manager(nom,ced_i,nomUs,pass, Usuario::contadorId);
     }else if(rol_i ==2){
-        usuario_nuevo = new ContribuidorI(nom,ced_i,nomUs,pass);
+        usuario_nuevo = new Contribuidor(nom,ced_i,nomUs,pass, Usuario::contadorId);
     }   
 
     system("cls");
@@ -189,6 +370,7 @@ Usuario* Interaccion::crear_Usuario(){
 }
 
 void Interaccion::ejecutar(){
+    this->guardar_en_archivo(); 
     int respuesta{0};
     bool flag = true;
     while (flag){
@@ -196,68 +378,17 @@ void Interaccion::ejecutar(){
         switch (respuesta){
             case 1:{//crear
                 Usuario* usuario_nuevo = crear_Usuario();
-                this->lista->agregarUsuario(usuario_nuevo);
+                this->usuarios_registrados->agregarUsuario(usuario_nuevo);
                 break;}
             case 2:{//iniciar sesion
-                if(this->lista->vacia()){
+                if(this->usuarios_registrados->vacia()){
                     cout << "\033[31m"<<"\nNo puede iniciar sesion ya que no existen usuarios\n"<<"\033[0m" << endl;  
                 }else{
                     if(this->iniciar_sesion()){
-                        bool salir {false};
-                        while(!salir){
-                            int accion_usuario = menu_accion_usuario();
-                            switch (accion_usuario) {
-                                case 1:
-                                // system("cls");
-                                    this->usuarioActivo->getCalendario()->imprimirCalendario();
-                                    break;
-                                case 2:
-                                    cout<<"2. Ver invitaciones pendientes"<<endl;
-                                    break;
-                                case 3:
-                                    // system("cls");
-                                    this->usuarioActivo->getCalendario()->crear_reservacion();
-                                    break;
-                                case 4:{
-                                    std::string posicion;
-                                    while(true){
-                                        cout<<"Ingrese el numero de reservacion que desea eliminar (<"<<this->usuarioActivo->getCalendario()->getCantidadReservaciones()<<"): ";
-                                        getline(cin,posicion);
-                                        if(numero_entero_dentro_de_rango(1,this->usuarioActivo->getCalendario()->getCantidadReservaciones(), posicion)){
-                                            this->usuarioActivo->getCalendario()->eliminarReservacion(stoi(posicion));
-                                            break;
-                                        }
-                                    }
-                                    break;
-                                }case 5:{
-                                    std::string posicion;
-                                    while(true){
-                                        cout<<"Ingrese el numero de reservacion que desea modificar (<"<<this->usuarioActivo->getCalendario()->getCantidadReservaciones()<<"): ";
-                                        getline(cin,posicion);
-                                        if(numero_entero_dentro_de_rango(1,this->usuarioActivo->getCalendario()->getCantidadReservaciones(), posicion)){
-                                            this->usuarioActivo->getCalendario()->modificarReservacion(stoi(posicion));
-                                            break;
-                                        }
-                                    }
-                                    break;
-                                }case 6:
-                                    cout<<"6. Ver Calendario de otros"<<endl;
-                                    break;
-                                case 7:
-                                    cout<<"\033[33m"<<"Cerrando sesion..."<<"\033[0m"<<endl;
-                                    salir = true;   //Cerrar sesion
-                                    break;
-                                case 8:
-                                    cout<< "Opción 8 seleccionada" << endl;
-                                    modificar_empleados();
-                                    break;
-                                case 9:
-                                    cout<< "Opción 9 seleccionada" << endl;
-                                    manActivo->listaEmp.imprimir();
-                                    break;
-                                default:
-                                    break;
-                            }
+                        if(this->usuarioActivo->getPuesto() == "Contribuidor"){
+                            this->realizar_accion_contribuidor();
+                        }else{
+                            this->realizar_accion_manager();
                         }
                     }                   
                 }
@@ -268,45 +399,58 @@ void Interaccion::ejecutar(){
                 flag=false;
                 break;}
             case 4:{ //imprimir usuarios
-                this->lista->imprimirUsuarios();
+                system("cls");
+                this->usuarios_registrados->imprimir();
                 break;}
             default:
                 cout << "\033[31m"<<"Opcion Invalida"<<"\033[0m" << endl;  
                 break;
         }
+        this->guardar_en_archivo(); //Después de cualquier accion, guardamos en archivo
     }
 }
 
-bool Interaccion::modificar_empleados(){
-    int idEntrada;
+// bool Interaccion::modificar_empleados(){
+//     int idEntrada;
 
-    while (true){
-        cout<<"Ingrese el Id de la persona que desea agregar: ";
-        cin>>idEntrada;
-        if(cin.fail()){
-            cin.clear();              
-            cin.ignore(1000, '\n');
-            cout << "\033[31m"<<"Ingrese un numero"<<"\033[0m" << endl;
-            continue;
-        }else{break;} //si la entrada es valida
-    }
-    try{
-        Usuario* aux = lista->encontrarId(idEntrada);
-        if(aux != nullptr){
-            bool flag = manActivo->listaEmp.agregarId(aux);
-            if(flag){
-                cout<<"Usuario agregado a su lista de empleados exitosamente"<<endl;
-            }else{cout<<"\033[31m"<<"Usuario que desea agregar ya estaba en su lista"<<"\033[0m"<<endl;}
+//     while (true){
+//         cout<<"Ingrese el Id de la persona que desea agregar: ";
+//         cin>>idEntrada;
+//         if(cin.fail()){
+//             cin.clear();              
+//             cin.ignore(1000, '\n');
+//             cout << "\033[31m"<<"Ingrese un numero"<<"\033[0m" << endl;
+//             continue;
+//         }else{break;} //si la entrada es valida
+//     }
+//     try{
+//         Usuario* aux = lista->encontrarId(idEntrada);
+//         if(aux != nullptr){
+//             bool flag = manActivo->listaEmp->agregar_usuario_por_id(this->usuarios_registrados, )
+//             agregarId(aux);
+//             if(flag){
+//                 cout<<"Usuario agregado a su lista de empleados exitosamente"<<endl;
+//             }else{cout<<"\033[31m"<<"Usuario que desea agregar ya estaba en su lista"<<"\033[0m"<<endl;}
             
-            //como ListaEmpleados esta declarado como atributo publico, 
-            //entonces puedo acceder a el directamente
-            return true;
-        }else{
-            cout<< "\033[31m"<<"ID no reponden a ningun usuario o es el de un manager. Regresando al menu principal"<<"\033[0m" << endl;
-        }
-    }catch (const std::invalid_argument& e){
-        cout << "Error: " << e.what() << endl;
+//             //como ListaEmpleados esta declarado como atributo publico, 
+//             //entonces puedo acceder a el directamente
+//             return true;
+//         }else{
+//             cout<< "\033[31m"<<"ID no reponden a ningun usuario o es el de un manager. Regresando al menu principal"<<"\033[0m" << endl;
+//         }
+//     }catch (const std::invalid_argument& e){
+//         cout << "Error: " << e.what() << endl;
+//     }
+//     return false;
+// }
+
+bool Interaccion::guardar_en_archivo() {
+    std::ofstream archivo("../ArchivoUsuarios.txt"); //Para no borrar lo que ya existe
+    if (archivo.is_open()) {
+        this->usuarios_registrados->guardarEnArchivo(archivo);
+        archivo.close();
+        return true;
     }
     return false;
-}
 
+}

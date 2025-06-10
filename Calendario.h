@@ -24,7 +24,7 @@ class Calendario {
         Nodo* primera_reservacion {nullptr};
         time_t segundos_actual;
         struct tm fecha_actual;
-        int cantidad_reservaciones {0};
+        int cantidad_reservaciones {-1};
 
     public:
         Calendario();
