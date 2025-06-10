@@ -1,15 +1,9 @@
-Contribuidor,Alejandro,118850831,Ale_G13,contraAle,0
-Manager,Jaffet,115470331,Jafo12,contraJaf,1
+Contribuidor,con,0,con,con,1
+Contribuidor,con2,0,con2,con2,2
+Manager,man,0,man,man,3
+Ids asociados,1
+Manager,man2,2,man2,man2,3
+Ids asociados,2,1
 
 
---------------------------------------------------------------------------------
-Reservacion #0:
-(07/07/2025 00:00) -> (08/07/2025 00:00) | Evento Diario
 
---------------------------------------------------------------------------------
-Reservacion #1:
-(08/08/2025 00:00) -> (09/08/2025 00:00) | Evento Diario
-
---------------------------------------------------------------------------------
-Reservacion #2:
-(09/09/2025 00:00) -> (10/09/2025 00:00) | Evento Diario

@@ -20,8 +20,24 @@ Interaccion::Interaccion(std::ifstream& archivo){
                 elementos_csv[i] = elemento;        //Guardamos en el array
                 i++;                    
         }
-        Usuario* usuario_nuevo = leer_Usuario(elementos_csv);   //Creamos usuario con el array generado
+
+        std::string puesto = elementos_csv[0];
+        std::string nombre = elementos_csv[1];
+        int cedula = stoi(elementos_csv[2]);
+        std::string nom_usuario = elementos_csv[3];
+        std::string contrasenna = elementos_csv[4];
+        int id = stoi(elementos_csv[5]);
+
+        Usuario* usuario_nuevo;
+        if(puesto == "Contribuidor"){
+            usuario_nuevo = new Contribuidor(nombre, cedula, nom_usuario, contrasenna, id);
+        }else{  //Si estoy en un Manager, sé que lo siguiente es leer sus ids asociados
+            ListaUsuario* lista_ids = new ListaUsuario();
+            lista_ids->leer_id_de_archivo(archivo, this->usuarios_registrados);
+            usuario_nuevo = new Manager(nombre, cedula, nom_usuario, contrasenna, id, lista_ids);
+        } 
         this->usuarios_registrados->agregarUsuario(usuario_nuevo); //Lo agregamos a la lista
+        
     }
     archivo.close();  // Cierra el archivo
 }
@@ -163,6 +179,7 @@ void Interaccion::realizar_accion_contribuidor(){
             default:
                 break;
         }
+        this->guardar_en_archivo(); 
     }
 }
 
@@ -255,26 +272,8 @@ void Interaccion::realizar_accion_manager(){
             default:
                 break;
         }
+        this->guardar_en_archivo(); 
     }
-}
-
-Usuario* Interaccion::leer_Usuario(std::string elementos[]){
-    std::string puesto = elementos[0];
-    std::string nombre = elementos[1];
-    int cedula = stoi(elementos[2]);
-    std::string nom_usuario = elementos[3];
-    std::string contrasenna = elementos[4];
-    int id = stoi(elementos[5]);
-
-    Usuario* usuario_nuevo;
-
-    if(puesto == "Contribuidor"){
-        usuario_nuevo = new Contribuidor(nombre, cedula, nom_usuario, contrasenna, id);
-    }else{
-        usuario_nuevo = new Manager(nombre, cedula, nom_usuario, contrasenna, id);
-    } 
-
-    return usuario_nuevo;
 }
 
 Usuario* Interaccion::crear_Usuario(){
@@ -409,40 +408,6 @@ void Interaccion::ejecutar(){
         this->guardar_en_archivo(); //Después de cualquier accion, guardamos en archivo
     }
 }
-
-// bool Interaccion::modificar_empleados(){
-//     int idEntrada;
-
-//     while (true){
-//         cout<<"Ingrese el Id de la persona que desea agregar: ";
-//         cin>>idEntrada;
-//         if(cin.fail()){
-//             cin.clear();              
-//             cin.ignore(1000, '\n');
-//             cout << "\033[31m"<<"Ingrese un numero"<<"\033[0m" << endl;
-//             continue;
-//         }else{break;} //si la entrada es valida
-//     }
-//     try{
-//         Usuario* aux = lista->encontrarId(idEntrada);
-//         if(aux != nullptr){
-//             bool flag = manActivo->listaEmp->agregar_usuario_por_id(this->usuarios_registrados, )
-//             agregarId(aux);
-//             if(flag){
-//                 cout<<"Usuario agregado a su lista de empleados exitosamente"<<endl;
-//             }else{cout<<"\033[31m"<<"Usuario que desea agregar ya estaba en su lista"<<"\033[0m"<<endl;}
-            
-//             //como ListaEmpleados esta declarado como atributo publico, 
-//             //entonces puedo acceder a el directamente
-//             return true;
-//         }else{
-//             cout<< "\033[31m"<<"ID no reponden a ningun usuario o es el de un manager. Regresando al menu principal"<<"\033[0m" << endl;
-//         }
-//     }catch (const std::invalid_argument& e){
-//         cout << "Error: " << e.what() << endl;
-//     }
-//     return false;
-// }
 
 bool Interaccion::guardar_en_archivo() {
     std::ofstream archivo("../ArchivoUsuarios.txt"); //Para no borrar lo que ya existe

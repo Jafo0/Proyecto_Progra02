@@ -12,3 +12,7 @@
         cout<<"Datos Persona: "<<"Puesto: Contribuidor"<<"\t|"<<"Nombre: "<<nombre<<"\t|"<<"Cedula: "<<cedula<<endl;
         cout<<"Datos Usuario: "<<"Nombre usuario: "<<nomUsuario<<"\t|"<<"Contrasenna: "<<contrasena<<"\t|"<<"Id: "<<id<<endl;
     }
+
+    void Contribuidor::guardar_en_archivo(std::ofstream& archivo){
+        archivo << this->obtenerInfo()<<endl;
+    }

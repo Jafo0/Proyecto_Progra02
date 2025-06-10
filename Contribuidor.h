@@ -7,5 +7,6 @@ class Contribuidor : public Usuario{
     Contribuidor(std::string,int,std::string,std::string, int); 
     //~ContribuidorI() override = default;
     void imprimir(std::string) override;
+    void guardar_en_archivo(std::ofstream&) override;
 };
 #endif

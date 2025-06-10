@@ -23,6 +23,7 @@ public:
     Usuario(std::string,int,std::string,std::string,std::string, int);
     virtual ~Usuario();
     virtual void imprimir(std::string)=0;
+    virtual void guardar_en_archivo(std::ofstream&)=0;
     std::string obtenerInfo() const;
     Calendario* getCalendario();
     std::string getNomUs() const;

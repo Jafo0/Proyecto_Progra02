@@ -5,6 +5,10 @@ ListaUsuario::Nodo::Nodo(Usuario* us, Nodo* sig):usuario(us), next(sig){}
 
 ListaUsuario::Nodo::~Nodo(){delete this->usuario;}
 
+void ListaUsuario::Nodo::set_siguiente(Nodo* siguiente){
+    this->next = siguiente;
+}
+
 // ListaUsuario::ListaUsuario(std::ifstream& archivo) {
 //     std::string linea;
 //     while (std::getline(archivo, linea)) {
@@ -30,12 +34,13 @@ bool ListaUsuario::vacia(){
     }
 }
 
+
 void ListaUsuario::guardarEnArchivo(std::ofstream& archivo) {
     //Primero guardamos todos los Contribuidores
     Nodo* aux = this->head;
     while(aux != nullptr) {
         if(aux->usuario->getPuesto() == "Contribuidor"){
-            archivo << aux->usuario->obtenerInfo() << endl;  // Agregar salto de línea  
+            aux->usuario->guardar_en_archivo(archivo);
         }
         aux = aux->next;
     }
@@ -43,7 +48,7 @@ void ListaUsuario::guardarEnArchivo(std::ofstream& archivo) {
     aux = this->head;
     while(aux != nullptr) {
         if(aux->usuario->getPuesto() == "Manager"){
-            archivo << aux->usuario->obtenerInfo() <<endl;  // Agregar salto de línea  
+            aux->usuario->guardar_en_archivo(archivo);
         }
         aux = aux->next;
     }
@@ -57,7 +62,7 @@ void ListaUsuario::agregarUsuario(Usuario* us){
     }
 }
 
-void ListaUsuario::agregar_usuario_por_id(ListaUsuario* usuarios_totales, int id){
+void ListaUsuario::agregar_contribuidor_por_id(ListaUsuario* usuarios_totales, int id){
     if((!this->comprobar_ID(id))){    //Si NO tenemos el id en nuestra lista (para no repetir):
         //Encuentro el usuario que quiero agregar:
         Nodo* temp = usuarios_totales->head;
@@ -68,13 +73,36 @@ void ListaUsuario::agregar_usuario_por_id(ListaUsuario* usuarios_totales, int id
             temp = temp->next;
         }
         //En "temp" ya tenemos el usuario que queremos agregar
-        if (!this->head){   //Lista vacía
-            this->head = new Nodo(temp->usuario,nullptr);
-        }else{  //La lista no está vacía
-            this->head = new Nodo(temp->usuario, this->head);  //Se agregan en forma de pila
+        if(temp->usuario->getPuesto() == "Manager"){
+            system("cls");
+            cout<<"\033[33m"<<"No se puede agregar el id ya que corresponde a un manager..."<<"\033[0m"<<endl;
+        }else{
+            if (!this->head){   //Lista vacía
+                this->head = new Nodo(temp->usuario,nullptr);
+            }else{  //La lista no está vacía
+                this->head = new Nodo(temp->usuario, this->head);  //Se agregan en forma de pila
+            }
+            system("cls");
+            cout<<"\033[32m"<<"id agregado con exito..."<<"\033[0m"<<endl;
         }
-    }
+    }else{
+        system("cls");
+        cout<<"\033[33m"<<"El id ingresado YA se encuentra en nuestra lista de subordinados..."<<"\033[0m"<<endl;
 
+    }
+}
+
+void ListaUsuario::eliminar_contribuidor_por_id(int id){   //Asumimos que el id sí está y tenemos contribuidores
+    if(this->head->usuario->getId() == id){  //Quiero eliminar el primer contribuidor
+        this->head = this->head->next; //No eliminamos this->head ya que sigue en nuestra lista de usuarios registrados
+    }else{  //Quiero eliminar una cabeza que no sea la primera
+        Nodo* temp = this->head;     //Guardamos la primera reservacion en nodo temporal.
+        while(true){
+            if(temp->next->usuario->getId() == id){break;}  //Comparamos el id con el nodo siguiente
+            temp = temp->next;
+        }
+        temp->set_siguiente(temp->next->next);  //No eliminamos temp->next ya que sigue en nuestra lista de usuarios registrados
+    }    
 }
 
 bool ListaUsuario::comprobar_ID(int id){
@@ -98,8 +126,40 @@ void ListaUsuario::imprimir(){
         while(actual != nullptr){
             actual->usuario->imprimir("USUARIO: " + std::to_string(contador));
             actual = actual->next;
+            contador++;
         }
-        contador++;
+        
+    }
+}
+
+void ListaUsuario::imprimir_contribuidores(){
+    if(this->hay_contribuidores()){ //Hay contribuidores registrados
+        Nodo* actual = head;
+        int contador = 0;
+        while(actual != nullptr){
+            if(actual->usuario->getPuesto() == "Contribuidor"){
+                actual->usuario->imprimir("CONTRIBUIDOR: " + std::to_string(contador));  
+            }  
+            actual = actual->next;
+            contador++;
+        }
+    }else{
+        cout<<"\033[33m"<<"No hay contribuidores registrados..."<<"\033[0m"<<endl;
+    }
+}
+
+bool ListaUsuario::hay_contribuidores(){
+    if(!this->head){    //No hay usuarios
+        cout<<"\033[33m"<<"No hay contribuidores registrados..."<<"\033[0m"<<endl;
+        return false;
+    }else{
+        Nodo* actual = head;
+        while(actual != nullptr){
+            if(actual->usuario->getPuesto() == "Contribuidor"){return true;}  
+            actual = actual->next;
+        }
+        cout<<"\033[33m"<<"No hay contribuidores registrados..."<<"\033[0m"<<endl;
+        return false;
     }
 }
 
@@ -147,4 +207,28 @@ Usuario* ListaUsuario::verificador(const std::string& respuestaUs,const std::str
         actual = actual->next;
     }
     return nullptr;
+}
+
+void ListaUsuario::guardar_id_en_archivo(std::ofstream& archivo){
+    Nodo* aux = this->head;
+    archivo << "Ids asociados,";
+    while(aux != nullptr) {
+            archivo << aux->usuario->getId(); 
+            if(aux->next){archivo<<",";} //Si hay un nodo siguiente
+        aux = aux->next;
+    }
+    archivo<<endl;
+}
+
+void ListaUsuario::leer_id_de_archivo(std::ifstream& archivo, ListaUsuario* usuarios_registrados){
+    //Me los va agregando
+
+    std::string linea_temp;
+    getline(archivo, linea_temp);   //Leo la línea
+    std::stringstream ss(linea_temp);   //Creo un stream de la línea
+    std::string id;               //Cada elemento separado por coma (csv)
+    getline(ss, id, ',');  //Me deshago del encabezado "Ids asociados,"
+    while(getline(ss, id, ',')){  //Leemos en intervalos de una coma
+        this->agregar_contribuidor_por_id(usuarios_registrados, stoi(id));
+    }
 }

@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 17)
 
 add_executable(ejecutable Reservacion.cpp ActividadSocial.cpp CitaPersonal.cpp EventoDiario.cpp Reunion.cpp Calendario.cpp
                Usuario.cpp Manager.cpp Contribuidor.cpp ListaUsuario.cpp 
-               Interaccion.cpp Comprobacion.cpp main.cpp  ) #<nombre del ejecutable>, .cpp, .h, ...
+               Interaccion.cpp Comprobacion.cpp main.cpp) #<nombre del ejecutable>, .cpp, .h, ...
 
 #Comandos de compilación y ejecución:
     #Primero, ocupo estar en powershell

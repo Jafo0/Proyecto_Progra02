@@ -6,7 +6,7 @@ Usuario::Usuario(std::string nom, int ced, std::string nomUs,std::string pues, s
         this->calendario = new Calendario();
         ++contadorId;
 }
-  
+
 Usuario::~Usuario(){
     delete this->calendario;
 }

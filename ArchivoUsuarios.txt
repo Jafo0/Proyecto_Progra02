@@ -1,3 +1,6 @@
-Contribuidor,Ale,185,alepro,alepro,2
-Contribuidor,test2,2,test2,test2,1
-Manager,test,1,test,test,0
+Contribuidor,con,0,con,con,1
+Contribuidor,con2,0,con2,con2,2
+Manager,man,0,man,man,3
+Ids asociados,
+Manager,man2,2,man2,man2,3
+Ids asociados,2,1

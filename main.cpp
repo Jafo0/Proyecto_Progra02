@@ -32,10 +32,3 @@ int main(){
 
     return 0;
 }
-
-// int main(){
-//     cout<<numero_entero_dentro_de_rango(0,0,"0")<<endl;
-//     cout<<"hola"<<endl;
-
-//     return 0;
-// }
