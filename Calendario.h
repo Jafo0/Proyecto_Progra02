@@ -39,7 +39,7 @@ class Calendario {
         void acomodarReservacion(Reservacion*);
         void eliminarReservacion(int);
         void modificarReservacion(int, int);
-        void imprimirCalendario(int);
+        void imprimirCalendario();//int
         //void imprimirCalendarioR();
 
         void guardarEnArchivo(std::ofstream&,int); //guardar en archivo calendario

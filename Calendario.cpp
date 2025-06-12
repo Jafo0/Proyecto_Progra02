@@ -296,23 +296,16 @@ void Calendario::modificarReservacion(int posicion, int id_organizador){
     }
 }
 
-void Calendario::imprimirCalendario(int tipo){ 
+void Calendario::imprimirCalendario(){ //int tipo
     if(this->primera_reservacion){                  //Si tenemos al menos una reservacion
         Nodo* temp = this->primera_reservacion;     //Guardamos la reservacion más próxima en nodo auxiliar
         int contador = 0;
-        if(tipo ==1){
-            while(temp){    //Mientras tengamos reservaciones activas
+        while(temp){    //Mientras tengamos reservaciones activas
                 temp->reservacion->imprimir(contador);
                 temp = temp->nodo_siguiente;
                 contador++;
-            }
-        }else{
-            while(temp){    //Mientras tengamos reservaciones activas
-                temp->reservacion->imprimirOculto(contador); // imprimir oculto va relacionado a "6. Ver Calendario de otros"
-                temp = temp->nodo_siguiente;
-                contador++;
-            }
         }
+         // imprimir oculto va relacionado a "6. Ver Calendario de otros"
     }else{
         cout<<"\033[33m"<<"Su calendario esta vacio..."<<"\033[0m"<<endl;
     }

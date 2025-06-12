@@ -131,9 +131,9 @@ void Interaccion::realizar_accion_contribuidor(){
 
         switch (accion) {
             case 1:
-                int tipo=1; //relacionado a imprimir oculto
+                //int tipo=1; //relacionado a imprimir oculto
                 system("cls");
-                this->usuarioActivo->getCalendario()->imprimirCalendario(tipo);
+                this->usuarioActivo->getCalendario()->imprimirCalendario();
                 break;
             case 2:
                 system("cls");
@@ -216,9 +216,9 @@ void Interaccion::realizar_accion_manager(){
         
         switch (accion_usuario) {
             case 1:
-                int tipo =1;
+                //int tipo =1;
                 system("cls");
-                this->usuarioActivo->getCalendario()->imprimirCalendario(tipo);
+                this->usuarioActivo->getCalendario()->imprimirCalendario();
                 break;
             case 2:
                 system("cls");
