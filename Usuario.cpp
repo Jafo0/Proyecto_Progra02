@@ -21,6 +21,8 @@ std::string Usuario::getNomUs() const{return nomUsuario;}
 
 std::string Usuario::getContra() const{return contrasena;}
 
+int Usuario::getCedula() const{return cedula;}
+
 int Usuario::getId() const{return id;}
 
 std::string Usuario::getPuesto() const{return puesto;}

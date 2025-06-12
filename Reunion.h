@@ -13,6 +13,8 @@ class Reunion : public Reservacion{
         Reunion(struct tm, struct tm, std::string, int);
         ~Reunion();
         void imprimir(int) override;
+        void imprimirOculto(int) override; //no muestro tipo de reservacion ni lugar
+        void guardarEnArchivo(std::ofstream&,int) override;
 
 };
 

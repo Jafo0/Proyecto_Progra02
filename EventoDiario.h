@@ -8,6 +8,8 @@ class EventoDiario : public Reservacion {
         EventoDiario(struct tm, struct tm);
         ~EventoDiario();
         void imprimir(int) override;
+        void imprimirOculto(int) override;
+        void guardarEnArchivo(std::ofstream&, int) override;
 };
 
 #endif  // EVENTO_DIARIO_H

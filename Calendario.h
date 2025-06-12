@@ -8,14 +8,14 @@
 #include "EventoDiario.h"
 
 #include "Comprobacion.h"
-
+#include <fstream>
 #include <cstdlib>  //Para limpiar la pantalla
 
 class Calendario {
     private:
         class Nodo{
             public:
-                Reservacion* reservacion {nullptr};
+                Reservacion* reservacion {nullptr}; //elementos que guarda
                 Nodo* nodo_siguiente {nullptr};
                 Nodo(Reservacion*, Nodo*);
                 ~Nodo();
@@ -39,7 +39,10 @@ class Calendario {
         void acomodarReservacion(Reservacion*);
         void eliminarReservacion(int);
         void modificarReservacion(int, int);
-        void imprimirCalendario();
+        void imprimirCalendario(int);
+        //void imprimirCalendarioR();
+
+        void guardarEnArchivo(std::ofstream&,int); //guardar en archivo calendario
 };
 
 #endif  // CALENDARIO_H

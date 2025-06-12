@@ -14,10 +14,13 @@ private:
     ListaUsuario* usuarios_registrados;
     Usuario* usuarioActivo{nullptr};
     Manager* manActivo{nullptr};    //esto me funciona para la comprobacion
+
+    //nuevo atributo
+    //Calendario* calendarios_registrados; //una lista de calendarios
 public:
     Interaccion();  //Cosntructor vacío
-    Interaccion(std::ifstream&);    //Constructor a partir de un archivo de texto
-    Usuario* crear_Usuario();
+    Interaccion(std::ifstream&);  //, std::ifstream& Constructor a partir de dos archivos de texto usuarios y calendario
+    Usuario* crear_Usuario();                     
     int menu_entrada();
     bool iniciar_sesion(); //iniciar sesion pide contrasenna y nombre de usuario
     int escoger_accion_usuario_contribuidor();
@@ -27,5 +30,8 @@ public:
     void ejecutar();
     bool guardar_en_archivo();
     std::string codificar (std::string);
+
+    //Nuevo guardar en archivo para Calendario
+    bool guardar_en_archivo_cal(int);
 };
 #endif  //INTERACCION_H

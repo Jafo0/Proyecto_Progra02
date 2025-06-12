@@ -242,7 +242,7 @@ void Calendario::acomodarReservacion(Reservacion* nueva_reservacion){
             Nodo* temp = this->primera_reservacion;     //Guardamos la reservacion más próxima en nodo auxiliar
             time_t segundos_nueva_reservacion = mktime(&nueva_reservacion->get_fecha_inicio()); //Segundos de nueva reservacion
             time_t segundos_reservacion_primera_reservacion = mktime(&(this->primera_reservacion->reservacion->get_fecha_inicio()));
-                
+
             if(!temp->nodo_siguiente){  //Solo hay una reservacion
                 if(segundos_nueva_reservacion<=segundos_reservacion_primera_reservacion){   //Si la nueva reservacion es previa a la existente
                     this->primera_reservacion = new Nodo(nueva_reservacion, this->primera_reservacion);
@@ -270,7 +270,7 @@ void Calendario::acomodarReservacion(Reservacion* nueva_reservacion){
 
 void Calendario::eliminarReservacion(int posicion){
     if(this->primera_reservacion){  //Tenemos al menos una reservación
-        if(posicion == 0){  //Quiero eliminar mi primera reservacion
+        if(posicion == 0){          //Quiero eliminar mi primera reservacion
             Nodo* cabeza_antigua = this->primera_reservacion;
             this->primera_reservacion = this->primera_reservacion->nodo_siguiente;
             delete cabeza_antigua;
@@ -296,17 +296,32 @@ void Calendario::modificarReservacion(int posicion, int id_organizador){
     }
 }
 
-void Calendario::imprimirCalendario(){
-    if(this->primera_reservacion){  //Si tenemos al menos una reservacion
+void Calendario::imprimirCalendario(int tipo){ 
+    if(this->primera_reservacion){                  //Si tenemos al menos una reservacion
         Nodo* temp = this->primera_reservacion;     //Guardamos la reservacion más próxima en nodo auxiliar
         int contador = 0;
-        while(temp){    //Mientras tengamos reservaciones activas
-            temp->reservacion->imprimir(contador);
-            temp = temp->nodo_siguiente;
-            contador++;
+        if(tipo ==1){
+            while(temp){    //Mientras tengamos reservaciones activas
+                temp->reservacion->imprimir(contador);
+                temp = temp->nodo_siguiente;
+                contador++;
+            }
+        }else{
+            while(temp){    //Mientras tengamos reservaciones activas
+                temp->reservacion->imprimirOculto(contador); // imprimir oculto va relacionado a "6. Ver Calendario de otros"
+                temp = temp->nodo_siguiente;
+                contador++;
+            }
         }
     }else{
         cout<<"\033[33m"<<"Su calendario esta vacio..."<<"\033[0m"<<endl;
     }
 }
 
+void Calendario::guardarEnArchivo(std::ofstream& archivo2,int id_ent){
+    Nodo* aux = primera_reservacion; //este es mi head
+    while (aux!=nullptr){
+        aux->reservacion->guardarEnArchivo(archivo2,id_ent);
+        aux = aux->nodo_siguiente;
+    }
+}

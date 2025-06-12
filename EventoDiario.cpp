@@ -10,3 +10,15 @@ void EventoDiario::imprimir(int posicion){
     cout<<this->imprimir_fecha(this->fecha_inicio)<<" -> "<<this->imprimir_fecha(this->fecha_fin);
     cout<<" | "<<"Evento Diario"<<"\n"<<endl;
 }
+void EventoDiario::imprimirOculto(int posicion){
+    cout<<std::setfill('-')<<std::setw(80)<<""<<endl;
+    cout<<"Reservacion #"<<posicion<<": "<<endl;
+    cout<<this->imprimir_fecha(this->fecha_inicio)<<" -> "<<this->imprimir_fecha(this->fecha_fin);
+    cout<<endl;
+}
+void EventoDiario::guardarEnArchivo(std::ofstream& archivo,int id_ent){
+    archivo<< "Evento Diario\n" 
+    << std::to_string(id_ent) << "," 
+    <<this->obtenerInfo()
+    << std::endl;
+}

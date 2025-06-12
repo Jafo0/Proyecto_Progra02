@@ -11,6 +11,8 @@ class ActividadSocial : public Reservacion {
         ActividadSocial(struct tm, struct tm);
         ~ActividadSocial();
         void imprimir(int) override;
+        void imprimirOculto(int) override; //no imprimi ni tipo de reservacion ni lugar
+        void guardarEnArchivo(std::ofstream&,int) override;
 };
 
 #endif  // ACTIVIDAD_SOCIAL_H

@@ -26,7 +26,7 @@ Preguntas profe:
 
         LUEGO:
         -Agregarle funcionalidad a la opción de ver calendario de otra persona por id.
-        -Hacer dos prints del calendario, uno total y otro reducido. Al imprimir mi calendario, hacerlo total, pero al imprimir el calendario de otra persona si soy contribuidor, imprimir reducido. Si soy manager y tengo subordinados, imprimir total, sino, imprimir reducidos.
+        
         -Hacer la estructura de las invitaciones:
             Cada usuario tiene otro atributo que es Calendario* invitaciones_pendientes.
             Cada usuario tendrá una función nueva que sea recibir invitacion. Esto recibe una reservación y la agrega a this->invitaciones_pendientes.
@@ -40,11 +40,22 @@ Preguntas profe:
             Al iniciar sesion: Ingresa: afaka->!irddd, y luego compara !irddd con !irddd
     Jaffet:
         -No poder crear dos usuarios con los mismos datos. Para datos diferentes, tampoco pueden repetir nombre y contraseña. Esto lo hacemos con un verificador2 dentro de lista Usuario que es llamado en Interaccion::crear_Usuario
+        -Hacer dos prints del calendario, uno total y otro reducido. Al imprimir mi calendario, hacerlo total, pero al imprimir el calendario de otra persona si soy contribuidor, imprimir reducido. Si soy manager y tengo subordinados, imprimir total, sino, imprimir reducidos.
+        -Modificar calendario para que se pueda leer desde un archivo y desde ahi cargarlo en interaccion
+
+        cambios:
+        *la interaccion comprueba el nombre de usuario y la cedula ya que estos deben ser unicos, en cuanto a la contrasena o su nombre no aplica, 1. dos personas pueden tener el mismo nombre 2. si digo que un usuario ya tiene esa contrasena, vulnera la privacidad de los usuarios
+        *Creacion de imprimir oculto como metodo virtual de la clase Reservacion, relacionado al contribuidor y que en la opcion 6 del menu no pueda ver el calendario de otros con normalidad
+        **falta implementar que se puedan leer los calendarios desde un archivo, sin embargo implemente cierta funcionalidad, por el momento no se guarda en el archivo de texto nuevo
+            //guardar en archivo es una funcion virtual de usuario para cada usuario, relacionado a la listausuario
+            //debo implementar algo similar a lo que esta en la interaccion recibiendo otro ifstream para leer desde otro archivo de texto llamado ListaCalendario para calendario
+            //como guardo una reservacion en calendario?
+            //en reservacion debe haber un metodo para cada tipo de resevacion llamado guardar en archivo que sea virtual, tiene ruta del archivo y la posicion de la lista
+            //debo hacer un metodo en reservacion para mostrar la fecha formateada const, hago el metodo de imprimir fecha constante
+            //todos los tipos de reservacion se guardan en el archivo, pero tambien deben tener el id del usuario al que pertenecen, de esta manera al cargar el archivo de calendarios asigno el calendario y reservaciones a cada usuario por medio de su id 
         
 
-
-
-
+        
 
 
 Comando Compilacion main.cpp:

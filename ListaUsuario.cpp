@@ -34,7 +34,6 @@ bool ListaUsuario::vacia(){
     }
 }
 
-
 void ListaUsuario::guardarEnArchivo(std::ofstream& archivo) {
     //Primero guardamos todos los Contribuidores
     Nodo* aux = this->head;
@@ -207,6 +206,18 @@ Usuario* ListaUsuario::verificador(const std::string& respuestaUs,const std::str
         actual = actual->next;
     }
     return nullptr;
+}
+
+bool ListaUsuario::verificador2(const int& ced,const std::string& nomUs){
+    Nodo* actual = head;
+    while(actual != nullptr){
+        if(actual->usuario->getCedula() == ced || actual->usuario->getNomUs() == nomUs){
+            return false;                   //no se pudo ingresar usuario
+            break;                          //sale del ciclo while
+        }
+        actual = actual->next;
+    }
+    return true;                            //el nombre de usuario no coincide con ninguno en la lista
 }
 
 void ListaUsuario::guardar_id_en_archivo(std::ofstream& archivo){

@@ -33,6 +33,7 @@ public:
     void imprimir_id();
     Usuario* encontrarId(const int&);
     Usuario* verificador(const std::string&,const std::string&); 
+    bool verificador2(const int&,const std::string&); //cedula y nombre usuario  son unicos
     void guardar_id_en_archivo(std::ofstream&);
     void leer_id_de_archivo(std::ifstream&, ListaUsuario*);
 

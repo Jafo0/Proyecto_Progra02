@@ -8,6 +8,8 @@ class CitaPersonal : public Reservacion {
         CitaPersonal(struct tm, struct tm);
         ~CitaPersonal();
         void imprimir(int) override;
+        void imprimirOculto(int) override;
+        void guardarEnArchivo(std::ofstream&, int) override;
 };
 
 #endif  // CITA_PERSONAL_H

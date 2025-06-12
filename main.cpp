@@ -19,8 +19,9 @@ int main(){
     system("cls");      //Limpio pantalla
     if(stoi(eleccion) == 1){    //Leemos de archivo
         std::ifstream archivo("../ArchivoUsuarios.txt");
-        if(archivo.is_open()){
-            i = new Interaccion(archivo);
+        std::ifstream archivo2("../ArchivoCalendario.txt");
+        if(archivo.is_open()){//&&archivo2.is_open()
+            i = new Interaccion(archivo);//archivo2
         }
     }else{
         i = new Interaccion();

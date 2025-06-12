@@ -29,6 +29,8 @@ public:
     std::string getNomUs() const;
     std::string getContra() const;
 
+    int getCedula() const;
+
     int getId() const;
     std::string getPuesto() const; //si su puesto es manager puede ver su lista de empleados
     

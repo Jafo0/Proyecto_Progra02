@@ -5,9 +5,10 @@
 
 Interaccion::Interaccion(){
     this->usuarios_registrados = new ListaUsuario();
+    //this->calendarios_registrados = new  Calendario();
 }
 
-Interaccion::Interaccion(std::ifstream& archivo){
+Interaccion::Interaccion(std::ifstream& archivo){//, std::ifstream& archivo2
     this->usuarios_registrados = new ListaUsuario();
     std::string linea_temp;
 
@@ -130,8 +131,9 @@ void Interaccion::realizar_accion_contribuidor(){
 
         switch (accion) {
             case 1:
+                int tipo=1; //relacionado a imprimir oculto
                 system("cls");
-                this->usuarioActivo->getCalendario()->imprimirCalendario();
+                this->usuarioActivo->getCalendario()->imprimirCalendario(tipo);
                 break;
             case 2:
                 system("cls");
@@ -140,6 +142,7 @@ void Interaccion::realizar_accion_contribuidor(){
             case 3:
                 system("cls");
                 this->usuarioActivo->getCalendario()->crear_reservacion(this->usuarioActivo->getId());
+                //this->guardar_en_archivo_cal(this->usuarioActivo->getId());
                 break;
             case 4:{
                 system("cls");
@@ -167,7 +170,7 @@ void Interaccion::realizar_accion_contribuidor(){
                 }
                 break;
             }case 6:
-            system("cls");
+            system("cls"); //AQUI VA IMPRIMIR OCULTO
                 cout<<"6. Ver Calendario de otros"<<endl;
                 break;
             case 7:
@@ -179,7 +182,7 @@ void Interaccion::realizar_accion_contribuidor(){
             default:
                 break;
         }
-        this->guardar_en_archivo(); 
+        this->guardar_en_archivo();
     }
 }
 
@@ -213,8 +216,9 @@ void Interaccion::realizar_accion_manager(){
         
         switch (accion_usuario) {
             case 1:
+                int tipo =1;
                 system("cls");
-                this->usuarioActivo->getCalendario()->imprimirCalendario();
+                this->usuarioActivo->getCalendario()->imprimirCalendario(tipo);
                 break;
             case 2:
                 system("cls");
@@ -223,6 +227,7 @@ void Interaccion::realizar_accion_manager(){
             case 3:
                 system("cls");
                 this->usuarioActivo->getCalendario()->crear_reservacion(this->usuarioActivo->getId());
+                //this->guardar_en_archivo_cal(this->usuarioActivo->getId());
                 break;
             case 4:{
                 system("cls");
@@ -357,15 +362,22 @@ Usuario* Interaccion::crear_Usuario(){
     cout<<mensaje;
 
     Usuario* usuario_nuevo;
-
-    if(rol_i == 1){
-        usuario_nuevo = new Manager(nom,ced_i,nomUs,pass, Usuario::contadorId);
-    }else if(rol_i ==2){
-        usuario_nuevo = new Contribuidor(nom,ced_i,nomUs,pass, Usuario::contadorId);
-    }   
-
-    system("cls");
-    return usuario_nuevo;
+    if(usuarios_registrados->verificador2(ced_i,nomUs)){//si esto es falso
+        if(rol_i == 1){
+            usuario_nuevo = new Manager(nom,ced_i,nomUs,pass, Usuario::contadorId);
+        }else if(rol_i ==2){
+            usuario_nuevo = new Contribuidor(nom,ced_i,nomUs,pass, Usuario::contadorId);
+        } 
+        system("cls");
+        return usuario_nuevo;
+    }else{
+        system("cls"); //limpio
+        cout<<"\033[33m"<<"Error, el nombre de usuario o cedula ya estan en uso"<<"\033[0m"<<endl;
+        usuario_nuevo = nullptr;
+        return usuario_nuevo;
+    }
+    
+    
 }
 
 void Interaccion::ejecutar(){
@@ -377,8 +389,11 @@ void Interaccion::ejecutar(){
         switch (respuesta){
             case 1:{//crear
                 Usuario* usuario_nuevo = crear_Usuario();
-                this->usuarios_registrados->agregarUsuario(usuario_nuevo);
-                break;}
+                if(usuario_nuevo != nullptr){
+                    this->usuarios_registrados->agregarUsuario(usuario_nuevo);
+                    break;}
+                }
+                break;
             case 2:{//iniciar sesion
                 if(this->usuarios_registrados->vacia()){
                     cout << "\033[31m"<<"\nNo puede iniciar sesion ya que no existen usuarios\n"<<"\033[0m" << endl;  
@@ -410,14 +425,28 @@ void Interaccion::ejecutar(){
 }
 
 bool Interaccion::guardar_en_archivo() {
-    std::ofstream archivo("../ArchivoUsuarios.txt"); //Para no borrar lo que ya existe
-    if (archivo.is_open()) {
+    std::ofstream archivo("../ArchivoUsuarios.txt");    //Para no borrar lo que ya existe
+    //std::ofstream archivo2("../ArchivoCalendario.txt"); //archivo de calendario
+
+    if (archivo.is_open()) { //&& archivo2.is_open()
         this->usuarios_registrados->guardarEnArchivo(archivo);
+        //this->calendarios_registrados->guardarEnArchivo(archivo);
+        archivo.close();
+        //archivo2.close();
+        return true;
+    }
+    return false;
+}
+
+bool Interaccion::guardar_en_archivo_cal(int id) {
+    std::ofstream archivo("ArchivoCalendario.txt"); 
+    
+    if (archivo.is_open()) {
+        this->usuarioActivo->getCalendario()->guardarEnArchivo(archivo,id);
         archivo.close();
         return true;
     }
     return false;
-
 }
 
 std::string Interaccion::codificar(std::string contrasenna){
