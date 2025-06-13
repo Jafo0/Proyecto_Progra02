@@ -238,7 +238,35 @@ void Calendario::crearReservacion(){
         }
     }
 }
+
+void Calendario::printParaAgregarId(){//podria retornar ListaUsuarios*,
+    //que esta sea la lista que entra como parametro para la reunion / actividad
+    string id;
+    string cantidad;
     
+    while(true){
+        cout<<"Cuantos asistentes desea agregar?"<<endl;
+        getline(cin,cantidad);
+        if(numero_entero_sin_rango(cantidad)){
+            int numAsistente = stoi(cantidad);
+            if(numAsistente == 0){
+                cout<<"\033[31m"<<"\nnumero invalido\n"<<"\033[0m"<<endl;
+                break;
+            }
+            for(int i=0;i<stoi(cantidad);i++){
+                cout<<"Ingrese Id de los asistentes / organizadores, #id"<< (i+1) <<endl;
+                getline(cin,id);
+                //implementar estructura de datos donde se vaya guardando, 
+                //podria calendario tener otro atributo de lista usuario
+                if(numero_entero_sin_rango(id)){
+                    //buscar si id esta en la listausuarios
+                }
+
+            }
+        }
+    }
+}
+
 void Calendario::ordenarReservacion(Reservacion* nueva_reservacion){
     if(!this->primeraReservacion){     //Si no tenemos reservaciones
     this->primeraReservacion = new Nodo(nueva_reservacion, nullptr);

@@ -65,6 +65,7 @@ class Calendario {
         void imprimirCalendarioOculto();
         int menuReservaciones() const;
         void crearReservacion();
+        void printParaAgregarId();              //print poara agregar el id
         void ordenarReservacion(Reservacion*);
         void eliminarReservacion(int);
         
