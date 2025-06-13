@@ -1,6 +1,7 @@
 #ifndef CALENDARIO_H
 #define CALENDARIO_H
 
+//Las reservaciones
 #include "Reservacion.h"
 #include "Reunion.h" 
 #include "CitaPersonal.h"
@@ -8,41 +9,66 @@
 #include "EventoDiario.h"
 
 #include "Comprobacion.h"
-#include <fstream>
-#include <cstdlib>  //Para limpiar la pantalla
+#include "Encabezados.h"
 
 class Calendario {
     private:
+        //Definido dentro de calendario
         class Nodo{
             public:
-                Reservacion* reservacion {nullptr}; //elementos que guarda
-                Nodo* nodo_siguiente {nullptr};
+                //Atributos
+                Reservacion* reservacion {nullptr};
+                Nodo* nodoSiguiente {nullptr};
+                //Constructores y destructores
                 Nodo(Reservacion*, Nodo*);
                 ~Nodo();
-                void setSiguiente(Nodo*);
+                //Setters y getters
+                Reservacion* getReservacion() const;
+                void setReservacion(Reservacion*);
+                Nodo* getNodoSiguiente() const;
+                void setNodoSiguiente(Nodo*);
         };
-        Nodo* primera_reservacion {nullptr};
-        time_t segundos_actual;
-        struct tm fecha_actual;
-        int cantidad_reservaciones {-1};
+
+        //Atributos de calendario
+        Nodo* primeraReservacion {nullptr};
+        time_t segundosActual;
+        struct tm fechaActual;
+        int cantidadReservaciones {0};
 
     public:
+        //Constructores y destructores
         Calendario();
         ~Calendario();
-        int getCantidadReservaciones();
-        bool reservacion_incorrecta(struct tm, struct tm, struct tm);   //Revisa que la fecha de fin sea mayor a la fecha inicio
-        bool choque_con_calendario(struct tm, struct tm);   //Revisa que la reserva no choque con otra del calendario
-        struct tm preguntarDia();
-        struct tm preguntarFecha(std::string);
-        int menu_reservaciones();
-        void crear_reservacion(int);
-        void acomodarReservacion(Reservacion*);
-        void eliminarReservacion(int);
-        void modificarReservacion(int, int);
-        void imprimirCalendario();//int
-        //void imprimirCalendarioR();
 
-        void guardarEnArchivo(std::ofstream&,int); //guardar en archivo calendario
+        //Setters y getters
+        time_t getSegundosActual() const;
+        struct tm getFechaActual() const;
+        int getCantidadReservaciones() const;
+
+        //Comprobación de fechas correctas
+        bool nuevaReservacionLogica(struct tm, struct tm) const;   //Fecha de fin sea mayor a la fecha inicio y posterior al pasado
+        bool choqueConCalendario(struct tm, struct tm) const;   //Revisa que la reserva no choque con otra del calendario
+
+        //Para pedir días
+        int preguntarAnno() const;
+        int preguntarMes() const;
+        int preguntarDia() const;
+        int preguntarHora() const;
+        int preguntarMinuto() const;
+
+        //Para pedir fechas
+        struct tm preguntarFechaGeneral() const;
+        struct tm preguntarFechaEspecifica(std::string)const;
+
+        //Para la visualización del calendario:
+        void imprimirCalendarioCompleto();
+        void imprimirCalendarioOculto();
+        int menuReservaciones() const;
+        void crearReservacion();
+        void ordenarReservacion(Reservacion*);
+        void eliminarReservacion(int);
+        
+        void escribirEnArchivo(std::ofstream&) const; //guardar en archivo calendario
 };
 
 #endif  // CALENDARIO_H

@@ -6,32 +6,46 @@
 #include "ListaUsuario.h"
 
 #include "Comprobacion.h"
-#include <cstdlib>
-#include <fstream>
+
 
 class Interaccion{
 private:
-    ListaUsuario* usuarios_registrados;
+    //Atributos
+    ListaUsuario* usuariosRegistrados;
     Usuario* usuarioActivo{nullptr};
     Manager* manActivo{nullptr};    //esto me funciona para la comprobacion
 
-    //nuevo atributo
-    //Calendario* calendarios_registrados; //una lista de calendarios
 public:
-    Interaccion();  //Cosntructor vacío
-    Interaccion(std::ifstream&);  //, std::ifstream& Constructor a partir de dos archivos de texto usuarios y calendario
-    Usuario* crear_Usuario();                     
+    //Constructores y destructores
+    Interaccion();  
+    // Interaccion(std::ifstream&);  //, std::ifstream& Constructor a partir de dos archivos de texto usuarios y calendario
+    ~Interaccion();
+
+    //Pedir información
     int menu_entrada();
+    string pedirTexto(string);
+    int pedirCedula();
+    int pedirPuesto();
+    int menuAccionContribuidor();
+    int menuAccionManager();
+
+    //Realizar acciones:
+    Usuario* crear_Usuario(); 
     bool iniciar_sesion(); //iniciar sesion pide contrasenna y nombre de usuario
-    int escoger_accion_usuario_contribuidor();
-    void realizar_accion_contribuidor();
-    int escoger_accion_usuario_manager();
-    void realizar_accion_manager();
-    void ejecutar();
-    bool guardar_en_archivo();
+    void realizarAccionContribuidor();
+    void realizarAccionManager();
+
+    //Lectura y escritura del archivo:
+    void guardar_en_archivo();
+    bool guardar_en_archivo_cal(int); //Nuevo guardar en archivo para Calendario
+    void leerArchivo(std::ifstream&);
+    Usuario* leerManager(std::ifstream&);
+    Usuario* leerContribuidor(std::ifstream&);
+
+    //Codificación de las contraseñas
     std::string codificar (std::string);
 
-    //Nuevo guardar en archivo para Calendario
-    bool guardar_en_archivo_cal(int);
+    //Método principal                
+    void ejecutar();
 };
 #endif  //INTERACCION_H

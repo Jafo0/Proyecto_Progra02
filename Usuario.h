@@ -2,10 +2,7 @@
 #define USUARIO_H
 
 #include "Calendario.h"
-#include <string>
-#include <fstream>
-using std::cout;
-using std::endl;
+#include "Encabezados.h"
 
 class Usuario{
 protected:
@@ -17,22 +14,33 @@ protected:
     Calendario* calendario;
     int id;
     
-
 public:
     static int contadorId; //esto es estatico por tanto es el que se aumenta o
+    //Constructores y Destructores
     Usuario(std::string,int,std::string,std::string,std::string, int);
-    virtual ~Usuario();
-    virtual void imprimir(std::string)=0;
-    virtual void guardar_en_archivo(std::ofstream&)=0;
-    std::string obtenerInfo() const;
-    Calendario* getCalendario();
-    std::string getNomUs() const;
-    std::string getContra() const;
 
+    //Setters y getters:
+    std::string getNombre() const;
+    void setNombre(const std::string&);
     int getCedula() const;
+    void setCedula(int);
+    std::string getNomUsuario() const;
+    void setNomUsuario(const std::string&);
+    std::string getPuesto() const;
+    void setPuesto(const std::string&);
+    std::string getContrasena() const;
+    void setContrasena(const std::string&);
+    Calendario* getCalendario() const;
+    void setCalendario(Calendario*);
+    int getID() const;
+    void setID(int);
 
-    int getId() const;
-    std::string getPuesto() const; //si su puesto es manager puede ver su lista de empleados
-    
+    //Otros métodos
+    virtual void imprimir(std::string) = 0;
+    std::string infoUsuario() const;
+
+    //Para escribir y leer de archivos
+    virtual void escribirEnArchivo(std::ofstream&) = 0;
+
 };
 #endif

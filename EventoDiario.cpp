@@ -4,21 +4,18 @@ EventoDiario::EventoDiario(struct tm _fecha_inicio, struct tm _fecha_fin) : Rese
 
 EventoDiario::~EventoDiario(){}
 
-void EventoDiario::imprimir(int posicion){
+void EventoDiario::imprimirReservacion(int posicion) {
+    cout<<std::setfill('-')<<std::setw(80)<<""<<endl;   //Encabezado
+    cout<<"Reservacion #"<<posicion<<": "<<endl;
+    cout<<this->getFecha(this->fechaInicio)<<" -> "<<this->getFecha(this->fechaFin)
+        <<" | "<<"Evento Diario"<<"\n"<<endl;
+}
+void EventoDiario::imprimirReservacionOculta(int posicion) {
     cout<<std::setfill('-')<<std::setw(80)<<""<<endl;
     cout<<"Reservacion #"<<posicion<<": "<<endl;
-    cout<<this->imprimir_fecha(this->fecha_inicio)<<" -> "<<this->imprimir_fecha(this->fecha_fin);
-    cout<<" | "<<"Evento Diario"<<"\n"<<endl;
+    cout<<this->getFecha(this->fechaInicio)<<" -> "<<this->getFecha(this->fechaFin)<<endl;
 }
-void EventoDiario::imprimirOculto(int posicion){
-    cout<<std::setfill('-')<<std::setw(80)<<""<<endl;
-    cout<<"Reservacion #"<<posicion<<": "<<endl;
-    cout<<this->imprimir_fecha(this->fecha_inicio)<<" -> "<<this->imprimir_fecha(this->fecha_fin);
-    cout<<endl;
-}
-void EventoDiario::guardarEnArchivo(std::ofstream& archivo,int id_ent){
-    archivo<< "Evento Diario\n" 
-    << std::to_string(id_ent) << "," 
-    <<this->obtenerInfo()
-    << std::endl;
+void EventoDiario::escribirReservacionArchivo(std::ofstream& archivo) {
+    archivo<<"Evento Diario"<<endl;
+    this->escibirFechasReservacionArchivo(archivo);
 }

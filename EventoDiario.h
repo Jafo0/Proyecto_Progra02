@@ -5,11 +5,14 @@
 
 class EventoDiario : public Reservacion {
     public:
+        //Constructores y destructores
         EventoDiario(struct tm, struct tm);
         ~EventoDiario();
-        void imprimir(int) override;
-        void imprimirOculto(int) override;
-        void guardarEnArchivo(std::ofstream&, int) override;
+
+        //Otros métodos
+        void imprimirReservacion(int)  override;
+        void imprimirReservacionOculta(int)  override;
+        void escribirReservacionArchivo(ofstream&)  override;
 };
 
 #endif  // EVENTO_DIARIO_H

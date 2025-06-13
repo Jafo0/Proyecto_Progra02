@@ -5,14 +5,16 @@
 
 class ActividadSocial : public Reservacion {
     protected:
-        //ListaUsuarios* participantes {nullptr};
         std::string lugar {"Comedor al aire libre"};
     public:
+        //Constructores destructores
         ActividadSocial(struct tm, struct tm);
         ~ActividadSocial();
-        void imprimir(int) override;
-        void imprimirOculto(int) override; //no imprimi ni tipo de reservacion ni lugar
-        void guardarEnArchivo(std::ofstream&,int) override;
+
+        //Otros métodos
+        void imprimirReservacion(int)  override;
+        void imprimirReservacionOculta(int)  override; 
+        void escribirReservacionArchivo(std::ofstream&)  override;
 };
 
 #endif  // ACTIVIDAD_SOCIAL_H

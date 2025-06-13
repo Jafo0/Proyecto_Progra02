@@ -5,11 +5,14 @@
 
 class CitaPersonal : public Reservacion {
     public:
+        //Constructores y destructores
         CitaPersonal(struct tm, struct tm);
         ~CitaPersonal();
-        void imprimir(int) override;
-        void imprimirOculto(int) override;
-        void guardarEnArchivo(std::ofstream&, int) override;
+
+        //Otros métodos
+        void imprimirReservacion(int)  override;
+        void imprimirReservacionOculta(int)  override;
+        void escribirReservacionArchivo(ofstream&)  override;
 };
 
 #endif  // CITA_PERSONAL_H

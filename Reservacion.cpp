@@ -1,33 +1,51 @@
 #include "Reservacion.h"
 
-Reservacion::Reservacion(struct tm _fecha_inicio, struct tm _fecha_fin) : fecha_inicio(_fecha_inicio), fecha_fin(_fecha_fin){}
+Reservacion::Reservacion (struct tm _fechaInicio, struct tm _fechaFin) 
+        : fechaInicio(_fechaInicio), fechaFin(_fechaFin) {}
 
-Reservacion::~Reservacion() {}
+Reservacion::~Reservacion () {}
 
-struct tm& Reservacion::get_fecha_inicio(){return this->fecha_inicio;}
+ struct tm& Reservacion::getFechaInicio ()  {return this->fechaInicio;}
 
-struct tm& Reservacion::get_fecha_fin(){return this->fecha_fin;}
+ struct tm& Reservacion::getFechaFin ()  {return this->fechaFin;}
 
-std::string Reservacion::obtenerInfo()const{
-    return imprimir_fecha_const(fecha_inicio) + "," + imprimir_fecha_const(fecha_fin);
-}
+void Reservacion::setFechaInicio(struct tm _fechaInicio){this->fechaInicio = _fechaInicio;}
 
-std::string Reservacion::imprimir_fecha(const tm& fecha){
+void Reservacion::setFechaFin(struct tm _fechaFin){this->fechaFin = _fechaFin;}
+
+string Reservacion::getFecha( struct tm& fecha) {
     char fecha_formateada[17];  // Suficiente para "dd/mm/yyyy HH:MM" + '\0'
     strftime(fecha_formateada, sizeof(fecha_formateada), "%d/%m/%Y %H:%M", &fecha);
     return "(" + std::string(fecha_formateada) + ")";
 }
-std::string Reservacion::imprimir_fecha_const(const tm& fecha) const{
-    return std::to_string(fecha.tm_mday)+","+
-    std::to_string(fecha.tm_mon + 1)+","+ //enero mes 1
-    std::to_string(fecha.tm_year + 1900)+","+   //anno 2020 por ejemplo
-    std::to_string(fecha.tm_hour)+":"+
-    std::to_string(fecha.tm_min);
+
+void Reservacion::escibirFechasReservacionArchivo(ofstream& archivo) {
+    //Escribo la fecha de inicio:
+    archivo << this->fechaInicio.tm_mday << ","
+        << (this->fechaInicio.tm_mon + 1) << ","
+        << (this->fechaInicio.tm_year + 1900) << ","
+        << this->fechaInicio.tm_min << ","
+        << this->fechaInicio.tm_hour << ",";
+
+    archivo << this->fechaFin.tm_mday << ","
+        << (this->fechaFin.tm_mon + 1) << ","
+        << (this->fechaFin.tm_year + 1900) << ","
+        << this->fechaFin.tm_min << ","
+        << this->fechaFin.tm_hour << "\n";
 }
 
-bool Reservacion::fecha_choca(struct tm fecha){
-    time_t segundos_inicio = mktime(&this->fecha_inicio);
-    time_t segundos_fin = mktime(&this->fecha_fin);
-    time_t segundos_fecha = mktime(&fecha);
-    return (segundos_inicio<=segundos_fecha && segundos_fecha<=segundos_fin)? true:false;   //Si la fecha está entre la fecha inicio y fecha final, hay choque de fechas
+bool Reservacion::choqueFechas(struct tm& fechaInicioOtra, struct tm& fechaFinOtra){
+    //Paso ambas fechas de inicio y fin a segundos para poder compararlas
+    time_t segundosInicio = mktime(&this->fechaInicio);
+    time_t segundosFin = mktime(&this->fechaFin);
+    time_t segundosInicioOtra = mktime(&fechaInicioOtra);
+    time_t segundosFinOtra = mktime(&fechaFinOtra);
+
+    //La fecha de inicio choca con mi reservación
+    if(segundosInicio<=segundosInicioOtra && segundosInicioOtra<=segundosFin || segundosInicio<=segundosFinOtra && segundosFinOtra<=segundosFin){
+        return true;
+    } 
+
+    //No hay choque
+    return false;
 }

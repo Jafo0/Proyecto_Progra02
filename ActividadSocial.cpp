@@ -1,25 +1,22 @@
 #include "ActividadSocial.h"
 
-ActividadSocial::ActividadSocial(struct tm _fecha_inicio, struct tm _fecha_fin) : Reservacion(_fecha_inicio, _fecha_fin){}
+ActividadSocial::ActividadSocial(struct tm _fechaInicio, struct tm _fecha_fin) : Reservacion(_fechaInicio, _fecha_fin){}
 
 ActividadSocial::~ActividadSocial(){}
 
-void ActividadSocial::imprimir(int posicion){
+void ActividadSocial::imprimirReservacion(int posicion) {
     cout<<std::setfill('-')<<std::setw(80)<<""<<endl;
-    cout<<this->imprimir_fecha(this->fecha_inicio)<<" -> "<<this->imprimir_fecha(this->fecha_fin);
-    cout<<" | "<<"Actividad Social"<<" | "<<"Sala de uso comun"<<endl;
-    cout<<"Participantes: "<<"\n"<<endl;
+    cout<<this->getFecha(this->fechaInicio)<<" -> "<<this->getFecha(this->fechaFin)
+        <<" | "<<"Actividad Social"<<" | "<<"Sala de uso comun"<<endl;
+}
 
-}
-void ActividadSocial::imprimirOculto(int posicion){
+void ActividadSocial::imprimirReservacionOculta(int posicion) {
     cout<<std::setfill('-')<<std::setw(80)<<""<<endl;
-    cout<<this->imprimir_fecha(this->fecha_inicio)<<" -> "<<this->imprimir_fecha(this->fecha_fin)<<endl;;
-    cout<<"Participantes: "<<"\n"<<endl;
+    cout<<this->getFecha(this->fechaInicio)<<" -> "<<this->getFecha(this->fechaFin)<<endl;
 }
-void ActividadSocial::guardarEnArchivo(std::ofstream& archivo,int id_ent){
-    archivo<< "Actividad Social\n"
-    <<std::to_string(id_ent) << ","
-    <<this->obtenerInfo()<< ","
-    <<lugar<<std::endl;
-    //el atributo de lugar ya esta por default
+
+void ActividadSocial::escribirReservacionArchivo(std::ofstream& archivo) {
+    archivo<< "Actividad Social"<<endl;
+    this->escibirFechasReservacionArchivo(archivo);
+    archivo<<lugar<<endl;
 }

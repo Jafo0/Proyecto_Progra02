@@ -5,14 +5,27 @@
 
 class Manager : public Usuario{
     public:
-        ListaUsuario* listaEmp; //pongo atributo en public
+        ListaUsuario* listaSubordinados {nullptr};
+        
+        //Constructores y destructores
         Manager(std::string,int,std::string,std::string, int);
-        Manager(std::string,int,std::string,std::string, int, ListaUsuario*);
-        void imprimirEmpleados();
+        Manager();
+        ~Manager();
+
+        //Setters y getters
+        void setListaSubordinados(ListaUsuario*);
+
+        //Para visualizar:
+        void imprimirSubordinados();
         void imprimir(std::string) override;
-        void agregar_empleado(ListaUsuario*);
-        void eliminar_empleado();
-        void modificar_listaEmp(ListaUsuario*);
-        void guardar_en_archivo(std::ofstream&) override;
+
+        //Para modificar los subordinados
+        void agregarSubordinado(Usuario*);
+        void eliminarSubordinado(int);
+        int menuAccionesSubordinados();
+        void modificarSubordinados(ListaUsuario*);
+
+        //Para escribir y leer de archivos
+        void escribirEnArchivo(std::ofstream&) override;
 };
 #endif

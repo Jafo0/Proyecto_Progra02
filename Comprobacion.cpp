@@ -83,3 +83,13 @@ bool numero_entero_sin_rango(std::string entrada){
     }
     return false;
 }
+
+bool annoValido(int anno){return 2025 < anno;}
+
+bool mesValido(int mes) {return 1 <= mes && mes <= 12;}
+
+bool diaValido(int dia) {return 1 <= dia && dia <= 31;}
+
+bool horaValida(int hora) {return 0 <= hora && hora <= 23;}
+
+bool minutoValido(int minuto) {return 0 <= minuto && minuto <= 59;}

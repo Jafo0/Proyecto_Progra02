@@ -1,2 +1,7 @@
-Manager,man,1,man,¢–£,0
-Ids asociados,
+Contribuidor
+con2,2,con2,˜¤£g,2
+Contribuidor
+con,0,con,˜¤£,0
+Manager
+man,1,man,¢–£,1
+Ids asociados,No hay ids asociados

@@ -5,16 +5,23 @@
 
 class Reunion : public Reservacion{
     private:
-        std::string lugar;
-        // ListaUsuario* participantes {nullptr};
-        int id_organizador;
+        string lugar;
 
     public:
-        Reunion(struct tm, struct tm, std::string, int);
+        //Constructores y destructores
+        Reunion(struct tm, struct tm, std::string);
         ~Reunion();
-        void imprimir(int) override;
-        void imprimirOculto(int) override; //no muestro tipo de reservacion ni lugar
-        void guardarEnArchivo(std::ofstream&,int) override;
+
+        //Setters y getters
+        string getLugar() ;
+        void setLugar(string);
+
+        //Otros métodos
+        void imprimirReservacion(int)  override;
+        void imprimirReservacionOculta(int) override; 
+
+        //Para guardar en archivo
+        void escribirReservacionArchivo(ofstream&) ; //Varía según el tipo de reservación
 
 };
 

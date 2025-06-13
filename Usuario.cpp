@@ -7,22 +7,28 @@ Usuario::Usuario(std::string nom, int ced, std::string nomUs,std::string pues, s
         ++contadorId;
 }
 
-Usuario::~Usuario(){
-    delete this->calendario;
-}
+std::string Usuario::getNombre() const{return this->nombre;}
+void Usuario::setNombre(const std::string& nuevoNombre){this->nombre = nuevoNombre;}
 
-std::string Usuario::obtenerInfo() const{
+int Usuario::getCedula() const{return this->cedula;}
+void Usuario::setCedula(int nuevaCedula){this->cedula = nuevaCedula;}
+
+std::string Usuario::getNomUsuario() const{return this->nomUsuario;}
+void Usuario::setNomUsuario(const std::string& nuevoNomUsuario){this->nomUsuario = nuevoNomUsuario;}
+
+std::string Usuario::getPuesto() const{return this->puesto;}
+void Usuario::setPuesto(const std::string& nuevoPuesto){this->puesto = nuevoPuesto;}
+
+std::string Usuario::getContrasena() const{return this->contrasena;}
+void Usuario::setContrasena(const std::string& nuevaContrasena){this->contrasena = nuevaContrasena;}
+
+Calendario* Usuario::getCalendario() const{return this->calendario;}
+void Usuario::setCalendario(Calendario* nuevoCalendario){this->calendario = nuevoCalendario;}
+
+int Usuario::getID() const{return this->id;}
+
+void Usuario::setID(int _id){this->id = _id;}
+
+std::string Usuario::infoUsuario() const{
     return puesto + "," + nombre + "," + std::to_string(cedula) + "," + nomUsuario + "," + contrasena + "," + std::to_string(id);
 }
-
-Calendario* Usuario::getCalendario(){return this->calendario;}
-
-std::string Usuario::getNomUs() const{return nomUsuario;}
-
-std::string Usuario::getContra() const{return contrasena;}
-
-int Usuario::getCedula() const{return cedula;}
-
-int Usuario::getId() const{return id;}
-
-std::string Usuario::getPuesto() const{return puesto;}

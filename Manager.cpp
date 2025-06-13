@@ -1,19 +1,18 @@
 #include"Manager.h"
-#include <iostream>
 #include "ListaUsuario.h"
+#include "Encabezados.h"
 
 Manager::Manager(std::string nom, int ced, std::string nomUs, std::string pass, int id)
     :Usuario(nom,ced,nomUs,"Manager",pass, id){
-        this->listaEmp = new ListaUsuario(); //atributo de lista empleado de manager
+        this->listaSubordinados = new ListaUsuario(); //atributo de lista empleado de manager
 }
 
-Manager::Manager(std::string nom, int ced, std::string nomUs, std::string pass, int id, ListaUsuario* lista_ids)
-    :Usuario(nom,ced,nomUs,"Manager",pass, id){
-        this->listaEmp = lista_ids;
-}
+Manager::~Manager(){}   //No elimino los subordinados porque esto se elimina luego en los usuarios totales registrados
 
-void Manager::imprimirEmpleados(){
-    this->listaEmp->imprimir_id();
+void Manager::setListaSubordinados(ListaUsuario* _listaSubordinados){this->listaSubordinados = _listaSubordinados;}
+
+void Manager::imprimirSubordinados(){
+    this->listaSubordinados->imprimirIDS();
 }
 
 void Manager::imprimir(std::string encabezado){
@@ -24,49 +23,24 @@ void Manager::imprimir(std::string encabezado){
     cout<<"Datos Usuario: "<<"Nombre usuario: "<<nomUsuario<<"\t|"<<"Contrasenna: "<<contrasena <<"\t|"<<"Id: "<<id<<endl;
 }
 
-void Manager::agregar_empleado(ListaUsuario* usuarios_registrados){ //Aquí ya hay contribuidores
-    std::string respuesta;
-    do{
-        usuarios_registrados->imprimir_contribuidores();
-        cout<<"\nIngrese el id del empleado que desea agregar como subordinado (-1 para salir): ";
-        getline(cin, respuesta);
-    }while(!de_string_a_int(respuesta));
-    if(stoi(respuesta) == -1){
-        system("cls");
-        cout<<"\033[33m"<<"Saliendo..."<<"\033[0m"<<endl;
-    }else{
-        if(usuarios_registrados->comprobar_ID(stoi(respuesta))){    //Si el id existe
-            this->listaEmp->agregar_contribuidor_por_id(usuarios_registrados, stoi(respuesta));
-        }else{
-            system("cls");
-            cout<<"\033[33m"<<"El id ingresado no corresponde a ningun empleado..."<<"\033[0m"<<endl;
-        }  
+void Manager::agregarSubordinado(Usuario* subordinado){ 
+    if(this->listaSubordinados->vacia()){
+        if(subordinado->getPuesto() == "Contribuidor"){  //Es un contribuidor
+            this->listaSubordinados->agregarUsuario(subordinado);
+        }
+    }else if(!this->listaSubordinados->comprobarID(subordinado->getID()) && subordinado->getPuesto() == "Contribuidor"){  //No está en la lista y es un contribuidor
+        this->listaSubordinados->agregarUsuario(subordinado);
+        cout<<"\033[32m"<<"Subalterno agregado exitosamente"<<"\033[0m"<<endl;
+    }else{cout<<"\033[33m"<<"No puede ser agregado ya que se encuentra o no es un contribuidor"<<"\033[0m"<<endl;}
+}
+
+void Manager::eliminarSubordinado(int id){ //Aquí ya hay contribuidores
+    if(!this->listaSubordinados->vacia() && this->listaSubordinados->comprobarID(id)){  //No está vacía y el id sí está
+        this->listaSubordinados->eliminarContribuidorPorID(id);
     }
 }
 
-void Manager::eliminar_empleado(){ //Aquí ya hay contribuidores
-    std::string respuesta;
-    do{
-        this->listaEmp->imprimir_contribuidores();
-        cout<<"\nIngrese el id del empleado que desea eliminar (-1 para salir): ";
-        getline(cin, respuesta);
-    }while(!de_string_a_int(respuesta));
-    if(stoi(respuesta) == -1){
-        system("cls");
-        cout<<"\033[33m"<<"Saliendo..."<<"\033[0m"<<endl;
-    }else{
-        if(this->listaEmp->comprobar_ID(stoi(respuesta))){    //Si el id existe
-            this->listaEmp->eliminar_contribuidor_por_id(stoi(respuesta));
-            system("cls");
-            cout<<"\033[32m"<<"El id ingresado ha sido eliminado con exito..."<<"\033[0m"<<endl;
-        }else{
-            system("cls");
-            cout<<"\033[33m"<<"El id ingresado no corresponde a ningun empleado..."<<"\033[0m"<<endl;
-        }  
-    }
-}
-
-void Manager::modificar_listaEmp(ListaUsuario* usuarios_registrados){
+int Manager::menuAccionesSubordinados(){
     cout<<"--------------Opciones para los subalternos--------------"<<endl;
     cout<<"1. Agregar"<<endl;
     cout<<"2. Eliminar"<<endl;
@@ -78,30 +52,46 @@ void Manager::modificar_listaEmp(ListaUsuario* usuarios_registrados){
         getline(cin,respuesta);
     }while(!numero_entero_dentro_de_rango(1,3, respuesta));
 
-    switch (stoi(respuesta)){
-        case 1:
-            system("cls");
-            if(usuarios_registrados->hay_contribuidores()){ //Si en los usuarios generales hay contribuidores
-                this->agregar_empleado(usuarios_registrados);
+    return stoi(respuesta);
+}
+
+void Manager::modificarSubordinados(ListaUsuario* usuariosRegistrados){
+    switch (this->menuAccionesSubordinados()){
+        case 1:{
+            string id;
+            cout<<"Ingrese el id por agregar: ";
+            getline(cin, id);
+            if(numero_entero_sin_rango(id)){    //número válido
+                if(usuariosRegistrados->comprobarID(stoi(id)) && usuariosRegistrados->IdEsContribuidor(stoi(id))){ //id válido y es contribuidor
+                    this->listaSubordinados->agregarUsuario(usuariosRegistrados->UsuarioPorID(stoi(id)));
+                }else{
+                    cout<<"\033[31m"<<"No se pudo agregar el subordinado..."<<"\033[0m"<<endl;
+                }
             }
             break;
-        case 2:
-            system("cls");
-            if(this->listaEmp->hay_contribuidores()){   //Si tengo agregado algún contribuidor
-                this->eliminar_empleado();
+        }case 2:
+            if(!this->listaSubordinados->vacia()){   //Si tengo agregado algún contribuidor
+                string id;
+                cout<<"Ingrese el id por eliminar: ";
+                getline(cin, id);
+                if(numero_entero_sin_rango(id)){    //número válido
+                    if(this->listaSubordinados->comprobarID(stoi(id))) //id válido 
+                    this->listaSubordinados->eliminarContribuidorPorID(stoi(id));
+                }
+                break;
             }
             break;
         case 3:
-            system("cls");
             cout<<"\033[33m"<<"Estoy regresando..."<<"\033[0m"<<endl;
             break;
         default:
             break;
-
     }
 }
 
-void Manager::guardar_en_archivo(std::ofstream& archivo){
-    archivo << this->obtenerInfo()<<endl;
-    this->listaEmp->guardar_id_en_archivo(archivo);
+void Manager::escribirEnArchivo(std::ofstream& archivo){
+    archivo<<"Manager"<<endl;
+    archivo<<nombre + "," + std::to_string(cedula) + "," + nomUsuario + "," + contrasena + "," + std::to_string(id)<<endl;
+    archivo<<"Ids asociados,";
+    this->listaSubordinados->escribirIdsEnArchivo(archivo);
 }
