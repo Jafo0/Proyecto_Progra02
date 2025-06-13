@@ -59,7 +59,7 @@ class Calendario {
 
         //Para pedir fechas
         struct tm preguntarFechaGeneral() const;
-        struct tm preguntarFechaEspecifica(std::string)const;
+        struct tm preguntarFechaEspecifica(string)const;
 
         //Para la visualización del calendario:
         void imprimirCalendarioCompleto();
@@ -71,13 +71,13 @@ class Calendario {
         void eliminarReservacion(int);
         
         //Lectura y escritura del archivo
-        void escribirEnArchivo(std::ofstream&) const; //guardar en archivo calendario
-        struct tm* leerIdYFechasDeArchivo(std::ifstream&);
-        Reservacion* leerReunionDeArchivo(std::ifstream&);
-        Reservacion* leerActividadSocialDeArchivo(std::ifstream&);
-        Reservacion* leerEventoDiarioDeArchivo(std::ifstream&);
-        Reservacion* leerCitaPersonalDeArchivo(std::ifstream&);
-        void leerDeArchivo(std::ifstream&);
+        void escribirEnArchivo(ofstream&, ofstream&) const; //guardar en archivo calendario
+        struct tm* leerIdYFechasDeArchivo(ifstream&);
+        Reservacion* leerReunionDeArchivo(ifstream&);
+        Reservacion* leerActividadSocialDeArchivo(ifstream&);
+        Reservacion* leerEventoDiarioDeArchivo(ifstream&);
+        Reservacion* leerCitaPersonalDeArchivo(ifstream&);
+        void leerDeArchivo(ifstream&);
 };
 
 #endif  // CALENDARIO_H

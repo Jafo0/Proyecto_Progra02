@@ -17,7 +17,7 @@ void CitaPersonal::imprimirReservacionOculta(int posicion) {
     cout<<"Reservacion #"<<posicion<<": "<<endl;
     cout<<this->getFecha(this->fechaInicio)<<" -> "<<this->getFecha(this->fechaFin)<<endl;
 }
-void CitaPersonal::escribirReservacionArchivo(std::ofstream& archivo) {
+void CitaPersonal::escribirReservacionArchivo(std::ofstream& archivo, ofstream& archivoOtro) {
     archivo<<"Cita Personal"<<endl;
     this->escribirIdYFechas(archivo);
 }

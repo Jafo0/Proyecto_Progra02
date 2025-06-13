@@ -1,8 +1,8 @@
 CMakeFiles/ejecutable.dir/EventoDiario.cpp.obj: \
- C:\Users\Usuario\Desktop\UCR\3er\ Sem\Progra\ ll\Evaluaciones\Proyecto\ \#2_CalendarPro\Proyecto_Progra02\ -\ copia\EventoDiario.cpp \
- C:\Users\Usuario\Desktop\UCR\3er\ Sem\Progra\ ll\Evaluaciones\Proyecto\ \#2_CalendarPro\Proyecto_Progra02\ -\ copia\EventoDiario.h \
- C:\Users\Usuario\Desktop\UCR\3er\ Sem\Progra\ ll\Evaluaciones\Proyecto\ \#2_CalendarPro\Proyecto_Progra02\ -\ copia\Reservacion.h \
- C:\Users\Usuario\Desktop\UCR\3er\ Sem\Progra\ ll\Evaluaciones\Proyecto\ \#2_CalendarPro\Proyecto_Progra02\ -\ copia\Encabezados.h \
+ C:\Users\Usuario\Desktop\UCR\3er\ Sem\Progra\ ll\Evaluaciones\Proyecto\ \#2_CalendarPro\Proyecto_Progra02\EventoDiario.cpp \
+ C:\Users\Usuario\Desktop\UCR\3er\ Sem\Progra\ ll\Evaluaciones\Proyecto\ \#2_CalendarPro\Proyecto_Progra02\EventoDiario.h \
+ C:\Users\Usuario\Desktop\UCR\3er\ Sem\Progra\ ll\Evaluaciones\Proyecto\ \#2_CalendarPro\Proyecto_Progra02\Reservacion.h \
+ C:\Users\Usuario\Desktop\UCR\3er\ Sem\Progra\ ll\Evaluaciones\Proyecto\ \#2_CalendarPro\Proyecto_Progra02\Encabezados.h \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\ctime \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\mingw32\bits\c++config.h \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\mingw32\bits\os_defines.h \
@@ -128,4 +128,4 @@ CMakeFiles/ejecutable.dir/EventoDiario.cpp.obj: \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\mingw32\bits\basic_file.h \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\mingw32\bits\c++io.h \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\fstream.tcc \
- C:\Users\Usuario\Desktop\UCR\3er\ Sem\Progra\ ll\Evaluaciones\Proyecto\ \#2_CalendarPro\Proyecto_Progra02\ -\ copia\Comprobacion.h
+ C:\Users\Usuario\Desktop\UCR\3er\ Sem\Progra\ ll\Evaluaciones\Proyecto\ \#2_CalendarPro\Proyecto_Progra02\Comprobacion.h

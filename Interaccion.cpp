@@ -297,10 +297,10 @@ void Interaccion::realizarAccionManager(){
 }
 
 void Interaccion::escribirEnArchivo() {
-    std::ofstream archivo("../ArchivoUsuarios.txt");    
+    ofstream archivo("../ArchivoUsuarios.txt");   
+    ofstream archivoOtro("../ActividadesColaborativas.txt");
     if (archivo.is_open()) {
-        this->usuariosRegistrados->escribirEnArchivo(archivo);
-        archivo.close();
+        this->usuariosRegistrados->escribirEnArchivo(archivo, archivoOtro);
     }
 }
 

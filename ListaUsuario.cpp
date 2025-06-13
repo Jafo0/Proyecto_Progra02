@@ -171,12 +171,12 @@ bool ListaUsuario::verificador2(const int& ced,const std::string& nomUs){
     return true;                            //el nombre de usuario no coincide con ninguno en la lista
 }
 
-void ListaUsuario::escribirEnArchivo(std::ofstream& archivo) {
+void ListaUsuario::escribirEnArchivo(std::ofstream& archivo, ofstream& archivoOtro) {
     //Primero guardamos todos los Contribuidores
     Nodo* aux = this->head;
     while(aux != nullptr) {
         if(aux->usuario->getPuesto() == "Contribuidor"){
-            aux->getUsuario()->escribirEnArchivo(archivo);
+            aux->getUsuario()->escribirEnArchivo(archivo, archivoOtro);
         }
         aux = aux->next;
     }
@@ -184,7 +184,7 @@ void ListaUsuario::escribirEnArchivo(std::ofstream& archivo) {
     aux = this->head;
     while(aux != nullptr) {
         if(aux->usuario->getPuesto() == "Manager"){
-            aux->usuario->escribirEnArchivo(archivo);
+            aux->usuario->escribirEnArchivo(archivo, archivoOtro);
         }
         aux = aux->next;
     }

@@ -238,12 +238,12 @@ void Calendario::crearReservacion(Usuario* usuarioActivo){
         }
     }
 }
-
+    
 void Calendario::printParaAgregarId(){//podria retornar ListaUsuarios*,
     //que esta sea la lista que entra como parametro para la reunion / actividad
     string id;
     string cantidad;
-    
+
     while(true){
         cout<<"Cuantos asistentes desea agregar?"<<endl;
         getline(cin,cantidad);
@@ -319,13 +319,15 @@ void Calendario::eliminarReservacion(int posicion){
     }
 }
 
-void Calendario::escribirEnArchivo(std::ofstream& archivo) const{
+void Calendario::escribirEnArchivo(std::ofstream& archivo, std::ofstream& archivoOtro) const{
     Nodo* aux = primeraReservacion; //este es mi head
     while (aux!=nullptr){
-        aux->getReservacion()->escribirReservacionArchivo(archivo);
+        aux->getReservacion()->escribirReservacionArchivo(archivo, archivoOtro);
         aux = aux->nodoSiguiente;
     }
     archivo<<"Fin de calendario"<<endl;
+    archivoOtro<<"Fin de calendario"<<endl;
+
 }
 
 struct tm* Calendario::leerIdYFechasDeArchivo(std::ifstream& archivo){

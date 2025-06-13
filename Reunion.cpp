@@ -48,8 +48,16 @@ void Reunion::imprimirListaInvitados(){
     this->lista_invitados->imprimirIDS();
 }
 
-void Reunion::escribirReservacionArchivo(std::ofstream& archivo) {
+void Reunion::escribirReservacionArchivo(std::ofstream& archivo, ofstream& archivoOtro) {
     archivo<<"Reunion"<<endl;
     this->escribirIdYFechas(archivo);
     archivo<<lugar<<endl;
+
+
+    //Escribo en mi otro archivo
+    archivoOtro<<"Reunion"<<endl;
+    this->escribirIdYFechas(archivoOtro);
+    archivoOtro<<lugar<<endl;
+    archivoOtro<<"IdOrganizador, "<<"<Hace falta agregarlo en Reunion.cpp>"<<endl;
+    archivoOtro<<"Ids invitados, "<<"<Hace falta agregarlo en Reunion.cpp>"<<endl; 
 }

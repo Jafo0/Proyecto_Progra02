@@ -12,7 +12,7 @@ class Contribuidor : public Usuario{
     void imprimir(std::string) override;
 
     //Lectura y escritura del archivo
-    void escribirEnArchivo(std::ofstream&) override;
+    void escribirEnArchivo(std::ofstream&, ofstream&) override;
     void leerCalendarioDeArchivo(std::ifstream&) override;
 };
 #endif

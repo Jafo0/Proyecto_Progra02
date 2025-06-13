@@ -89,13 +89,13 @@ void Manager::modificarSubordinados(ListaUsuario* usuariosRegistrados){
     }
 }
 
-void Manager::escribirEnArchivo(std::ofstream& archivo){
+void Manager::escribirEnArchivo(std::ofstream& archivo, ofstream& archivoOtro){
     archivo<<"Manager"<<endl;
     archivo<<nombre + "," + std::to_string(cedula) + "," + nomUsuario + "," + contrasena + "," + std::to_string(id)<<endl;
     archivo<<"Ids asociados,";
     this->listaSubordinados->escribirIdsEnArchivo(archivo);
     archivo<<"Calendario: "<<endl;
-    this->calendario->escribirEnArchivo(archivo);
+    this->calendario->escribirEnArchivo(archivo, archivoOtro);
 }
 
 void Manager::leerCalendarioDeArchivo(std::ifstream& archivo){

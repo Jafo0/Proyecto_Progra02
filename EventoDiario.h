@@ -13,7 +13,7 @@ class EventoDiario : public Reservacion {
         //Otros métodos
         void imprimirReservacion(int)  override;
         void imprimirReservacionOculta(int)  override;
-        void escribirReservacionArchivo(ofstream&)  override;
+        void escribirReservacionArchivo(ofstream&, ofstream&)  override;
 };
 
 #endif  // EVENTO_DIARIO_H

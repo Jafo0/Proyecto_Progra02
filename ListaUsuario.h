@@ -46,7 +46,7 @@ public:
     bool verificador2(const int&,const std::string&); //cedula y nombre usuario  son unicos
 
     //Otros métodos
-    void escribirEnArchivo(std::ofstream&);
+    void escribirEnArchivo(std::ofstream&, ofstream&);
     void escribirIdsEnArchivo(std::ofstream&);
     void leerIds(std::ifstream&, ListaUsuario*);
 };

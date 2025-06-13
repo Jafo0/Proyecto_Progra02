@@ -30,7 +30,7 @@ class Reunion : public Reservacion{
         void imprimirListaInvitados();
 
         //Para guardar en archivo
-        void escribirReservacionArchivo(ofstream&) override; //Varía según el tipo de reservación
+        void escribirReservacionArchivo(ofstream&, ofstream&) override; //Varía según el tipo de reservación
 
 };
 

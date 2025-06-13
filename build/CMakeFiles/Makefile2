@@ -53,10 +53,10 @@ RM = "C:\Program Files\CMake\bin\cmake.exe" -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = "C:\Users\Usuario\Desktop\UCR\3er Sem\Progra ll\Evaluaciones\Proyecto #2_CalendarPro\Proyecto_Progra02 - copia"
+CMAKE_SOURCE_DIR = "C:\Users\Usuario\Desktop\UCR\3er Sem\Progra ll\Evaluaciones\Proyecto #2_CalendarPro\Proyecto_Progra02"
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = "C:\Users\Usuario\Desktop\UCR\3er Sem\Progra ll\Evaluaciones\Proyecto #2_CalendarPro\Proyecto_Progra02 - copia\build"
+CMAKE_BINARY_DIR = "C:\Users\Usuario\Desktop\UCR\3er Sem\Progra ll\Evaluaciones\Proyecto #2_CalendarPro\Proyecto_Progra02\build"
 
 #=============================================================================
 # Directory level rules for the build root directory
@@ -84,14 +84,14 @@ clean: CMakeFiles/ejecutable.dir/clean
 CMakeFiles/ejecutable.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\ejecutable.dir\build.make CMakeFiles/ejecutable.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\ejecutable.dir\build.make CMakeFiles/ejecutable.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\Users\Usuario\Desktop\UCR\3er Sem\Progra ll\Evaluaciones\Proyecto #2_CalendarPro\Proyecto_Progra02 - copia\build\CMakeFiles" --progress-num=1,2,3,4,5,6,7,8,9,10,11,12,13,14 "Built target ejecutable"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\Users\Usuario\Desktop\UCR\3er Sem\Progra ll\Evaluaciones\Proyecto #2_CalendarPro\Proyecto_Progra02\build\CMakeFiles" --progress-num=1,2,3,4,5,6,7,8,9,10,11,12,13,14 "Built target ejecutable"
 .PHONY : CMakeFiles/ejecutable.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/ejecutable.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "C:\Users\Usuario\Desktop\UCR\3er Sem\Progra ll\Evaluaciones\Proyecto #2_CalendarPro\Proyecto_Progra02 - copia\build\CMakeFiles" 14
+	$(CMAKE_COMMAND) -E cmake_progress_start "C:\Users\Usuario\Desktop\UCR\3er Sem\Progra ll\Evaluaciones\Proyecto #2_CalendarPro\Proyecto_Progra02\build\CMakeFiles" 14
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 CMakeFiles/ejecutable.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start "C:\Users\Usuario\Desktop\UCR\3er Sem\Progra ll\Evaluaciones\Proyecto #2_CalendarPro\Proyecto_Progra02 - copia\build\CMakeFiles" 0
+	$(CMAKE_COMMAND) -E cmake_progress_start "C:\Users\Usuario\Desktop\UCR\3er Sem\Progra ll\Evaluaciones\Proyecto #2_CalendarPro\Proyecto_Progra02\build\CMakeFiles" 0
 .PHONY : CMakeFiles/ejecutable.dir/rule
 
 # Convenience name for target.
@@ -101,7 +101,7 @@ ejecutable: CMakeFiles/ejecutable.dir/rule
 # codegen rule for target.
 CMakeFiles/ejecutable.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\ejecutable.dir\build.make CMakeFiles/ejecutable.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\Users\Usuario\Desktop\UCR\3er Sem\Progra ll\Evaluaciones\Proyecto #2_CalendarPro\Proyecto_Progra02 - copia\build\CMakeFiles" --progress-num=1,2,3,4,5,6,7,8,9,10,11,12,13,14 "Finished codegen for target ejecutable"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\Users\Usuario\Desktop\UCR\3er Sem\Progra ll\Evaluaciones\Proyecto #2_CalendarPro\Proyecto_Progra02\build\CMakeFiles" --progress-num=1,2,3,4,5,6,7,8,9,10,11,12,13,14 "Finished codegen for target ejecutable"
 .PHONY : CMakeFiles/ejecutable.dir/codegen
 
 # clean rule for target.

@@ -13,7 +13,6 @@ class Reservacion {
         //Constructores y destructores:
         Reservacion(struct tm, struct tm);  //Genera el id
         Reservacion(struct tm, struct tm, time_t);  //Le paso el id
-        Reservacion(ifstream&);   //Apartir de un archivo 
         ~Reservacion();
         
         //Setters y Getters
@@ -29,7 +28,7 @@ class Reservacion {
 
         //Para escribir en archivo
         void escribirIdYFechas(ofstream&);   //Escribe las fechas y el id de la reservacion
-        virtual void escribirReservacionArchivo(ofstream&) = 0; //Varía según el tipo de reservación
+        virtual void escribirReservacionArchivo(ofstream&, ofstream&) = 0; //Varía según el tipo de reservación
 
         //Para comprobar si una fecha incresada choca con esta fecha
         bool choqueFechas(struct tm&, struct tm&);

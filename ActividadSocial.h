@@ -15,7 +15,7 @@ class ActividadSocial : public Reservacion {
         //Otros métodos
         void imprimirReservacion(int)  override;
         void imprimirReservacionOculta(int)  override; 
-        void escribirReservacionArchivo(std::ofstream&)  override;
+        void escribirReservacionArchivo(std::ofstream&, ofstream&)  override;
 };
 
 #endif  // ACTIVIDAD_SOCIAL_H

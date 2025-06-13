@@ -40,7 +40,7 @@ public:
     std::string infoUsuario() const;
 
     //Para escribir y leer de archivos
-    virtual void escribirEnArchivo(std::ofstream&) = 0;
+    virtual void escribirEnArchivo(ofstream&, ofstream&) = 0;
     virtual void leerCalendarioDeArchivo(std::ifstream&) = 0;
 
 };
