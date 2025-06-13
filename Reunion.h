@@ -3,9 +3,14 @@
 
 #include "Reservacion.h"
 
+class Usuario;
+class ListaUsuario;
+
 class Reunion : public Reservacion{
     private:
         string lugar;
+        Usuario* organizador {nullptr};
+        ListaUsuario* invitados {nullptr};
 
     public:
         //Constructores y destructores
@@ -21,7 +26,7 @@ class Reunion : public Reservacion{
         void imprimirReservacionOculta(int) override; 
 
         //Para guardar en archivo
-        void escribirReservacionArchivo(ofstream&) ; //Varía según el tipo de reservación
+        void escribirReservacionArchivo(ofstream&) override; //Varía según el tipo de reservación
 
 };
 

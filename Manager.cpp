@@ -94,4 +94,10 @@ void Manager::escribirEnArchivo(std::ofstream& archivo){
     archivo<<nombre + "," + std::to_string(cedula) + "," + nomUsuario + "," + contrasena + "," + std::to_string(id)<<endl;
     archivo<<"Ids asociados,";
     this->listaSubordinados->escribirIdsEnArchivo(archivo);
+    archivo<<"Calendario: "<<endl;
+    this->calendario->escribirEnArchivo(archivo);
 }
+
+void Manager::leerCalendarioDeArchivo(std::ifstream& archivo){
+    this->calendario->leerDeArchivo(archivo);
+} 

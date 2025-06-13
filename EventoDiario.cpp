@@ -8,7 +8,7 @@ void EventoDiario::imprimirReservacion(int posicion) {
     cout<<std::setfill('-')<<std::setw(80)<<""<<endl;   //Encabezado
     cout<<"Reservacion #"<<posicion<<": "<<endl;
     cout<<this->getFecha(this->fechaInicio)<<" -> "<<this->getFecha(this->fechaFin)
-        <<" | "<<"Evento Diario"<<"\n"<<endl;
+        <<" | "<<"Evento Diario"<<endl;
 }
 void EventoDiario::imprimirReservacionOculta(int posicion) {
     cout<<std::setfill('-')<<std::setw(80)<<""<<endl;

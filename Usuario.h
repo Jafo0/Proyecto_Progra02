@@ -30,7 +30,7 @@ public:
     void setPuesto(const std::string&);
     std::string getContrasena() const;
     void setContrasena(const std::string&);
-    Calendario* getCalendario() const;
+    Calendario*& getCalendario();
     void setCalendario(Calendario*);
     int getID() const;
     void setID(int);
@@ -41,6 +41,7 @@ public:
 
     //Para escribir y leer de archivos
     virtual void escribirEnArchivo(std::ofstream&) = 0;
+    virtual void leerCalendarioDeArchivo(std::ifstream&) = 0;
 
 };
 #endif

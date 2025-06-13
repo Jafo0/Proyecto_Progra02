@@ -1,8 +1,8 @@
 CMakeFiles/ejecutable.dir/Reunion.cpp.obj: \
- C:\Users\Usuario\Desktop\UCR\3er\ Sem\Progra\ ll\Evaluaciones\Proyecto\ \#2_CalendarPro\VersionFinal\Reunion.cpp \
- C:\Users\Usuario\Desktop\UCR\3er\ Sem\Progra\ ll\Evaluaciones\Proyecto\ \#2_CalendarPro\VersionFinal\Reunion.h \
- C:\Users\Usuario\Desktop\UCR\3er\ Sem\Progra\ ll\Evaluaciones\Proyecto\ \#2_CalendarPro\VersionFinal\Reservacion.h \
- C:\Users\Usuario\Desktop\UCR\3er\ Sem\Progra\ ll\Evaluaciones\Proyecto\ \#2_CalendarPro\VersionFinal\Encabezados.h \
+ C:\Users\Usuario\Desktop\UCR\3er\ Sem\Progra\ ll\Evaluaciones\Proyecto\ \#2_CalendarPro\Proyecto_Progra02\Reunion.cpp \
+ C:\Users\Usuario\Desktop\UCR\3er\ Sem\Progra\ ll\Evaluaciones\Proyecto\ \#2_CalendarPro\Proyecto_Progra02\Reunion.h \
+ C:\Users\Usuario\Desktop\UCR\3er\ Sem\Progra\ ll\Evaluaciones\Proyecto\ \#2_CalendarPro\Proyecto_Progra02\Reservacion.h \
+ C:\Users\Usuario\Desktop\UCR\3er\ Sem\Progra\ ll\Evaluaciones\Proyecto\ \#2_CalendarPro\Proyecto_Progra02\Encabezados.h \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\ctime \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\mingw32\bits\c++config.h \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\mingw32\bits\os_defines.h \
@@ -128,4 +128,4 @@ CMakeFiles/ejecutable.dir/Reunion.cpp.obj: \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\mingw32\bits\basic_file.h \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\mingw32\bits\c++io.h \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\fstream.tcc \
- C:\Users\Usuario\Desktop\UCR\3er\ Sem\Progra\ ll\Evaluaciones\Proyecto\ \#2_CalendarPro\VersionFinal\Comprobacion.h
+ C:\Users\Usuario\Desktop\UCR\3er\ Sem\Progra\ ll\Evaluaciones\Proyecto\ \#2_CalendarPro\Proyecto_Progra02\Comprobacion.h

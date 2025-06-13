@@ -8,7 +8,7 @@ void CitaPersonal::imprimirReservacion(int posicion) {
     cout<<std::setfill('-')<<std::setw(80)<<""<<endl;
     cout<<"Reservacion #"<<posicion<<": "<<endl;
     cout<<this->getFecha(this->fechaInicio)<<" -> "<<this->getFecha(this->fechaFin)
-        <<" | "<<"Cita Personal"<<"\n"<<endl;
+        <<" | "<<"Cita Personal"<<endl;
 }
 void CitaPersonal::imprimirReservacionOculta(int posicion) {
     cout<<std::setfill('-')<<std::setw(80)<<""<<endl;

@@ -162,22 +162,31 @@ void Interaccion::realizarAccionContribuidor(){
                 
                 this->usuarioActivo->getCalendario()->crearReservacion();
                 break;
-            case 4:{
-                
-                if(this->usuarioActivo->getCalendario()->getCantidadReservaciones() != -1){
+            case 4:{ 
+                if(this->usuarioActivo->getCalendario()->getCantidadReservaciones() != 0){
                     string posicion;
                     do{
-                        cout<<"\033[33m"<<"Ingrese el numero de reservacion que desea eliminar (<"<<this->usuarioActivo->getCalendario()->getCantidadReservaciones()<<"): "<<"\033[0m";
+                        cout<<"\033[33m"<<"Ingrese el numero de reservacion que desea eliminar [1,"<<this->usuarioActivo->getCalendario()->getCantidadReservaciones()<<"]: "<<"\033[0m";
                         getline(cin,posicion);
-                    }while(!numero_entero_dentro_de_rango(0,this->usuarioActivo->getCalendario()->getCantidadReservaciones(), posicion));
+                    }while(!numero_entero_dentro_de_rango(1,this->usuarioActivo->getCalendario()->getCantidadReservaciones(), posicion));
                     this->usuarioActivo->getCalendario()->eliminarReservacion(stoi(posicion));
+                    cout<< "\033[32m"<<"\nReservacion eliminada exitosamente\n"<<"\033[0m" << endl;
                 }else{
-                    cout << "\033[31m"<<"No tiene reservaciones en su calendario\n"<<"\033[0m" << endl;
+                    cout << "\033[31m"<<"\nNo tiene reservaciones en su calendario\n"<<"\033[0m" << endl;
                 }
                 break;
             }case 5:{
-                
-                cout<<"5. Modificar reservacion"<<endl;
+                string i;
+                if(this->usuarioActivo->getCalendario()->getCantidadReservaciones() != 0){  //Calendario no vacío
+                    this->usuarioActivo->getCalendario()->imprimirCalendarioCompleto();
+                    do{
+                        cout<<"\033[33m"<<"Ingrese el numero de reservacion que desea modificar [1,"<<this->usuarioActivo->getCalendario()->getCantidadReservaciones()<<"]: "<<"\033[0m";
+                        getline(cin, i);
+                    }while(!numero_entero_dentro_de_rango(1,this->usuarioActivo->getCalendario()->getCantidadReservaciones(), i));
+
+                    this->usuarioActivo->getCalendario()->eliminarReservacion(stoi(i));
+                    this->usuarioActivo->getCalendario()->crearReservacion();
+                }
                 break;
             }case 6:{
                 string id;
@@ -201,7 +210,7 @@ void Interaccion::realizarAccionContribuidor(){
             default:
                 break;
         }
-        this->guardar_en_archivo();
+        this->escribirEnArchivo();
     }
 }
 
@@ -220,21 +229,30 @@ void Interaccion::realizarAccionManager(){
                 this->usuarioActivo->getCalendario()->crearReservacion();
                 break;
             case 4:{
-                
-                if(this->usuarioActivo->getCalendario()->getCantidadReservaciones() != -1){
+                if(this->usuarioActivo->getCalendario()->getCantidadReservaciones() != 0){
                     string posicion;
                     do{
-                        cout<<"\033[33m"<<"Ingrese el numero de reservacion que desea eliminar (<"<<this->usuarioActivo->getCalendario()->getCantidadReservaciones()<<"): "<<"\033[0m";
+                        cout<<"\033[33m"<<"Ingrese el numero de reservacion que desea eliminar [1,"<<this->usuarioActivo->getCalendario()->getCantidadReservaciones()<<"]: "<<"\033[0m";
                         getline(cin,posicion);
-                    }while(!numero_entero_dentro_de_rango(0,this->usuarioActivo->getCalendario()->getCantidadReservaciones()-1, posicion));
+                    }while(!numero_entero_dentro_de_rango(1,this->usuarioActivo->getCalendario()->getCantidadReservaciones(), posicion));
                     this->usuarioActivo->getCalendario()->eliminarReservacion(stoi(posicion));
+                    cout<< "\033[32m"<<"\nReservacion eliminada exitosamente\n"<<"\033[0m" << endl;
                 }else{
                     cout << "\033[31m"<<"\nNo tiene reservaciones en su calendario\n"<<"\033[0m" << endl;
                 }
                 break;
             }case 5:{
-                
-                cout<<"5. Modificar reservacion"<<endl;
+                string i;
+                if(this->usuarioActivo->getCalendario()->getCantidadReservaciones() != 0){  //Calendario no vacío
+                    this->usuarioActivo->getCalendario()->imprimirCalendarioCompleto();
+                    do{
+                        cout<<"\033[33m"<<"Ingrese el numero de reservacion que desea eliminar [1,"<<this->usuarioActivo->getCalendario()->getCantidadReservaciones()<<"]: "<<"\033[0m";
+                        getline(cin, i);
+                    }while(!numero_entero_dentro_de_rango(1,this->usuarioActivo->getCalendario()->getCantidadReservaciones(), i));
+
+                    this->usuarioActivo->getCalendario()->eliminarReservacion(stoi(i));
+                    this->usuarioActivo->getCalendario()->crearReservacion();
+                }
                 break;
             }case 6:
                 
@@ -258,69 +276,15 @@ void Interaccion::realizarAccionManager(){
             default:
                 break;
         }
-        this->guardar_en_archivo(); 
+        this->escribirEnArchivo(); 
     }
 }
 
-void Interaccion::guardar_en_archivo() {
+void Interaccion::escribirEnArchivo() {
     std::ofstream archivo("../ArchivoUsuarios.txt");    
     if (archivo.is_open()) {
         this->usuariosRegistrados->escribirEnArchivo(archivo);
         archivo.close();
-    }
-}
-
-string Interaccion::codificar(string contrasenna){
-    int longitud = contrasenna.length();    //Longitud de la contraseña
-    const char* arreglo_original = contrasenna.c_str(); //Función vista en clase
-    string contrasenna_codificada; //Contraseña codificada
-    for(int i = 0; i < longitud; i++){
-        contrasenna_codificada += arreglo_original[i] + '5'; //Hago el mapeo para que la contraseña no se vea como la ingresada por el usuario
-    }
-    return contrasenna_codificada;
-}
-
-void Interaccion::ejecutar(){
-    this->guardar_en_archivo(); 
-    int respuesta{0};
-    bool flag = true;
-    while (flag){
-        respuesta = this->menu_entrada();   //Aquí nos aseguramos de tener una entrada válida
-        switch (respuesta){
-            case 1:{//crear
-                Usuario* usuario_nuevo = crear_Usuario();
-                if(usuario_nuevo != nullptr){
-                    this->usuariosRegistrados->agregarUsuario(usuario_nuevo);
-                    break;}
-                }
-                break;
-            case 2:{//iniciar sesion
-                if(this->usuariosRegistrados->vacia()){
-                    cout << "\033[31m"<<"\nNo puede iniciar sesion ya que no existen usuarios\n"<<"\033[0m" << endl;  
-                }else{
-                    if(this->iniciar_sesion()){
-                        if(this->usuarioActivo->getPuesto() == "Contribuidor"){
-                            this->realizarAccionContribuidor();
-                        }else{
-                            this->realizarAccionManager();
-                        }
-                    }                   
-                }
-                break;}
-            case 3:{ //salir
-                
-                cout<<"\033[33m"<<"Saliendo del Programa..."<<"\033[0m"<<endl;
-                flag=false;
-                break;}
-            case 4:{ //imprimir usuarios
-                
-                this->usuariosRegistrados->imprimir("No hay usuarios registrados", "Usuarios registrados: ");
-                break;}
-            default:
-                cout << "\033[31m"<<"Opcion Invalida"<<"\033[0m" << endl;  
-                break;
-        }
-        this->guardar_en_archivo(); //Después de cualquier accion, guardamos en archivo
     }
 }
 
@@ -359,18 +323,24 @@ Usuario* Interaccion::leerManager(std::ifstream& archivo){
     string contrasenna = datos_csv[3];
     int id = stoi(datos_csv[4]);
 
-    Usuario* usuario_nuevo = new Manager(nombre, cedula, nom_usuario, contrasenna, id);
+    Usuario* usuario_nuevo = new Manager(nombre, cedula, nom_usuario, contrasenna, id); //Creo manager con calendario vacio
 
     this->manActivo = static_cast<Manager*>(usuario_nuevo); 
     
-    this->manActivo->listaSubordinados->leerIds(archivo, this->usuariosRegistrados);
- 
+    this->manActivo->listaSubordinados->leerIds(archivo, this->usuariosRegistrados);    //Leo los subordinados
+
+    this->manActivo->leerCalendarioDeArchivo(archivo);   //Leo su calendario
+
     this->usuariosRegistrados->agregarUsuario(usuario_nuevo); //Lo agregamos a la lista
 
     this->manActivo == nullptr;
 }
 
 Usuario* Interaccion::leerContribuidor(std::ifstream& archivo){
+    /*
+    Para info general del contribuidor
+    */
+
     string linea_temp;
     getline(archivo, linea_temp);
     std::stringstream ss(linea_temp);   //Creo un stream de la línea
@@ -381,15 +351,70 @@ Usuario* Interaccion::leerContribuidor(std::ifstream& archivo){
             datos_csv[i] = dato;        //Guardamos en el array
             i++;                    
     }
-        
+    //Defino los datos
     string nombre = datos_csv[0];
     int cedula = stoi(datos_csv[1]);
     string nom_usuario = datos_csv[2];
     string contrasenna = datos_csv[3];
     int id = stoi(datos_csv[4]);
 
-    Usuario* usuario_nuevo = new Contribuidor(nombre, cedula, nom_usuario, contrasenna, id);
+    Usuario* usuario_nuevo = new Contribuidor(nombre, cedula, nom_usuario, contrasenna, id); //Creo contribuidor con calendario vacio
+
+    usuario_nuevo->leerCalendarioDeArchivo(archivo);   //Leo su calendario
 
     this->usuariosRegistrados->agregarUsuario(usuario_nuevo); //Lo agregamos a la lista
 }
 
+string Interaccion::codificar(string contrasenna){
+    int longitud = contrasenna.length();    //Longitud de la contraseña
+    const char* arreglo_original = contrasenna.c_str(); //Función vista en clase
+    string contrasenna_codificada; //Contraseña codificada
+    for(int i = 0; i < longitud; i++){
+        contrasenna_codificada += arreglo_original[i] + '5'; //Hago el mapeo para que la contraseña no se vea como la ingresada por el usuario
+    }
+    return contrasenna_codificada;
+}
+
+void Interaccion::ejecutar(){
+    this->escribirEnArchivo(); 
+    int respuesta{0};
+    bool flag = true;
+    while (flag){
+        respuesta = this->menu_entrada();   //Aquí nos aseguramos de tener una entrada válida
+        switch (respuesta){
+            case 1:{//crear
+                Usuario* usuario_nuevo = crear_Usuario();
+                if(usuario_nuevo != nullptr){
+                    this->usuariosRegistrados->agregarUsuario(usuario_nuevo);
+                    break;}
+                }
+                break;
+            case 2:{//iniciar sesion
+                if(this->usuariosRegistrados->vacia()){
+                    cout << "\033[31m"<<"\nNo puede iniciar sesion ya que no existen usuarios\n"<<"\033[0m" << endl;  
+                }else{
+                    if(this->iniciar_sesion()){
+                        if(this->usuarioActivo->getPuesto() == "Contribuidor"){
+                            this->realizarAccionContribuidor();
+                        }else{
+                            this->realizarAccionManager();
+                        }
+                    }                   
+                }
+                break;}
+            case 3:{ //salir
+                
+                cout<<"\033[33m"<<"Saliendo del Programa..."<<"\033[0m"<<endl;
+                flag=false;
+                break;}
+            case 4:{ //imprimir usuarios
+                
+                this->usuariosRegistrados->imprimir("No hay usuarios registrados", "Usuarios registrados: ");
+                break;}
+            default:
+                cout << "\033[31m"<<"Opcion Invalida"<<"\033[0m" << endl;  
+                break;
+        }
+        this->escribirEnArchivo(); //Después de cualquier accion, guardamos en archivo
+    }
+}

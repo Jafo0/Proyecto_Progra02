@@ -22,7 +22,7 @@ void Usuario::setPuesto(const std::string& nuevoPuesto){this->puesto = nuevoPues
 std::string Usuario::getContrasena() const{return this->contrasena;}
 void Usuario::setContrasena(const std::string& nuevaContrasena){this->contrasena = nuevaContrasena;}
 
-Calendario* Usuario::getCalendario() const{return this->calendario;}
+Calendario*& Usuario::getCalendario() {return this->calendario;}
 void Usuario::setCalendario(Calendario* nuevoCalendario){this->calendario = nuevoCalendario;}
 
 int Usuario::getID() const{return this->id;}

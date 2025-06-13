@@ -148,21 +148,22 @@ struct tm Calendario::preguntarFechaEspecifica(std::string mensaje) const{
 void Calendario::imprimirCalendarioCompleto(){ 
     if(this->primeraReservacion){                  //Si tenemos al menos una reservacion
         Nodo* temp = this->primeraReservacion;     //Guardamos la reservacion más próxima en nodo auxiliar
-        int contador = 0;
+        int contador = 1;
         while(temp){    //Mientras tengamos reservaciones activas
                 temp->getReservacion()->imprimirReservacion(contador);
                 contador++;
                 temp = temp->nodoSiguiente;                
         }
+        cout<<endl;
     }else{
-        cout<<"\033[33m"<<"Su calendario esta vacio..."<<"\033[0m"<<endl;
+        cout<<"\033[33m"<<"Su calendario esta vacio...\n"<<"\033[0m"<<endl;
     }
 }
 
 void Calendario::imprimirCalendarioOculto(){ 
     if(this->primeraReservacion){                  //Si tenemos al menos una reservacion
         Nodo* temp = this->primeraReservacion;     //Guardamos la reservacion más próxima en nodo auxiliar
-        int contador = 0;
+        int contador = 1;
         while(temp){    //Mientras tengamos reservaciones activas
                 temp->getReservacion()->imprimirReservacionOculta(contador);
                 contador++;
@@ -233,7 +234,6 @@ void Calendario::crearReservacion(){
         
         if(reservacion){
             cout<<"\033[32m"<<"\nLa reservacion ha sido creada correctamente"<<"\033[0m"<<endl;   
-            this->cantidadReservaciones++;
             this->ordenarReservacion(reservacion);  //La ordenamos en nuestro calendario
         }
     }
@@ -268,18 +268,19 @@ void Calendario::ordenarReservacion(Reservacion* nueva_reservacion){
                 temp->setNodoSiguiente(new Nodo(nueva_reservacion, nullptr));   //Llegamos al final
             }
         }
-    }     
+    }  
+    this->cantidadReservaciones++;   
 }
 
 void Calendario::eliminarReservacion(int posicion){
     if(this->primeraReservacion){  //Tenemos al menos una reservación
-        if(posicion == 0){          //Quiero eliminar mi primera reservacion
+        if(posicion == 1){          //Quiero eliminar mi primera reservacion
             Nodo* cabeza_antigua = this->primeraReservacion;
             this->primeraReservacion = this->primeraReservacion->getNodoSiguiente();
             delete cabeza_antigua;
         }else{
             Nodo* temp = this->primeraReservacion;     //Guardamos la primera reservacion en nodo temporal.
-            int i = 0;
+            int i = 1;
             while(i < posicion-1){
                 temp = temp->getNodoSiguiente();
                 i++;
@@ -292,10 +293,97 @@ void Calendario::eliminarReservacion(int posicion){
     }
 }
 
-void Calendario::escribirEnArchivo(std::ofstream& archivo2) const{
+void Calendario::escribirEnArchivo(std::ofstream& archivo) const{
     Nodo* aux = primeraReservacion; //este es mi head
     while (aux!=nullptr){
-        aux->getReservacion()->escribirReservacionArchivo(archivo2);
+        aux->getReservacion()->escribirReservacionArchivo(archivo);
         aux = aux->nodoSiguiente;
     }
+    archivo<<"Fin de calendario"<<endl;
+}
+
+struct tm* Calendario::leerFechasDeArchivo(std::ifstream& archivo){
+    string linea_temp;
+
+    getline(archivo, linea_temp);
+    std::stringstream ss(linea_temp);   //Creo un stream de la línea
+    string dato;               //Cada elemento separado por coma (csv)
+    string datos_csv[10];       // mi array de elementos 
+    int i = 0;
+    while (getline(ss, dato, ',')) {        //Mientras se pueda: Leemos ss hasta la coma y guardamos en elemento
+            datos_csv[i] = dato;        //Guardamos en el array
+            i++;                    
+    }
+
+    struct tm fechaInicio = {}, fechaFin = {};
+
+    fechaInicio.tm_mday = stoi(datos_csv[0]);
+    fechaInicio.tm_mon  = stoi(datos_csv[1])-1;
+    fechaInicio.tm_year = stoi(datos_csv[2]) - 1900;  
+    fechaInicio.tm_hour = stoi(datos_csv[3]);
+    fechaInicio.tm_min  = stoi(datos_csv[4]);
+
+    fechaFin.tm_mday = stoi(datos_csv[5]);
+    fechaFin.tm_mon  = stoi(datos_csv[6])-1;
+    fechaFin.tm_year = stoi(datos_csv[7]) - 1900; 
+    fechaFin.tm_hour = stoi(datos_csv[8]);
+    fechaFin.tm_min  = stoi(datos_csv[9]);
+
+    struct tm* fechas =  new struct tm[2];
+    fechas[0] = fechaInicio;
+    fechas[1] = fechaFin;
+
+    return fechas;
+}
+ 
+Reservacion* Calendario::leerReunionDeArchivo(std::ifstream& archivo){  
+    struct tm* fechas = this->leerFechasDeArchivo(archivo);
+
+    string lugar;
+    getline(archivo, lugar);
+
+    Reservacion* nuevaReservacion = new Reunion(fechas[0], fechas[1], lugar);
+    return nuevaReservacion;
+}
+
+Reservacion* Calendario::leerActividadSocialDeArchivo(std::ifstream& archivo){
+    struct tm* fechas = this->leerFechasDeArchivo(archivo);
+    Reservacion* nuevaReservacion = new ActividadSocial(fechas[0], fechas[1]);
+    return nuevaReservacion;
+}
+
+Reservacion* Calendario::leerEventoDiarioDeArchivo(std::ifstream& archivo){
+    struct tm* fechas = this->leerFechasDeArchivo(archivo);
+    Reservacion* nuevaReservacion = new EventoDiario(fechas[0], fechas[1]);
+    return nuevaReservacion;
+}
+
+Reservacion* Calendario::leerCitaPersonalDeArchivo(std::ifstream& archivo){
+    struct tm* fechas = this->leerFechasDeArchivo(archivo);
+    Reservacion* nuevaReservacion = new CitaPersonal(fechas[0], fechas[1]);
+    return nuevaReservacion;
+}
+
+void Calendario::leerDeArchivo(std::ifstream& archivo){
+    string linea_temp;
+    Reservacion* nuevaReservacion;
+    getline(archivo, linea_temp);   //Me deshago del encabezado "Calendario:"
+    
+    while(true){
+        getline(archivo, linea_temp);
+        if(linea_temp == "Fin de calendario"){   //No tenemos reservaciones
+            break;
+        }else{
+            if(linea_temp == "Reunion"){
+                nuevaReservacion = this->leerReunionDeArchivo(archivo); 
+            }else if(linea_temp == "Evento Diario"){
+                nuevaReservacion = this->leerEventoDiarioDeArchivo(archivo); 
+            }else if(linea_temp == "Actividad Social"){
+                nuevaReservacion = this->leerActividadSocialDeArchivo(archivo); 
+            }else if(linea_temp == "Cita Personal"){
+                nuevaReservacion = this->leerCitaPersonalDeArchivo(archivo); 
+            }
+            this->ordenarReservacion(nuevaReservacion);  //La ordenamos en nuestro calendario
+        }
+    } 
 }

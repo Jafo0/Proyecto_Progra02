@@ -36,7 +36,7 @@ public:
     void realizarAccionManager();
 
     //Lectura y escritura del archivo:
-    void guardar_en_archivo();
+    void escribirEnArchivo();
     bool guardar_en_archivo_cal(int); //Nuevo guardar en archivo para Calendario
     void leerArchivo(std::ifstream&);
     Usuario* leerManager(std::ifstream&);

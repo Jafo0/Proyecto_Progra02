@@ -176,7 +176,7 @@ void ListaUsuario::escribirEnArchivo(std::ofstream& archivo) {
     Nodo* aux = this->head;
     while(aux != nullptr) {
         if(aux->usuario->getPuesto() == "Contribuidor"){
-            aux->usuario->escribirEnArchivo(archivo);
+            aux->getUsuario()->escribirEnArchivo(archivo);
         }
         aux = aux->next;
     }

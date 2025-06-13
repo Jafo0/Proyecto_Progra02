@@ -27,5 +27,6 @@ class Manager : public Usuario{
 
         //Para escribir y leer de archivos
         void escribirEnArchivo(std::ofstream&) override;
+        void leerCalendarioDeArchivo(std::ifstream&) override;
 };
 #endif
