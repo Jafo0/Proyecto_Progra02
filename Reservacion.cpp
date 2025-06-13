@@ -1,7 +1,10 @@
 #include "Reservacion.h"
 
 Reservacion::Reservacion (struct tm _fechaInicio, struct tm _fechaFin) 
-        : fechaInicio(_fechaInicio), fechaFin(_fechaFin) {}
+        : fechaInicio(_fechaInicio), fechaFin(_fechaFin) {this->idReservacion = time(nullptr);}
+
+Reservacion::Reservacion (struct tm _fechaInicio, struct tm _fechaFin, time_t _idReservacion) 
+        : fechaInicio(_fechaInicio), fechaFin(_fechaFin), idReservacion(_idReservacion) {}
 
 Reservacion::~Reservacion () {}
 
@@ -19,7 +22,7 @@ string Reservacion::getFecha( struct tm& fecha) {
     return "(" + std::string(fecha_formateada) + ")";
 }
 
-void Reservacion::escibirFechasReservacionArchivo(ofstream& archivo) {
+void Reservacion::escribirIdYFechas(ofstream& archivo) {
     //Escribo la fecha de inicio:
     archivo << this->fechaInicio.tm_mday << ","
         << (this->fechaInicio.tm_mon + 1) << ","
@@ -27,11 +30,14 @@ void Reservacion::escibirFechasReservacionArchivo(ofstream& archivo) {
         << this->fechaInicio.tm_min << ","
         << this->fechaInicio.tm_hour << ",";
 
+    //Escribo la fecha de fin:
     archivo << this->fechaFin.tm_mday << ","
         << (this->fechaFin.tm_mon + 1) << ","
         << (this->fechaFin.tm_year + 1900) << ","
         << this->fechaFin.tm_min << ","
-        << this->fechaFin.tm_hour << "\n";
+        << this->fechaFin.tm_hour <<",";
+
+    archivo<<this->idReservacion<<endl;
 }
 
 bool Reservacion::choqueFechas(struct tm& fechaInicioOtra, struct tm& fechaFinOtra){

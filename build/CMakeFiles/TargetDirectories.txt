@@ -1,3 +1,3 @@
-C:/Users/Usuario/Desktop/UCR/3er Sem/Progra ll/Evaluaciones/Proyecto #2_CalendarPro/Proyecto_Progra02/build/CMakeFiles/ejecutable.dir
-C:/Users/Usuario/Desktop/UCR/3er Sem/Progra ll/Evaluaciones/Proyecto #2_CalendarPro/Proyecto_Progra02/build/CMakeFiles/edit_cache.dir
-C:/Users/Usuario/Desktop/UCR/3er Sem/Progra ll/Evaluaciones/Proyecto #2_CalendarPro/Proyecto_Progra02/build/CMakeFiles/rebuild_cache.dir
+C:/Users/Usuario/Desktop/UCR/3er Sem/Progra ll/Evaluaciones/Proyecto #2_CalendarPro/Proyecto_Progra02 - copia/build/CMakeFiles/ejecutable.dir
+C:/Users/Usuario/Desktop/UCR/3er Sem/Progra ll/Evaluaciones/Proyecto #2_CalendarPro/Proyecto_Progra02 - copia/build/CMakeFiles/edit_cache.dir
+C:/Users/Usuario/Desktop/UCR/3er Sem/Progra ll/Evaluaciones/Proyecto #2_CalendarPro/Proyecto_Progra02 - copia/build/CMakeFiles/rebuild_cache.dir

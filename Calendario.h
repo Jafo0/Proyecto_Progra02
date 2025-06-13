@@ -70,13 +70,12 @@ class Calendario {
         
         //Lectura y escritura del archivo
         void escribirEnArchivo(std::ofstream&) const; //guardar en archivo calendario
-        struct tm* leerFechasDeArchivo(std::ifstream&);
+        struct tm* leerIdYFechasDeArchivo(std::ifstream&);
         Reservacion* leerReunionDeArchivo(std::ifstream&);
         Reservacion* leerActividadSocialDeArchivo(std::ifstream&);
         Reservacion* leerEventoDiarioDeArchivo(std::ifstream&);
         Reservacion* leerCitaPersonalDeArchivo(std::ifstream&);
         void leerDeArchivo(std::ifstream&);
-
 };
 
 #endif  // CALENDARIO_H

@@ -2,6 +2,8 @@
 
 ActividadSocial::ActividadSocial(struct tm _fechaInicio, struct tm _fecha_fin) : Reservacion(_fechaInicio, _fecha_fin){}
 
+ActividadSocial::ActividadSocial(struct tm _fechaInicio, struct tm _fecha_fin, time_t _idReservacion) : Reservacion(_fechaInicio, _fecha_fin, _idReservacion){}
+
 ActividadSocial::~ActividadSocial(){}
 
 void ActividadSocial::imprimirReservacion(int posicion) {
@@ -19,5 +21,5 @@ void ActividadSocial::imprimirReservacionOculta(int posicion) {
 
 void ActividadSocial::escribirReservacionArchivo(std::ofstream& archivo) {
     archivo<< "Actividad Social"<<endl;
-    this->escibirFechasReservacionArchivo(archivo);
+    this->escribirIdYFechas(archivo);
 }

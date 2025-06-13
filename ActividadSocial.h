@@ -9,6 +9,7 @@ class ActividadSocial : public Reservacion {
     public:
         //Constructores destructores
         ActividadSocial(struct tm, struct tm);
+        ActividadSocial(struct tm, struct tm, time_t);
         ~ActividadSocial();
 
         //Otros métodos

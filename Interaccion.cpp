@@ -301,11 +301,10 @@ void Interaccion::leerArchivo(std::ifstream& archivo){
     archivo.close();  // Cierra el archivo
 }
 
-Usuario* Interaccion::leerManager(std::ifstream& archivo){
+void Interaccion::leerManager(std::ifstream& archivo){
     /*
     Para info general del manager
     */
-
     string linea_temp;
     getline(archivo, linea_temp);
     std::stringstream ss(linea_temp);   //Creo un stream de la línea
@@ -336,7 +335,7 @@ Usuario* Interaccion::leerManager(std::ifstream& archivo){
     this->manActivo == nullptr;
 }
 
-Usuario* Interaccion::leerContribuidor(std::ifstream& archivo){
+void Interaccion::leerContribuidor(std::ifstream& archivo){
     /*
     Para info general del contribuidor
     */

@@ -2,6 +2,8 @@
 
 CitaPersonal::CitaPersonal(struct tm _fechaInicio, struct tm _fechaFin) : Reservacion(_fechaInicio, _fechaFin){}
 
+CitaPersonal::CitaPersonal(struct tm _fechaInicio, struct tm _fechaFin, time_t _idReservacion) : Reservacion(_fechaInicio, _fechaFin, _idReservacion){}
+
 CitaPersonal::~CitaPersonal(){}
 
 void CitaPersonal::imprimirReservacion(int posicion) {
@@ -17,5 +19,5 @@ void CitaPersonal::imprimirReservacionOculta(int posicion) {
 }
 void CitaPersonal::escribirReservacionArchivo(std::ofstream& archivo) {
     archivo<<"Cita Personal"<<endl;
-    this->escibirFechasReservacionArchivo(archivo);
+    this->escribirIdYFechas(archivo);
 }

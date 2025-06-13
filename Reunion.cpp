@@ -3,6 +3,9 @@
 Reunion::Reunion(struct tm _fechaInicio, struct tm _fechaFin, std::string _lugar) 
         : Reservacion(_fechaInicio, _fechaFin), lugar(_lugar){}
 
+Reunion::Reunion(struct tm _fechaInicio, struct tm _fechaFin, std::string _lugar, time_t _idReservacion) 
+        : Reservacion(_fechaInicio, _fechaFin, _idReservacion), lugar(_lugar){}
+
 Reunion::~Reunion(){}
 
 string Reunion::getLugar()  {return this->lugar;}
@@ -24,6 +27,6 @@ void Reunion::imprimirReservacionOculta(int posicion) {
 
 void Reunion::escribirReservacionArchivo(std::ofstream& archivo) {
     archivo<<"Reunion"<<endl;
-    this->escibirFechasReservacionArchivo(archivo);
+    this->escribirIdYFechas(archivo);
     archivo<<lugar<<endl;
 }

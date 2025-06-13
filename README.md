@@ -20,8 +20,6 @@ Preguntas profe:
     -Podemos utilizar <string>.empty()?
 
 
-
-
 Comando Compilacion main.cpp:
     g++ .\Encabezados.h .\Reservacion.cpp .\Reunion.cpp .\CitaPersonal.cpp .\ActividadSocial.cpp .\EventoDiario.cpp .\Calendario.cpp .\Usuario.cpp .\Manager.cpp .\Contribuidor.cpp .\ListaUsuario.cpp .\Interaccion.cpp .\Comprobacion.cpp .\main.cpp
     

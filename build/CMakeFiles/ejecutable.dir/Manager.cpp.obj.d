@@ -1,11 +1,11 @@
 CMakeFiles/ejecutable.dir/Manager.cpp.obj: \
- C:\Users\Usuario\Desktop\UCR\3er\ Sem\Progra\ ll\Evaluaciones\Proyecto\ \#2_CalendarPro\Proyecto_Progra02\Manager.cpp \
- C:\Users\Usuario\Desktop\UCR\3er\ Sem\Progra\ ll\Evaluaciones\Proyecto\ \#2_CalendarPro\Proyecto_Progra02\Manager.h \
- C:\Users\Usuario\Desktop\UCR\3er\ Sem\Progra\ ll\Evaluaciones\Proyecto\ \#2_CalendarPro\Proyecto_Progra02\ListaUsuario.h \
- C:\Users\Usuario\Desktop\UCR\3er\ Sem\Progra\ ll\Evaluaciones\Proyecto\ \#2_CalendarPro\Proyecto_Progra02\Usuario.h \
- C:\Users\Usuario\Desktop\UCR\3er\ Sem\Progra\ ll\Evaluaciones\Proyecto\ \#2_CalendarPro\Proyecto_Progra02\Calendario.h \
- C:\Users\Usuario\Desktop\UCR\3er\ Sem\Progra\ ll\Evaluaciones\Proyecto\ \#2_CalendarPro\Proyecto_Progra02\Reservacion.h \
- C:\Users\Usuario\Desktop\UCR\3er\ Sem\Progra\ ll\Evaluaciones\Proyecto\ \#2_CalendarPro\Proyecto_Progra02\Encabezados.h \
+ C:\Users\Usuario\Desktop\UCR\3er\ Sem\Progra\ ll\Evaluaciones\Proyecto\ \#2_CalendarPro\Proyecto_Progra02\ -\ copia\Manager.cpp \
+ C:\Users\Usuario\Desktop\UCR\3er\ Sem\Progra\ ll\Evaluaciones\Proyecto\ \#2_CalendarPro\Proyecto_Progra02\ -\ copia\Manager.h \
+ C:\Users\Usuario\Desktop\UCR\3er\ Sem\Progra\ ll\Evaluaciones\Proyecto\ \#2_CalendarPro\Proyecto_Progra02\ -\ copia\ListaUsuario.h \
+ C:\Users\Usuario\Desktop\UCR\3er\ Sem\Progra\ ll\Evaluaciones\Proyecto\ \#2_CalendarPro\Proyecto_Progra02\ -\ copia\Usuario.h \
+ C:\Users\Usuario\Desktop\UCR\3er\ Sem\Progra\ ll\Evaluaciones\Proyecto\ \#2_CalendarPro\Proyecto_Progra02\ -\ copia\Calendario.h \
+ C:\Users\Usuario\Desktop\UCR\3er\ Sem\Progra\ ll\Evaluaciones\Proyecto\ \#2_CalendarPro\Proyecto_Progra02\ -\ copia\Reservacion.h \
+ C:\Users\Usuario\Desktop\UCR\3er\ Sem\Progra\ ll\Evaluaciones\Proyecto\ \#2_CalendarPro\Proyecto_Progra02\ -\ copia\Encabezados.h \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\ctime \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\mingw32\bits\c++config.h \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\mingw32\bits\os_defines.h \
@@ -131,8 +131,8 @@ CMakeFiles/ejecutable.dir/Manager.cpp.obj: \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\mingw32\bits\basic_file.h \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\mingw32\bits\c++io.h \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\fstream.tcc \
- C:\Users\Usuario\Desktop\UCR\3er\ Sem\Progra\ ll\Evaluaciones\Proyecto\ \#2_CalendarPro\Proyecto_Progra02\Comprobacion.h \
- C:\Users\Usuario\Desktop\UCR\3er\ Sem\Progra\ ll\Evaluaciones\Proyecto\ \#2_CalendarPro\Proyecto_Progra02\Reunion.h \
- C:\Users\Usuario\Desktop\UCR\3er\ Sem\Progra\ ll\Evaluaciones\Proyecto\ \#2_CalendarPro\Proyecto_Progra02\CitaPersonal.h \
- C:\Users\Usuario\Desktop\UCR\3er\ Sem\Progra\ ll\Evaluaciones\Proyecto\ \#2_CalendarPro\Proyecto_Progra02\ActividadSocial.h \
- C:\Users\Usuario\Desktop\UCR\3er\ Sem\Progra\ ll\Evaluaciones\Proyecto\ \#2_CalendarPro\Proyecto_Progra02\EventoDiario.h
+ C:\Users\Usuario\Desktop\UCR\3er\ Sem\Progra\ ll\Evaluaciones\Proyecto\ \#2_CalendarPro\Proyecto_Progra02\ -\ copia\Comprobacion.h \
+ C:\Users\Usuario\Desktop\UCR\3er\ Sem\Progra\ ll\Evaluaciones\Proyecto\ \#2_CalendarPro\Proyecto_Progra02\ -\ copia\Reunion.h \
+ C:\Users\Usuario\Desktop\UCR\3er\ Sem\Progra\ ll\Evaluaciones\Proyecto\ \#2_CalendarPro\Proyecto_Progra02\ -\ copia\CitaPersonal.h \
+ C:\Users\Usuario\Desktop\UCR\3er\ Sem\Progra\ ll\Evaluaciones\Proyecto\ \#2_CalendarPro\Proyecto_Progra02\ -\ copia\ActividadSocial.h \
+ C:\Users\Usuario\Desktop\UCR\3er\ Sem\Progra\ ll\Evaluaciones\Proyecto\ \#2_CalendarPro\Proyecto_Progra02\ -\ copia\EventoDiario.h

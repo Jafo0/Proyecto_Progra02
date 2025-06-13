@@ -7,6 +7,7 @@ class CitaPersonal : public Reservacion {
     public:
         //Constructores y destructores
         CitaPersonal(struct tm, struct tm);
+        CitaPersonal(struct tm, struct tm, time_t);
         ~CitaPersonal();
 
         //Otros métodos

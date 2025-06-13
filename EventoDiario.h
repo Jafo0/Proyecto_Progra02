@@ -7,6 +7,7 @@ class EventoDiario : public Reservacion {
     public:
         //Constructores y destructores
         EventoDiario(struct tm, struct tm);
+        EventoDiario(struct tm, struct tm, time_t);
         ~EventoDiario();
 
         //Otros métodos

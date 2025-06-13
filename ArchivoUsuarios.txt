@@ -1,15 +1,27 @@
 Contribuidor
-con,1,con,˜¤£,1
+con,1,con,ï¿½ï¿½ï¿½,1
 Calendario: 
+Reunion
+7,7,2025,0,0,7,7,2025,10,10,1749837794
+JaffetsHouse
+Cita Personal
+8,8,2025,8,8,8,8,2025,9,9,1749837825
+Actividad Social
+9,9,2025,9,9,9,9,2025,10,10,1749837839
+Evento Diario
+10,10,2025,0,0,11,10,2025,0,0,1749837844
 Fin de calendario
 Manager
-man,0,man,¢–£,0
+man,0,man,ï¿½ï¿½ï¿½,0
 Ids asociados,No hay ids asociados
 Calendario: 
+Reunion
+7,7,2025,0,0,7,7,2025,10,10,1749837794
+JaffetsHouse
+Cita Personal
+8,8,2025,8,8,8,8,2025,9,9,1749837825
+Actividad Social
+9,9,2025,9,9,9,9,2025,10,10,1749837839
 Evento Diario
-10,10,2025,0,0,11,10,2025,0,0
-Evento Diario
-11,11,2025,0,0,12,11,2025,0,0
-Evento Diario
-12,12,2025,0,0,13,12,2025,0,0
+10,10,2025,0,0,11,10,2025,0,0,1749837844
 Fin de calendario

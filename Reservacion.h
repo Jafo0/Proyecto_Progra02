@@ -7,10 +7,12 @@ class Reservacion {
     protected:
         struct tm fechaInicio = {};  //Inicializo cada campo de fecha en cero
         struct tm fechaFin = {};  //Inicializo cada campo de fecha en cero
+        time_t idReservacion {0};
 
     public:
         //Constructores y destructores:
-        Reservacion(struct tm, struct tm); 
+        Reservacion(struct tm, struct tm);  //Genera el id
+        Reservacion(struct tm, struct tm, time_t);  //Le paso el id
         Reservacion(ifstream&);   //Apartir de un archivo 
         ~Reservacion();
         
@@ -26,7 +28,7 @@ class Reservacion {
         string getFecha(struct tm&);     //Me da en formato de string una fecha ingresada
 
         //Para escribir en archivo
-        void escibirFechasReservacionArchivo(ofstream&);   //Escribe las fechas de la reservacion
+        void escribirIdYFechas(ofstream&);   //Escribe las fechas y el id de la reservacion
         virtual void escribirReservacionArchivo(ofstream&) = 0; //Varía según el tipo de reservación
 
         //Para comprobar si una fecha incresada choca con esta fecha

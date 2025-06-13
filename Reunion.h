@@ -15,6 +15,7 @@ class Reunion : public Reservacion{
     public:
         //Constructores y destructores
         Reunion(struct tm, struct tm, std::string);
+        Reunion(struct tm, struct tm, std::string, time_t);
         ~Reunion();
 
         //Setters y getters

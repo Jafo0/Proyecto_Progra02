@@ -39,8 +39,8 @@ public:
     void escribirEnArchivo();
     bool guardar_en_archivo_cal(int); //Nuevo guardar en archivo para Calendario
     void leerArchivo(std::ifstream&);
-    Usuario* leerManager(std::ifstream&);
-    Usuario* leerContribuidor(std::ifstream&);
+    void leerManager(std::ifstream&);
+    void leerContribuidor(std::ifstream&);
 
     //Codificación de las contraseñas
     std::string codificar (std::string);

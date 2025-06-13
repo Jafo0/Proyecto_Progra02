@@ -70,7 +70,7 @@ int Calendario::preguntarAnno() const{
         if(numero_entero_sin_rango(anno)){
             if(anno_actual<=stoi(anno)){
                 return stoi(anno);
-            }
+            }else{cout<< "\033[31m"<<"\nIngrese un anno correcto\n"<<"\033[0m" << endl;}
         }
     }
 }
@@ -302,13 +302,13 @@ void Calendario::escribirEnArchivo(std::ofstream& archivo) const{
     archivo<<"Fin de calendario"<<endl;
 }
 
-struct tm* Calendario::leerFechasDeArchivo(std::ifstream& archivo){
+struct tm* Calendario::leerIdYFechasDeArchivo(std::ifstream& archivo){
     string linea_temp;
 
     getline(archivo, linea_temp);
     std::stringstream ss(linea_temp);   //Creo un stream de la línea
     string dato;               //Cada elemento separado por coma (csv)
-    string datos_csv[10];       // mi array de elementos 
+    string datos_csv[11];       // mi array de elementos 
     int i = 0;
     while (getline(ss, dato, ',')) {        //Mientras se pueda: Leemos ss hasta la coma y guardamos en elemento
             datos_csv[i] = dato;        //Guardamos en el array
@@ -329,38 +329,41 @@ struct tm* Calendario::leerFechasDeArchivo(std::ifstream& archivo){
     fechaFin.tm_hour = stoi(datos_csv[8]);
     fechaFin.tm_min  = stoi(datos_csv[9]);
 
-    struct tm* fechas =  new struct tm[2];
+    time_t idReservacion = static_cast<time_t>(stoll(datos_csv[10]));   //Para evitar perder información
+
+    struct tm* fechas =  new struct tm[3];
     fechas[0] = fechaInicio;
     fechas[1] = fechaFin;
+    fechas[2] = *localtime(&idReservacion);
 
     return fechas;
 }
  
 Reservacion* Calendario::leerReunionDeArchivo(std::ifstream& archivo){  
-    struct tm* fechas = this->leerFechasDeArchivo(archivo);
+    struct tm* fechas = this->leerIdYFechasDeArchivo(archivo);
 
     string lugar;
     getline(archivo, lugar);
 
-    Reservacion* nuevaReservacion = new Reunion(fechas[0], fechas[1], lugar);
+    Reservacion* nuevaReservacion = new Reunion(fechas[0], fechas[1], lugar, mktime(&fechas[2]));
     return nuevaReservacion;
 }
 
 Reservacion* Calendario::leerActividadSocialDeArchivo(std::ifstream& archivo){
-    struct tm* fechas = this->leerFechasDeArchivo(archivo);
-    Reservacion* nuevaReservacion = new ActividadSocial(fechas[0], fechas[1]);
+    struct tm* fechas = this->leerIdYFechasDeArchivo(archivo);
+    Reservacion* nuevaReservacion = new ActividadSocial(fechas[0], fechas[1], mktime(&fechas[2]));
     return nuevaReservacion;
 }
 
 Reservacion* Calendario::leerEventoDiarioDeArchivo(std::ifstream& archivo){
-    struct tm* fechas = this->leerFechasDeArchivo(archivo);
-    Reservacion* nuevaReservacion = new EventoDiario(fechas[0], fechas[1]);
+    struct tm* fechas = this->leerIdYFechasDeArchivo(archivo);
+    Reservacion* nuevaReservacion = new EventoDiario(fechas[0], fechas[1], mktime(&fechas[2]));
     return nuevaReservacion;
 }
 
 Reservacion* Calendario::leerCitaPersonalDeArchivo(std::ifstream& archivo){
-    struct tm* fechas = this->leerFechasDeArchivo(archivo);
-    Reservacion* nuevaReservacion = new CitaPersonal(fechas[0], fechas[1]);
+    struct tm* fechas = this->leerIdYFechasDeArchivo(archivo);
+    Reservacion* nuevaReservacion = new CitaPersonal(fechas[0], fechas[1], mktime(&fechas[2]));
     return nuevaReservacion;
 }
 
