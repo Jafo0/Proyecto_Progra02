@@ -191,7 +191,7 @@ int Calendario::menuReservaciones() const{
     }   
 }
 
-void Calendario::crearReservacion(){
+void Calendario::crearReservacion(Usuario* usuarioActivo){
     int tipo_reservacion = this->menuReservaciones(); //Indico qué reservación quiero
     struct tm fechaInicio {}, fechaFin {}; 
 
@@ -217,7 +217,7 @@ void Calendario::crearReservacion(){
                     getline(cin, lugar);
                     if(texto_no_vacio_sin_espacios(lugar)){break;}
                 }
-                reservacion = new Reunion(fechaInicio, fechaFin, lugar); 
+                reservacion = new Reunion(fechaInicio, fechaFin, lugar, usuarioActivo); 
                 break;
             }case 2:
                 reservacion = new CitaPersonal(fechaInicio, fechaFin);
@@ -256,10 +256,8 @@ void Calendario::printParaAgregarId(){//podria retornar ListaUsuarios*,
             for(int i=0;i<stoi(cantidad);i++){
                 cout<<"Ingrese Id de los asistentes / organizadores, #id"<< (i+1) <<endl;
                 getline(cin,id);
-                //implementar estructura de datos donde se vaya guardando, 
-                //podria calendario tener otro atributo de lista usuario
                 if(numero_entero_sin_rango(id)){
-                    //buscar si id esta en la listausuarios
+                    
                 }
 
             }

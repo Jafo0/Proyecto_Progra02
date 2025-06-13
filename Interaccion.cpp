@@ -159,8 +159,8 @@ void Interaccion::realizarAccionContribuidor(){
                 cout<<"2. Ver invitaciones pendientes"<<endl;
                 break;
             case 3:
-                
-                this->usuarioActivo->getCalendario()->crearReservacion();
+
+                this->usuarioActivo->getCalendario()->crearReservacion(this->usuarioActivo);
                 break;
             case 4:{ 
                 if(this->usuarioActivo->getCalendario()->getCantidadReservaciones() != 0){
@@ -185,7 +185,7 @@ void Interaccion::realizarAccionContribuidor(){
                     }while(!numero_entero_dentro_de_rango(1,this->usuarioActivo->getCalendario()->getCantidadReservaciones(), i));
 
                     this->usuarioActivo->getCalendario()->eliminarReservacion(stoi(i));
-                    this->usuarioActivo->getCalendario()->crearReservacion();
+                    this->usuarioActivo->getCalendario()->crearReservacion(usuarioActivo);
                 }
                 break;
             }case 6:{
@@ -195,6 +195,10 @@ void Interaccion::realizarAccionContribuidor(){
                     getline(cin, id);
                 }while(!numero_entero_sin_rango(id));
 
+                if(usuarioActivo->getID() == stoi(id)){
+                    cout << "\033[33m"<<"Si desea ver su propio id vaya a opcion (1)\n"<<"\033[0m" << endl;
+                    break;
+                }
                 if(this->usuariosRegistrados->comprobarID(stoi(id))){
                     this->usuariosRegistrados->UsuarioPorID(stoi(id))->getCalendario()->imprimirCalendarioOculto();
                 }else{
@@ -226,7 +230,7 @@ void Interaccion::realizarAccionManager(){
                 cout<<"2. Ver invitaciones pendientes"<<endl;
                 break;
             case 3:
-                this->usuarioActivo->getCalendario()->crearReservacion();
+                this->usuarioActivo->getCalendario()->crearReservacion(this->usuarioActivo);
                 break;
             case 4:{
                 if(this->usuarioActivo->getCalendario()->getCantidadReservaciones() != 0){
@@ -251,13 +255,25 @@ void Interaccion::realizarAccionManager(){
                     }while(!numero_entero_dentro_de_rango(1,this->usuarioActivo->getCalendario()->getCantidadReservaciones(), i));
 
                     this->usuarioActivo->getCalendario()->eliminarReservacion(stoi(i));
-                    this->usuarioActivo->getCalendario()->crearReservacion();
+                    this->usuarioActivo->getCalendario()->crearReservacion(this->usuarioActivo);
                 }
                 break;
-            }case 6:
-                
-                cout<<"6. Ver Calendario de otros"<<endl;
-                break;
+            }case 6:{
+                string id;
+                do{
+                    cout<<"Ingrese el id de la persona que desea ver: ";
+                    getline(cin, id);
+                }while(!numero_entero_sin_rango(id));
+                if(usuarioActivo->getID() == stoi(id)){
+                    cout << "\033[33m"<<"Si desea ver su propio id vaya a opcion (1)\n"<<"\033[0m" << endl;
+                    break;
+                }
+                if(this->usuariosRegistrados->comprobarID(stoi(id))){
+                    this->usuariosRegistrados->UsuarioPorID(stoi(id))->getCalendario()->imprimirCalendarioOculto();
+                }else{
+                    cout << "\033[33m"<<"El id ingresado no corresponde a ningun usuario\n"<<"\033[0m" << endl;
+                }
+                break;}
             case 7:
                 
                 this->manActivo->modificarSubordinados(this->usuariosRegistrados);

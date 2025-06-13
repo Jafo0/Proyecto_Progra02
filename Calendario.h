@@ -11,6 +11,7 @@
 #include "Comprobacion.h"
 #include "Encabezados.h"
 
+class Usuario;
 class Calendario {
     private:
         //Definido dentro de calendario
@@ -64,8 +65,8 @@ class Calendario {
         void imprimirCalendarioCompleto();
         void imprimirCalendarioOculto();
         int menuReservaciones() const;
-        void crearReservacion();
-        void printParaAgregarId();              //print poara agregar el id
+        void crearReservacion(Usuario*);        //le llega un puntero a usuario
+        void printParaAgregarId();              //print para agregar el id
         void ordenarReservacion(Reservacion*);
         void eliminarReservacion(int);
         
