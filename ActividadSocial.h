@@ -2,14 +2,15 @@
 #define ACTIVIDAD_SOCIAL_H
 
 #include "Reservacion.h"
-
+class ListaUsuario;
 class ActividadSocial : public Reservacion {
     protected:
-        std::string lugar {"Comedor al aire libre"};
+        ListaUsuario* lista_org{nullptr};
+        std::string lugar {"sala de uso comun"};
     public:
         //Constructores destructores
-        ActividadSocial(struct tm, struct tm);
         ActividadSocial(struct tm, struct tm, time_t);
+        ActividadSocial(struct tm, struct tm, ListaUsuario*); //nuevo constructor
         ~ActividadSocial();
 
         //Otros métodos

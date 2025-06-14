@@ -1,6 +1,8 @@
 #include "ActividadSocial.h"
+#include "ListaUsuario.h"
 
-ActividadSocial::ActividadSocial(struct tm _fechaInicio, struct tm _fecha_fin) : Reservacion(_fechaInicio, _fecha_fin){}
+ActividadSocial::ActividadSocial(struct tm _fechaInicio, struct tm _fecha_fin, ListaUsuario* lista):
+Reservacion(_fechaInicio,_fecha_fin), lista_org(lista){}
 
 ActividadSocial::ActividadSocial(struct tm _fechaInicio, struct tm _fecha_fin, time_t _idReservacion) : Reservacion(_fechaInicio, _fecha_fin, _idReservacion){}
 

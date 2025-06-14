@@ -12,6 +12,7 @@ protected:
     std::string puesto;
     std::string contrasena;
     Calendario* calendario;
+    Calendario* invitaciones;
     int id;
     
 public:

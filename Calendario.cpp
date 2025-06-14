@@ -34,6 +34,8 @@ struct tm Calendario::getFechaActual() const {return this->fechaActual;}
 
 int Calendario::getCantidadReservaciones() const {return this->cantidadReservaciones;}
 
+Calendario::Nodo* Calendario::getNodoPrimeraReservacion(){return this->primeraReservacion;}
+
 bool Calendario::nuevaReservacionLogica(struct tm fechaInicio, struct tm fechaFin) const{
     time_t segundosInicio = mktime(&fechaInicio);
     time_t segundosFin = mktime(&fechaFin);
@@ -225,9 +227,12 @@ void Calendario::crearReservacion(Usuario* usuarioActivo, ListaUsuario* usuarios
             }case 2:
                 reservacion = new CitaPersonal(fechaInicio, fechaFin);
                 break;
-            case 3:
-                reservacion = new ActividadSocial(fechaInicio, fechaFin);
-                break;
+            case 3:{
+                ListaUsuario* orga = new ListaUsuario();
+                orga = printParaAgregarId(usuarioActivo,usuariosRegistrados);
+                orga->agregarUsuario(usuarioActivo); //de esta manera ya anade al que crea la reunion
+                reservacion = new ActividadSocial(fechaInicio, fechaFin, orga);
+                break;}
             case 4:
                 reservacion = new EventoDiario(fechaInicio, fechaFin);
                 break;

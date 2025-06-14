@@ -45,6 +45,7 @@ class Calendario {
         time_t getSegundosActual() const;
         struct tm getFechaActual() const;
         int getCantidadReservaciones() const;
+        Nodo* getNodoPrimeraReservacion();
 
         //Comprobación de fechas correctas
         bool nuevaReservacionLogica(struct tm, struct tm) const;   //Fecha de fin sea mayor a la fecha inicio y posterior al pasado
