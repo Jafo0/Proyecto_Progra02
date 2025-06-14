@@ -1,12 +1,5 @@
 Contribuidor
 con,1,con,˜¤£,1
-Calendario: 
-Fin de calendario
 Manager
 man,0,man,¢–£,0
-Ids asociados,No hay ids asociados
-Calendario: 
-Reunion
-7,7,2025,7,7,8,8,2025,8,8,1749879337
-Casa
-Fin de calendario
+Ids asociados,1

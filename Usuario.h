@@ -44,8 +44,7 @@ public:
     void revisarInvitaciones();
 
     //Para escribir y leer de archivos
-    virtual void escribirEnArchivo(ofstream&, ofstream&) = 0;
-    virtual void leerCalendarioDeArchivo(std::ifstream&) = 0;
+    virtual void escribirEnArchivo(ofstream&) = 0;
 
 };
 #endif

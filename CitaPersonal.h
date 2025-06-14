@@ -13,7 +13,6 @@ class CitaPersonal : public Reservacion {
         //Otros métodos
         void imprimirReservacion(int)  override;
         void imprimirReservacionOculta(int)  override;
-        void escribirReservacionArchivo(ofstream&, ofstream&)  override;
 };
 
 #endif  // CITA_PERSONAL_H

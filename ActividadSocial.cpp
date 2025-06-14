@@ -35,16 +35,6 @@ void ActividadSocial::imprimirReservacionOculta(int posicion) {
     cout<<this->getFecha(this->fechaInicio)<<" -> "<<this->getFecha(this->fechaFin)<<endl;
 }
 
-void ActividadSocial::escribirReservacionArchivo(std::ofstream& archivo, ofstream& archivoOtro) {
-    archivo<< "Actividad Social"<<endl;
-    this->escribirIdYFechas(archivo);
-
-    //Escribo en mi otro archivo
-    archivoOtro<< "Actividad Social"<<endl;
-    this->escribirIdYFechas(archivoOtro);
-    archivoOtro<<"IdsOrganizadores, "<<"<Hace falta agregarlo en ActividadSocial.cpp>"<<endl;
-}
-
 void ActividadSocial::eliminarParaOrganizadores(int idOrganizadorQueElimina){
     if(idOrganizadorQueElimina == this->organizador->getID()){
         this->organizador->getCalendario()->eliminarReservacion(this->idReservacion);

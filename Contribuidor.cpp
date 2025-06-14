@@ -13,13 +13,8 @@ void Contribuidor::imprimir(std::string encabezado){
     cout<<"Datos Usuario: "<<"Nombre usuario: "<<nomUsuario<<"\t|"<<"Contrasenna: "<<contrasena<<"\t|"<<"Id: "<<id<<endl;
 }
 
-void Contribuidor::escribirEnArchivo(std::ofstream& archivo, ofstream& archivoOtro){
+void Contribuidor::escribirEnArchivo(std::ofstream& archivo){
     archivo<<"Contribuidor"<<endl;
     archivo<<nombre + "," + std::to_string(cedula) + "," + nomUsuario + "," + contrasena + "," + std::to_string(id)<<endl;
-    archivo<<"Calendario: "<<endl;
-    this->calendario->escribirEnArchivo(archivo, archivoOtro);
 }
 
-void Contribuidor::leerCalendarioDeArchivo(std::ifstream& archivo){
-    this->calendario->leerDeArchivo(archivo);
-} 

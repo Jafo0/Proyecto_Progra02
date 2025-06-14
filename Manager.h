@@ -26,7 +26,6 @@ class Manager : public Usuario{
         void modificarSubordinados(ListaUsuario*);
 
         //Para escribir y leer de archivos
-        void escribirEnArchivo(std::ofstream&, ofstream&) override;
-        void leerCalendarioDeArchivo(std::ifstream&) override;
+        void escribirEnArchivo(std::ofstream&) override;
 };
 #endif

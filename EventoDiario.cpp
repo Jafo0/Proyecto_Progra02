@@ -17,7 +17,3 @@ void EventoDiario::imprimirReservacionOculta(int posicion) {
     cout<<"Reservacion #"<<posicion<<": "<<endl;
     cout<<this->getFecha(this->fechaInicio)<<" -> "<<this->getFecha(this->fechaFin)<<endl;
 }
-void EventoDiario::escribirReservacionArchivo(std::ofstream& archivo, ofstream& archivoOtro) {
-    archivo<<"Evento Diario"<<endl;
-    this->escribirIdYFechas(archivo);
-}

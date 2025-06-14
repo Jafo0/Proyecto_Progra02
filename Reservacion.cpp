@@ -28,24 +28,6 @@ string Reservacion::getFecha( struct tm& fecha) {
     return "(" + std::string(fecha_formateada) + ")";
 }
 
-void Reservacion::escribirIdYFechas(ofstream& archivo) {
-    //Escribo la fecha de inicio:
-    archivo << this->fechaInicio.tm_mday << ","
-        << (this->fechaInicio.tm_mon + 1) << ","
-        << (this->fechaInicio.tm_year + 1900) << ","
-        << this->fechaInicio.tm_min << ","
-        << this->fechaInicio.tm_hour << ",";
-
-    //Escribo la fecha de fin:
-    archivo << this->fechaFin.tm_mday << ","
-        << (this->fechaFin.tm_mon + 1) << ","
-        << (this->fechaFin.tm_year + 1900) << ","
-        << this->fechaFin.tm_min << ","
-        << this->fechaFin.tm_hour <<",";
-
-    archivo<<this->idReservacion<<endl;
-}
-
 bool Reservacion::choqueFechas(struct tm& fechaInicioOtra, struct tm& fechaFinOtra){
     //Paso ambas fechas de inicio y fin a segundos para poder compararlas
     time_t segundosInicio = mktime(&this->fechaInicio);

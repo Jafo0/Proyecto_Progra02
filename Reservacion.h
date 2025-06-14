@@ -30,10 +30,6 @@ class Reservacion {
         virtual void imprimirReservacionOculta(int) = 0;   //Imprime la reservación solo con datos de las fechas
         string getFecha(struct tm&);     //Me da en formato de string una fecha ingresada
 
-        //Para escribir en archivo
-        void escribirIdYFechas(ofstream&);   //Escribe las fechas y el id de la reservacion
-        virtual void escribirReservacionArchivo(ofstream&, ofstream&) = 0; //Varía según el tipo de reservación
-
         //Para comprobar si una fecha incresada choca con esta fecha
         bool choqueFechas(struct tm&, struct tm&);
 };  

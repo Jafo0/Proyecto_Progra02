@@ -303,9 +303,8 @@ void Interaccion::realizarAccionManager(){
 
 void Interaccion::escribirEnArchivo() {
     ofstream archivo("../ArchivoUsuarios.txt");   
-    ofstream archivoOtro("../ActividadesColaborativas.txt");
     if (archivo.is_open()) {
-        this->usuariosRegistrados->escribirEnArchivo(archivo, archivoOtro);
+        this->usuariosRegistrados->escribirEnArchivo(archivo);
     }
 }
 
@@ -349,8 +348,6 @@ void Interaccion::leerManager(std::ifstream& archivo){
     
     this->manActivo->listaSubordinados->leerIds(archivo, this->usuariosRegistrados);    //Leo los subordinados
 
-    this->manActivo->leerCalendarioDeArchivo(archivo);   //Leo su calendario
-
     this->usuariosRegistrados->agregarUsuario(usuario_nuevo); //Lo agregamos a la lista
 
     this->manActivo == nullptr;
@@ -379,8 +376,6 @@ void Interaccion::leerContribuidor(std::ifstream& archivo){
     int id = stoi(datos_csv[4]);
 
     Usuario* usuario_nuevo = new Contribuidor(nombre, cedula, nom_usuario, contrasenna, id); //Creo contribuidor con calendario vacio
-
-    usuario_nuevo->leerCalendarioDeArchivo(archivo);   //Leo su calendario
 
     this->usuariosRegistrados->agregarUsuario(usuario_nuevo); //Lo agregamos a la lista
 }

@@ -75,15 +75,6 @@ class Calendario {
         void eliminarReservacionSocial(int, int);
         void eliminarReservacion(time_t);
         
-        //Lectura y escritura del archivo
-        void escribirEnArchivo(ofstream&, ofstream&) const; //guardar en archivo calendario
-        struct tm* leerIdYFechasDeArchivo(ifstream&);
-        Reservacion* leerReunionDeArchivo(ifstream&);
-        Reservacion* leerActividadSocialDeArchivo(ifstream&);
-        Reservacion* leerEventoDiarioDeArchivo(ifstream&);
-        Reservacion* leerCitaPersonalDeArchivo(ifstream&);
-        void leerDeArchivo(ifstream&);
-
         //Para las invitaciones
         void revisarInvitaciones(Calendario*);
 };
