@@ -19,6 +19,8 @@ void Reunion::setLugar(string _lugar){this->lugar = _lugar;}
 
 void Reunion::setListaInvitados(ListaUsuario* _invitados){ this->lista_invitados = _invitados;}
 
+ListaUsuario* Reunion::getListaInv(){return this->lista_invitados;}
+
 void Reunion::imprimirReservacion(int posicion)  {
     cout<<std::setfill('-')<<std::setw(80)<<""<<endl;   //Encabezado
     cout<<"Reservacion #"<<posicion<<": "<<endl;
@@ -27,16 +29,14 @@ void Reunion::imprimirReservacion(int posicion)  {
         << "Id organizador: ";
         
         if(this->organizador != nullptr){
-
             cout<<this->getOrganizador()->getID();
         }else{
             cout<<"--";
         }
-        /*
+        
         cout<<" | " << "Lista de Invitados: ";
-        cout << this->getListaInv()->imprimirIDS();
+        this->getListaInv()->imprimirIDS();
         cout<<endl;
-        */
 }
 
 void Reunion::imprimirReservacionOculta(int posicion) {

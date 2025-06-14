@@ -1,10 +1,16 @@
+Contribuidor
+con2,3,con2,˜¤£g,2
+Calendario: 
+Fin de calendario
+Contribuidor
+con,1,con,˜¤£,1
+Calendario: 
+Fin de calendario
 Manager
 man,0,man,¢–£,0
 Ids asociados,No hay ids asociados
 Calendario: 
 Reunion
-8,8,2025,8,8,9,9,2025,9,9,1749843689
+14,6,2025,10,10,14,6,2025,12,12,1749865912
 Casa
-Actividad Social
-10,10,2025,10,10,11,11,2025,11,11,1749843587
 Fin de calendario

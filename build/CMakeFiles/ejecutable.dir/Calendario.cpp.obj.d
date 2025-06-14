@@ -132,4 +132,6 @@ CMakeFiles/ejecutable.dir/Calendario.cpp.obj: \
  C:\Users\Usuario\Desktop\UCR\3er\ Sem\Progra\ ll\Evaluaciones\Proyecto\ \#2_CalendarPro\Proyecto_Progra02\Reunion.h \
  C:\Users\Usuario\Desktop\UCR\3er\ Sem\Progra\ ll\Evaluaciones\Proyecto\ \#2_CalendarPro\Proyecto_Progra02\CitaPersonal.h \
  C:\Users\Usuario\Desktop\UCR\3er\ Sem\Progra\ ll\Evaluaciones\Proyecto\ \#2_CalendarPro\Proyecto_Progra02\ActividadSocial.h \
- C:\Users\Usuario\Desktop\UCR\3er\ Sem\Progra\ ll\Evaluaciones\Proyecto\ \#2_CalendarPro\Proyecto_Progra02\EventoDiario.h
+ C:\Users\Usuario\Desktop\UCR\3er\ Sem\Progra\ ll\Evaluaciones\Proyecto\ \#2_CalendarPro\Proyecto_Progra02\EventoDiario.h \
+ C:\Users\Usuario\Desktop\UCR\3er\ Sem\Progra\ ll\Evaluaciones\Proyecto\ \#2_CalendarPro\Proyecto_Progra02\ListaUsuario.h \
+ C:\Users\Usuario\Desktop\UCR\3er\ Sem\Progra\ ll\Evaluaciones\Proyecto\ \#2_CalendarPro\Proyecto_Progra02\Usuario.h

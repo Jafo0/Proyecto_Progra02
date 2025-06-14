@@ -23,6 +23,7 @@ class Reunion : public Reservacion{
         Usuario* getOrganizador();
         void setListaInvitados(ListaUsuario*);
         void setLugar(string);
+        ListaUsuario* getListaInv();
 
         //Otros métodos
         void imprimirReservacion(int)  override;

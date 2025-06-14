@@ -1,0 +1,8 @@
+Fin de calendario
+Fin de calendario
+Reunion
+14,6,2025,10,10,14,6,2025,12,12,1749865912
+Casa
+IdOrganizador, <Hace falta agregarlo en Reunion.cpp>
+Ids invitados, <Hace falta agregarlo en Reunion.cpp>
+Fin de calendario

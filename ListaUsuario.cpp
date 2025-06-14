@@ -129,7 +129,7 @@ void ListaUsuario::imprimir(string encabezado1, string encabezado2){
 }
 
 void ListaUsuario::imprimirIDS(){
-    cout<<"\033[33m"<<"Ids asociados: ";
+    // cout<<"\033[33m"<<"Ids asociados: ";
     if(this->head){
         Nodo* actual = this->head;
         while(actual != nullptr){
