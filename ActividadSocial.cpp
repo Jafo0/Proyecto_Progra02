@@ -33,3 +33,7 @@ void ActividadSocial::escribirReservacionArchivo(std::ofstream& archivo, ofstrea
     this->escribirIdYFechas(archivoOtro);
     archivoOtro<<"IdsOrganizadores, "<<"<Hace falta agregarlo en ActividadSocial.cpp>"<<endl;
 }
+
+void ActividadSocial::eliminarParaOrganizadores(){
+    this->lista_org->eliminar(this->idReservacion);
+}

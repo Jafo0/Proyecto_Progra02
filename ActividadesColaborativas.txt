@@ -1,8 +1,5 @@
-Actividad Social
-7,7,2025,7,7,8,8,2025,8,8,1749874065
-IdsOrganizadores, <Hace falta agregarlo en ActividadSocial.cpp>
 Fin de calendario
 Actividad Social
-7,7,2025,7,7,8,8,2025,8,8,1749874065
+7,7,2025,7,7,8,8,2025,8,8,1749877216
 IdsOrganizadores, <Hace falta agregarlo en ActividadSocial.cpp>
 Fin de calendario

@@ -114,6 +114,14 @@ void ListaUsuario::eliminarContribuidorPorID(int id){  //Para eliminar contribui
     }  
 }
 
+void ListaUsuario::eliminar(time_t idReservacion){
+    ListaUsuario::Nodo* temp = this->head;
+    while(temp){
+        temp->getUsuario()->getCalendario()->eliminarReservacion(idReservacion);
+        temp = temp->getNext();
+    }
+}
+
 void ListaUsuario::imprimir(string encabezado1, string encabezado2){
     if(!this->head){    //No hay usuarios
         cout<<"\033[33m"<<encabezado1<<"\033[0m"<<endl;

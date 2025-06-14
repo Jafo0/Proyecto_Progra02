@@ -315,7 +315,39 @@ void Calendario::ordenarReservacion(Reservacion* nueva_reservacion){
     this->cantidadReservaciones++;   
 }
 
-void Calendario::eliminarReservacion(int posicion){
+Reservacion* Calendario::obtenerReservacionPorPosicion(int posicion){
+    if(this->primeraReservacion){  //Tenemos al menos una reservación
+        if(posicion == 1){          //Quiero eliminar mi primera reservacion
+            Nodo* cabeza_antigua = this->primeraReservacion;
+            this->primeraReservacion = this->primeraReservacion->getNodoSiguiente();
+            delete cabeza_antigua;
+        }else{
+            Nodo* temp = this->primeraReservacion;     //Guardamos la primera reservacion en nodo temporal.
+            int i = 1;
+            while(i < posicion-1){
+                temp = temp->getNodoSiguiente();
+                i++;
+            }
+            Nodo* aux = temp->getNodoSiguiente();   //El nodo auxiliar es el que queremos borrar
+            return aux->getReservacion();
+        }
+    }
+}
+
+string Calendario::posicionEs(int posicion){
+    Nodo* temp = this->primeraReservacion;
+    int contador{1};
+    while(temp){
+        if(contador == posicion){
+            return temp->getReservacion()->getTipo();
+        }
+        temp = temp->getNodoSiguiente();
+        contador++;
+    }
+    return "";
+}
+
+void Calendario::eliminarReservacionIndividual(int posicion){
     if(this->primeraReservacion){  //Tenemos al menos una reservación
         if(posicion == 1){          //Quiero eliminar mi primera reservacion
             Nodo* cabeza_antigua = this->primeraReservacion;
@@ -331,6 +363,41 @@ void Calendario::eliminarReservacion(int posicion){
             Nodo* aux = temp->getNodoSiguiente();   //El nodo auxiliar es el que queremos borrar
             temp->setNodoSiguiente(temp->getNodoSiguiente()->getNodoSiguiente());
             delete aux;
+        }
+        this->cantidadReservaciones--; 
+    }
+}
+
+void Calendario::eliminarReservacionSocial(int posicion, int idOrganizador){
+    if(this->primeraReservacion){  //Tenemos al menos una reservación
+        if(posicion == 1){          //Quiero eliminar mi primera reservacion
+            Nodo* cabeza_antigua = this->primeraReservacion;
+            this->primeraReservacion = this->primeraReservacion->getNodoSiguiente();
+            if(cabeza_antigua->getReservacion()->getTipo() == "ActividadSocial"){
+                ActividadSocial* reservacion = static_cast<ActividadSocial*>(cabeza_antigua->getReservacion());
+                reservacion->eliminarParaOrganizadores();
+
+            }else{  //Soy reunion
+                //si soy organizador: eliminar para todos
+                //Sino solo para mi
+            }
+            //En este ifelse eliminamos la reservación de las listas
+        }else{
+            Nodo* temp = this->primeraReservacion;     //Guardamos la primera reservacion en nodo temporal.
+            int i = 1;
+            while(i < posicion-1){
+                temp = temp->getNodoSiguiente();
+                i++;
+            }
+            Nodo* aux = temp->getNodoSiguiente();   //El nodo auxiliar es el que queremos borrar
+            temp->setNodoSiguiente(temp->getNodoSiguiente()->getNodoSiguiente());
+            if(aux->getReservacion()->getTipo() == "ActividadSocial"){
+                ActividadSocial* reservacion = static_cast<ActividadSocial*>(aux->getReservacion());
+                reservacion->eliminarParaOrganizadores();
+            }else{  //Soy Reunion
+                //si soy organizador: eliminar para todos
+                //Sino solo para mi
+            }
         }
         this->cantidadReservaciones--; 
     }

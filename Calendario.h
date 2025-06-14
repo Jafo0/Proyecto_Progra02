@@ -69,7 +69,10 @@ class Calendario {
         void crearReservacion(Usuario*,ListaUsuario*);        //le llega un puntero a usuario
         ListaUsuario* printParaAgregarId(Usuario*,ListaUsuario*);           //print para agregar el id
         void ordenarReservacion(Reservacion*);
-        void eliminarReservacion(int);
+        Reservacion* obtenerReservacionPorPosicion(int);
+        string posicionEs(int);
+        void eliminarReservacionIndividual(int);
+        void eliminarReservacionSocial(int, int);
         void eliminarReservacion(time_t);
         
         //Lectura y escritura del archivo

@@ -39,6 +39,7 @@ public:
     void agregarUsuario(Usuario*);
     Usuario* UsuarioPorID(int); //Le doy un id y me devuelve un Usuario*
     void eliminarContribuidorPorID(int); //Esto es para eliminar contribuidores
+    void eliminar(time_t);
 
     //Para visualizar la lista:
     void imprimir(string, string);

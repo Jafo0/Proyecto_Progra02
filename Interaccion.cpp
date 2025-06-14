@@ -167,7 +167,12 @@ void Interaccion::realizarAccionContribuidor(){
                         cout<<"\033[33m"<<"Ingrese el numero de reservacion que desea eliminar [1,"<<this->usuarioActivo->getCalendario()->getCantidadReservaciones()<<"]: "<<"\033[0m";
                         getline(cin,posicion);
                     }while(!numero_entero_dentro_de_rango(1,this->usuarioActivo->getCalendario()->getCantidadReservaciones(), posicion));
-                    this->usuarioActivo->getCalendario()->eliminarReservacion(stoi(posicion));
+                    
+                    if(this->usuarioActivo->getCalendario()->posicionEs(stoi(posicion)) == "Reunion" ||this->usuarioActivo->getCalendario()->posicionEs(stoi(posicion)) == "ActividadSocial"){
+                        this->usuarioActivo->getCalendario()->eliminarReservacionSocial(stoi(posicion), this->usuarioActivo->getID()); 
+                    }else{
+                        this->usuarioActivo->getCalendario()->eliminarReservacionIndividual(stoi(posicion)); 
+                    }
                     cout<< "\033[32m"<<"\nReservacion eliminada exitosamente\n"<<"\033[0m" << endl;
                 }else{
                     cout << "\033[31m"<<"\nNo tiene reservaciones en su calendario\n"<<"\033[0m" << endl;
@@ -204,7 +209,6 @@ void Interaccion::realizarAccionContribuidor(){
                 }
                 break;
             }case 7:
-            
                 cout<<"\033[33m"<<"Cerrando sesion..."<<"\033[0m"<<endl;
                 salir = true;   //Cerrar sesion
                 this->usuarioActivo = nullptr;
@@ -236,7 +240,11 @@ void Interaccion::realizarAccionManager(){
                         cout<<"\033[33m"<<"Ingrese el numero de reservacion que desea eliminar [1,"<<this->usuarioActivo->getCalendario()->getCantidadReservaciones()<<"]: "<<"\033[0m";
                         getline(cin,posicion);
                     }while(!numero_entero_dentro_de_rango(1,this->usuarioActivo->getCalendario()->getCantidadReservaciones(), posicion));
-                    this->usuarioActivo->getCalendario()->eliminarReservacion(stoi(posicion));
+                    if(this->usuarioActivo->getCalendario()->posicionEs(stoi(posicion)) == "Reunion" ||this->usuarioActivo->getCalendario()->posicionEs(stoi(posicion)) == "ActividadSocial"){
+                        this->usuarioActivo->getCalendario()->eliminarReservacionSocial(stoi(posicion)); 
+                    }else{
+                        this->usuarioActivo->getCalendario()->eliminarReservacionIndividual(stoi(posicion)); 
+                    }
                     cout<< "\033[32m"<<"\nReservacion eliminada exitosamente\n"<<"\033[0m" << endl;
                 }else{
                     cout << "\033[31m"<<"\nNo tiene reservaciones en su calendario\n"<<"\033[0m" << endl;
