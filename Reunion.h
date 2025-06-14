@@ -15,7 +15,7 @@ class Reunion : public Reservacion{
         //Constructores y destructores
         Reunion(struct tm, struct tm, std::string);
         Reunion(struct tm, struct tm, std::string, time_t);
-        Reunion(struct tm, struct tm, std::string,Usuario*); //constructor al que le llega el usuario
+        Reunion(struct tm, struct tm, std::string,Usuario*,ListaUsuario*); //constructor al que le llega el usuario
         ~Reunion();
 
         //Setters y getters
@@ -31,7 +31,7 @@ class Reunion : public Reservacion{
 
         //Para guardar en archivo
         void escribirReservacionArchivo(ofstream&, ofstream&) override; //Varía según el tipo de reservación
-
+      
 };
 
 #endif  // REUNION_H

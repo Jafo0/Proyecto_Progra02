@@ -160,7 +160,7 @@ void Interaccion::realizarAccionContribuidor(){
                 break;
             case 3:
 
-                this->usuarioActivo->getCalendario()->crearReservacion(this->usuarioActivo);
+                this->usuarioActivo->getCalendario()->crearReservacion(this->usuarioActivo,this->usuariosRegistrados);
                 break;
             case 4:{ 
                 if(this->usuarioActivo->getCalendario()->getCantidadReservaciones() != 0){
@@ -185,7 +185,7 @@ void Interaccion::realizarAccionContribuidor(){
                     }while(!numero_entero_dentro_de_rango(1,this->usuarioActivo->getCalendario()->getCantidadReservaciones(), i));
 
                     this->usuarioActivo->getCalendario()->eliminarReservacion(stoi(i));
-                    this->usuarioActivo->getCalendario()->crearReservacion(usuarioActivo);
+                    this->usuarioActivo->getCalendario()->crearReservacion(this->usuarioActivo,this->usuariosRegistrados);
                 }
                 break;
             }case 6:{
@@ -230,7 +230,7 @@ void Interaccion::realizarAccionManager(){
                 cout<<"2. Ver invitaciones pendientes"<<endl;
                 break;
             case 3:
-                this->usuarioActivo->getCalendario()->crearReservacion(this->usuarioActivo);
+                this->usuarioActivo->getCalendario()->crearReservacion(this->usuarioActivo,this->usuariosRegistrados);
                 break;
             case 4:{
                 if(this->usuarioActivo->getCalendario()->getCantidadReservaciones() != 0){
@@ -255,7 +255,7 @@ void Interaccion::realizarAccionManager(){
                     }while(!numero_entero_dentro_de_rango(1,this->usuarioActivo->getCalendario()->getCantidadReservaciones(), i));
 
                     this->usuarioActivo->getCalendario()->eliminarReservacion(stoi(i));
-                    this->usuarioActivo->getCalendario()->crearReservacion(this->usuarioActivo);
+                    this->usuarioActivo->getCalendario()->crearReservacion(this->usuarioActivo,this->usuariosRegistrados);
                 }
                 break;
             }case 6:{

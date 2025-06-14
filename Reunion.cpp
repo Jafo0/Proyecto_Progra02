@@ -2,14 +2,11 @@
 #include "ListaUsuario.h"
 #include "Usuario.h"
 
-Reunion::Reunion(struct tm _fechaInicio, struct tm _fechaFin, std::string _lugar) 
-        : Reservacion(_fechaInicio, _fechaFin), lugar(_lugar){}
-
 Reunion::Reunion(struct tm _fechaInicio, struct tm _fechaFin, std::string _lugar, time_t _idReservacion) 
         : Reservacion(_fechaInicio, _fechaFin, _idReservacion), lugar(_lugar){}
 
-Reunion::Reunion(struct tm _fechaInicio, struct tm _fechaFin, std::string _lugar,Usuario* user) 
-        : Reservacion(_fechaInicio, _fechaFin), lugar(_lugar), organizador(user){}
+Reunion::Reunion(struct tm _fechaInicio, struct tm _fechaFin, std::string _lugar,Usuario* user,ListaUsuario* listus) 
+        : Reservacion(_fechaInicio, _fechaFin), lugar(_lugar), organizador(user), lista_invitados(listus){}
         //aun no se imprime este puntero a usuario
 
 Reunion::~Reunion(){}
@@ -27,15 +24,19 @@ void Reunion::imprimirReservacion(int posicion)  {
     cout<<"Reservacion #"<<posicion<<": "<<endl;
     cout<<this->getFecha(this->fechaInicio)<<" -> "<<this->getFecha(this->fechaFin)    //Obtengo las fechas
         <<" | "<<"Reunion"<<" | "<<this->lugar<<" | "
-        << "Organizador: "<<endl;
+        << "Id organizador: ";
         
         if(this->organizador != nullptr){
-            
+
             cout<<this->getOrganizador()->getID();
         }else{
             cout<<"--";
         }
+        /*
+        cout<<" | " << "Lista de Invitados: ";
+        cout << this->getListaInv()->imprimirIDS();
         cout<<endl;
+        */
 }
 
 void Reunion::imprimirReservacionOculta(int posicion) {

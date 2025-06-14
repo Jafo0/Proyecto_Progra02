@@ -1,4 +1,5 @@
 #include "Calendario.h"
+#include "ListaUsuario.h"
 
 Calendario::Nodo::Nodo(Reservacion* _reservacion, Nodo* _nodoSiguiente) : reservacion(_reservacion), nodoSiguiente(_nodoSiguiente){}
 
@@ -191,7 +192,7 @@ int Calendario::menuReservaciones() const{
     }   
 }
 
-void Calendario::crearReservacion(Usuario* usuarioActivo){
+void Calendario::crearReservacion(Usuario* usuarioActivo, ListaUsuario* usuariosRegistrados){
     int tipo_reservacion = this->menuReservaciones(); //Indico qué reservación quiero
     struct tm fechaInicio {}, fechaFin {}; 
 
@@ -217,7 +218,9 @@ void Calendario::crearReservacion(Usuario* usuarioActivo){
                     getline(cin, lugar);
                     if(texto_no_vacio_sin_espacios(lugar)){break;}
                 }
-                reservacion = new Reunion(fechaInicio, fechaFin, lugar, usuarioActivo); 
+                ListaUsuario* participantes = new ListaUsuario();
+                participantes = printParaAgregarId(usuarioActivo,usuariosRegistrados);
+                reservacion = new Reunion(fechaInicio, fechaFin, lugar, usuarioActivo,participantes); 
                 break;
             }case 2:
                 reservacion = new CitaPersonal(fechaInicio, fechaFin);
@@ -239,29 +242,55 @@ void Calendario::crearReservacion(Usuario* usuarioActivo){
     }
 }
     
-void Calendario::printParaAgregarId(){//podria retornar ListaUsuarios*,
+ListaUsuario* Calendario::printParaAgregarId(Usuario* usuarioActivo,ListaUsuario* usuariosRegistrados){//podria retornar ListaUsuarios*,
     //que esta sea la lista que entra como parametro para la reunion / actividad
     string id;
     string cantidad;
-
+    ListaUsuario* aux = new ListaUsuario();
     while(true){
-        cout<<"Cuantos asistentes desea agregar?"<<endl;
+        cout<<"Cuantos asistentes desea agregar?: ";
         getline(cin,cantidad);
-        if(numero_entero_sin_rango(cantidad)){
-            int numAsistente = stoi(cantidad);
-            if(numAsistente == 0){
-                cout<<"\033[31m"<<"\nnumero invalido\n"<<"\033[0m"<<endl;
-                break;
-            }
-            for(int i=0;i<stoi(cantidad);i++){
-                cout<<"Ingrese Id de los asistentes / organizadores, #id"<< (i+1) <<endl;
-                getline(cin,id);
-                if(numero_entero_sin_rango(id)){
-                    
-                }
 
+        if(!numero_entero_sin_rango(cantidad)){
+            cout<<"\033[31m"<<"\nError: numero invalido\n"<<"\033[0m"<<endl;
+            continue;
+        }
+        int numAsistente = stoi(cantidad);
+        if(numAsistente == 0){
+            delete aux;
+            return nullptr;
+        }
+        if(numAsistente < 0) {
+            cout << "\033[31mError: El número debe ser positivo\033[0m" << endl;
+            continue;
+        }
+
+        for(int i=0;i<stoi(cantidad);i++){
+            cout<<"Ingrese Id de los asistentes / organizadores, #id"<< (i+1) <<": ";
+            getline(cin,id);
+            if(!numero_entero_sin_rango(id)) {
+                cout << "\033[31mError: ID debe ser numérico\033[0m" << endl;
+                i--; // Repeat this iteration
+                continue;
+            
+            }
+            int idNum = stoi(id);
+            if(usuarioActivo->getID() == idNum) {
+                cout << "\033[31mError: No puede agregarse a sí mismo\033[0m" << endl;
+                i--;
+                continue;
+            }
+            if(!usuariosRegistrados->comprobarID(idNum)) {
+                cout << "\033[31mError: ID no encontrado\033[0m" << endl;
+                i--;
+                continue;
+            }
+            Usuario* usuario = usuariosRegistrados->UsuarioPorID(idNum);
+            if(usuario && !aux->comprobarID(idNum)) {
+                aux->agregarUsuario(usuario);
             }
         }
+        return aux;
     }
 }
 
