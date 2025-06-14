@@ -222,7 +222,7 @@ void Calendario::crearReservacion(Usuario* usuarioActivo, ListaUsuario* usuarios
                 }
                 ListaUsuario* participantes = new ListaUsuario();
                 participantes = printParaAgregarId(usuarioActivo,usuariosRegistrados);
-                reservacion = new Reunion(fechaInicio, fechaFin, lugar, usuarioActivo,participantes); 
+                reservacion = new Reunion(fechaInicio, fechaFin, lugar, usuarioActivo, participantes); 
                 break;
             }case 2:
                 reservacion = new CitaPersonal(fechaInicio, fechaFin);
@@ -230,8 +230,7 @@ void Calendario::crearReservacion(Usuario* usuarioActivo, ListaUsuario* usuarios
             case 3:{
                 ListaUsuario* orga = new ListaUsuario();
                 orga = printParaAgregarId(usuarioActivo,usuariosRegistrados);
-                orga->agregarUsuario(usuarioActivo); //de esta manera ya anade al que crea la reunion
-                reservacion = new ActividadSocial(fechaInicio, fechaFin, orga);
+                reservacion = new ActividadSocial(fechaInicio, fechaFin,usuarioActivo, orga);
                 break;}
             case 4:
                 reservacion = new EventoDiario(fechaInicio, fechaFin);
@@ -253,7 +252,7 @@ ListaUsuario* Calendario::printParaAgregarId(Usuario* usuarioActivo,ListaUsuario
     int contador =1;
     ListaUsuario* aux = new ListaUsuario();
     while(true){
-        if(contador>(usuarioActivo->contadorId-1)){ //si es mayor que la cantidad de ids que se han creado
+        if(contador>usuarioActivo->contadorId){ //si es mayor que la cantidad de ids que se han creado
             cout << "\033[31mLimite de usuarios creados alcanzado\033[0m" << endl;
             return aux;
         }
@@ -267,18 +266,17 @@ ListaUsuario* Calendario::printParaAgregarId(Usuario* usuarioActivo,ListaUsuario
         int idNum=stoi(id);
         if(idNum==-1){
             break;
-        }
-        if(usuarioActivo->getID() == stoi(id)) {
+        }else if(usuarioActivo->getID() == stoi(id)) {
             cout << "\033[31mError: No puede agregarse a si mismo\033[0m" << endl;
             // repetir
             continue;
-        }
-
-        Usuario* usuario = usuariosRegistrados->UsuarioPorID(idNum);
-        if(usuario && !aux->comprobarID(idNum)){
-            aux->agregarUsuario(usuario);
-            contador++;
-            continue;
+        }else{
+            Usuario* usuario = usuariosRegistrados->UsuarioPorID(idNum);
+            if(usuario && !aux->comprobarID(idNum)){
+                aux->agregarUsuario(usuario);
+                contador++;
+                continue;
+            }
         }
     }
     return aux;
@@ -335,6 +333,23 @@ void Calendario::eliminarReservacion(int posicion){
             delete aux;
         }
         this->cantidadReservaciones--; 
+    }
+}
+
+void Calendario::eliminarReservacion(time_t idReservacion){
+    if(this->primeraReservacion){  //Tenemos al menos una reservación
+        if(this->primeraReservacion->getReservacion()->getIdReservacion() == idReservacion){ 
+            Nodo* cabeza_antigua = this->primeraReservacion;
+            this->primeraReservacion = this->primeraReservacion->getNodoSiguiente();
+        }else{  //Quiero eliminar alguna
+            Nodo* temp = this->primeraReservacion;     //Guardamos la primera reservacion en nodo temporal.
+            while(temp->getNodoSiguiente()){
+                if(temp->getNodoSiguiente()->getReservacion()->getIdReservacion() == idReservacion){ 
+                    temp->setNodoSiguiente(temp->getNodoSiguiente()->getNodoSiguiente());
+                }
+                temp = temp->getNodoSiguiente();
+            }
+        }
     }
 }
 
@@ -436,4 +451,38 @@ void Calendario::leerDeArchivo(std::ifstream& archivo){
             this->ordenarReservacion(nuevaReservacion);  //La ordenamos en nuestro calendario
         }
     } 
+}
+
+//Esto lo llama mi calendario invitaciones y recibe el calendario usuario
+void Calendario::revisarInvitaciones(Calendario* calendarioUsuario){
+    string decision;
+    Nodo* temp = this->primeraReservacion;
+    int i {1};
+    while(temp){
+        temp->getReservacion()->imprimirReservacion(i);
+        do{
+            cout<<"1. Aceptar"<<endl;
+            cout<<"2. Omitir"<<endl;
+            cout<<"Ingrese la accion por realizar: ";
+            getline(cin, decision);
+        }while(!numero_entero_dentro_de_rango(1,2,decision));  
+
+        switch (stoi(decision)){
+            case 1: //Agregamos la invitacion
+                if(!calendarioUsuario->choqueConCalendario(temp->getReservacion()->getFechaInicio(), temp->getReservacion()->getFechaFin())){
+                    calendarioUsuario->ordenarReservacion(temp->getReservacion());
+                    //La elimino de mi calendario de invitaciones
+                    this->eliminarReservacion(temp->getReservacion()->getIdReservacion());
+                    cout<< "\033[33m"<<"\nReservacion agregada con exito\n"<<"\033[0m" << endl;
+                }else{
+                    cout<< "\033[31m"<<"\nLa reservacion no pudo ser agregada ya que choca con otra fecha del calendario. Se mantiene como pendiente\n"<<"\033[0m" << endl;
+                }
+                break;
+            default: // Caso 2 (o default): Omitimos
+                break;
+        }
+        temp = temp->getNodoSiguiente();
+    }
+    cout<< "\033[32m"<<"\nNo hay mas reservaciones pendientes\n"<<"\033[0m" << endl;
+    
 }

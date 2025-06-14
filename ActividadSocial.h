@@ -3,14 +3,16 @@
 
 #include "Reservacion.h"
 class ListaUsuario;
+class Usuario;
 class ActividadSocial : public Reservacion {
     protected:
+        Usuario* organizador{nullptr};
         ListaUsuario* lista_org{nullptr};
         std::string lugar {"sala de uso comun"};
     public:
         //Constructores destructores
         ActividadSocial(struct tm, struct tm, time_t);
-        ActividadSocial(struct tm, struct tm, ListaUsuario*); //nuevo constructor
+        ActividadSocial(struct tm, struct tm, Usuario*, ListaUsuario*); //nuevo constructor
         ~ActividadSocial();
 
         //Otros métodos

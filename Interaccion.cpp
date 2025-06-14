@@ -155,10 +155,9 @@ void Interaccion::realizarAccionContribuidor(){
                 this->usuarioActivo->getCalendario()->imprimirCalendarioCompleto();
                 break;
             case 2:
-                this->usuarioActivo->getInvitaciones()->imprimirCalendarioCompleto();
+                this->usuarioActivo->revisarInvitaciones();
                 break;
             case 3:
-
                 this->usuarioActivo->getCalendario()->crearReservacion(this->usuarioActivo,this->usuariosRegistrados);
                 break;
             case 4:{ 
@@ -225,7 +224,7 @@ void Interaccion::realizarAccionManager(){
                 this->usuarioActivo->getCalendario()->imprimirCalendarioCompleto();
                 break;
             case 2:
-                this->usuarioActivo->getInvitaciones()->imprimirCalendarioCompleto();
+                this->usuarioActivo->revisarInvitaciones();
                 break;
             case 3:
                 this->usuarioActivo->getCalendario()->crearReservacion(this->usuarioActivo,this->usuariosRegistrados);

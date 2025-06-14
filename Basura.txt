@@ -13,4 +13,4 @@ Evento Diario
 10,10,2025,0,0,11,10,2025,0,0
 Fin de calendario
 
-cout<< "\033[32m"<<"\nLLEGUE AL FINAL DEL WHILE\n"<<"\033[0m" << endl;
+cout<< "\033[32m"<<"\nAMARILLO\n"<<"\033[0m" << endl;

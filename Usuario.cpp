@@ -35,4 +35,12 @@ std::string Usuario::infoUsuario() const{
     return puesto + "," + nombre + "," + std::to_string(cedula) + "," + nomUsuario + "," + contrasena + "," + std::to_string(id);
 }
 
+void Usuario::revisarInvitaciones(){
+    if(this->invitaciones){
+        this->invitaciones->revisarInvitaciones(this->calendario);
+    }else{
+        cout<< "\033[32m"<<"\nNo hay invitaciones pendientes\n"<<"\033[0m" << endl;
+    }
+}
+
 Calendario* Usuario::getInvitaciones() {return this->invitaciones;}

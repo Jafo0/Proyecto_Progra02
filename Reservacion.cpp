@@ -16,6 +16,8 @@ void Reservacion::setFechaInicio(struct tm _fechaInicio){this->fechaInicio = _fe
 
 void Reservacion::setFechaFin(struct tm _fechaFin){this->fechaFin = _fechaFin;}
 
+time_t Reservacion::getIdReservacion(){return this->idReservacion;}
+
 string Reservacion::getFecha( struct tm& fecha) {
     char fecha_formateada[17];  // Suficiente para "dd/mm/yyyy HH:MM" + '\0'
     strftime(fecha_formateada, sizeof(fecha_formateada), "%d/%m/%Y %H:%M", &fecha);

@@ -70,6 +70,7 @@ class Calendario {
         ListaUsuario* printParaAgregarId(Usuario*,ListaUsuario*);           //print para agregar el id
         void ordenarReservacion(Reservacion*);
         void eliminarReservacion(int);
+        void eliminarReservacion(time_t);
         
         //Lectura y escritura del archivo
         void escribirEnArchivo(ofstream&, ofstream&) const; //guardar en archivo calendario
@@ -79,6 +80,9 @@ class Calendario {
         Reservacion* leerEventoDiarioDeArchivo(ifstream&);
         Reservacion* leerCitaPersonalDeArchivo(ifstream&);
         void leerDeArchivo(ifstream&);
+
+        //Para las invitaciones
+        void revisarInvitaciones(Calendario*);
 };
 
 #endif  // CALENDARIO_H

@@ -20,6 +20,7 @@ class Reservacion {
         struct tm& getFechaFin(); 
         void setFechaInicio(struct tm);
         void setFechaFin(struct tm);
+        time_t getIdReservacion();
 
         //Para visualizar
         virtual void imprimirReservacion(int) = 0;     //Imprime la reservación con todos sus detalles

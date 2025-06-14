@@ -13,13 +13,6 @@ Usuario* ListaUsuario::Nodo::getUsuario() const{return this->usuario;}
 
 void ListaUsuario::Nodo::setUsuario(Usuario* _usuario){this->usuario = _usuario;}
 
-// ListaUsuario::ListaUsuario(std::ifstream& archivo) {
-//     std::string linea;
-//     while (std::getline(archivo, linea)) {
-//         std::cout << linea << std::endl;
-//     }
-// }
-
 ListaUsuario::ListaUsuario(){}
 
 ListaUsuario::~ListaUsuario(){

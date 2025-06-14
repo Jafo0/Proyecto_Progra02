@@ -1,7 +1,8 @@
+Actividad Social
+7,7,2025,7,7,8,8,2025,8,8,1749874065
+IdsOrganizadores, <Hace falta agregarlo en ActividadSocial.cpp>
 Fin de calendario
-Reunion
-8,8,2025,8,8,9,9,2025,9,9,1749868863
-1
-IdOrganizador, <Hace falta agregarlo en Reunion.cpp>
-Ids invitados, <Hace falta agregarlo en Reunion.cpp>
+Actividad Social
+7,7,2025,7,7,8,8,2025,8,8,1749874065
+IdsOrganizadores, <Hace falta agregarlo en ActividadSocial.cpp>
 Fin de calendario

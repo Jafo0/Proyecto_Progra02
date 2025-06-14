@@ -41,6 +41,7 @@ public:
     //Otros métodos
     virtual void imprimir(std::string) = 0;
     std::string infoUsuario() const;
+    void revisarInvitaciones();
 
     //Para escribir y leer de archivos
     virtual void escribirEnArchivo(ofstream&, ofstream&) = 0;
