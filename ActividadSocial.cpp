@@ -15,7 +15,18 @@ void ActividadSocial::imprimirReservacion(int posicion) {
     cout<<std::setfill('-')<<std::setw(80)<<""<<endl;
     cout<<"Reservacion #"<<posicion<<": "<<endl;
     cout<<this->getFecha(this->fechaInicio)<<" -> "<<this->getFecha(this->fechaFin)
-        <<" | "<<"Actividad Social"<<" | "<<"Sala de uso comun"<<endl;
+        <<" | "<<"Actividad Social"<<" | "<<"Sala de uso comun"
+
+        << "Id Creador: ";
+        
+        if(this->organizador != nullptr){
+            cout<<this->organizador->getID();
+        }else{
+            cout<<"--";
+        }
+        cout<<" | " << "Lista de Invitados: ";
+        this->lista_org->imprimirIDS();
+        cout<<endl;
 }
 
 void ActividadSocial::imprimirReservacionOculta(int posicion) {
@@ -34,6 +45,11 @@ void ActividadSocial::escribirReservacionArchivo(std::ofstream& archivo, ofstrea
     archivoOtro<<"IdsOrganizadores, "<<"<Hace falta agregarlo en ActividadSocial.cpp>"<<endl;
 }
 
-void ActividadSocial::eliminarParaOrganizadores(){
+void ActividadSocial::eliminarParaOrganizadores(int idOrganizadorQueElimina){
+    if(idOrganizadorQueElimina == this->organizador->getID()){
+        this->organizador->getCalendario()->eliminarReservacion(this->idReservacion);
+    }
+    cout<< "\033[32m"<<"\nAMARILLO\n"<<"\033[0m" << endl;
     this->lista_org->eliminar(this->idReservacion);
+    this->lista_org = new ListaUsuario();
 }

@@ -6,6 +6,7 @@ Manager
 man,0,man,¢–£,0
 Ids asociados,No hay ids asociados
 Calendario: 
-Actividad Social
-7,7,2025,7,7,8,8,2025,8,8,1749877216
+Reunion
+7,7,2025,7,7,8,8,2025,8,8,1749879337
+Casa
 Fin de calendario

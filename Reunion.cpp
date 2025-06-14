@@ -64,3 +64,12 @@ void Reunion::escribirReservacionArchivo(std::ofstream& archivo, ofstream& archi
     archivoOtro<<"IdOrganizador, "<<"<Hace falta agregarlo en Reunion.cpp>"<<endl;
     archivoOtro<<"Ids invitados, "<<"<Hace falta agregarlo en Reunion.cpp>"<<endl; 
 }
+
+void Reunion::eliminarInvitados(){
+    this->lista_invitados->eliminar(this->idReservacion);
+    this->lista_invitados = new ListaUsuario();
+}
+
+void Reunion::eliminarInvitado(int idQueElimina){
+    this->lista_invitados->eliminarContribuidorPorID(idQueElimina);
+}

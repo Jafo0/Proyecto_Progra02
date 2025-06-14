@@ -19,7 +19,7 @@ class ActividadSocial : public Reservacion {
         void imprimirReservacion(int)  override;
         void imprimirReservacionOculta(int)  override; 
         void escribirReservacionArchivo(std::ofstream&, ofstream&)  override;
-        void eliminarParaOrganizadores();
+        void eliminarParaOrganizadores(int);
 };
 
 #endif  // ACTIVIDAD_SOCIAL_H

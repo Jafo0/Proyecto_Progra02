@@ -233,7 +233,7 @@ void Interaccion::realizarAccionManager(){
             case 3:
                 this->usuarioActivo->getCalendario()->crearReservacion(this->usuarioActivo,this->usuariosRegistrados);
                 break;
-            case 4:{
+            case 4:{ 
                 if(this->usuarioActivo->getCalendario()->getCantidadReservaciones() != 0){
                     string posicion;
                     do{
@@ -241,7 +241,7 @@ void Interaccion::realizarAccionManager(){
                         getline(cin,posicion);
                     }while(!numero_entero_dentro_de_rango(1,this->usuarioActivo->getCalendario()->getCantidadReservaciones(), posicion));
                     if(this->usuarioActivo->getCalendario()->posicionEs(stoi(posicion)) == "Reunion" ||this->usuarioActivo->getCalendario()->posicionEs(stoi(posicion)) == "ActividadSocial"){
-                        this->usuarioActivo->getCalendario()->eliminarReservacionSocial(stoi(posicion)); 
+                        this->usuarioActivo->getCalendario()->eliminarReservacionSocial(stoi(posicion), this->usuarioActivo->getID()); 
                     }else{
                         this->usuarioActivo->getCalendario()->eliminarReservacionIndividual(stoi(posicion)); 
                     }
