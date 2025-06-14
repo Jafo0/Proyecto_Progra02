@@ -35,6 +35,8 @@ public:
     void setCalendario(Calendario*);
     int getID() const;
     void setID(int);
+    Calendario* getInvitaciones();
+    
 
     //Otros métodos
     virtual void imprimir(std::string) = 0;

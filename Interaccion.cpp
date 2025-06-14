@@ -155,8 +155,7 @@ void Interaccion::realizarAccionContribuidor(){
                 this->usuarioActivo->getCalendario()->imprimirCalendarioCompleto();
                 break;
             case 2:
-                
-                cout<<"2. Ver invitaciones pendientes"<<endl;
+                this->usuarioActivo->getInvitaciones()->imprimirCalendarioCompleto();
                 break;
             case 3:
 
@@ -226,8 +225,7 @@ void Interaccion::realizarAccionManager(){
                 this->usuarioActivo->getCalendario()->imprimirCalendarioCompleto();
                 break;
             case 2:
-                
-                cout<<"2. Ver invitaciones pendientes"<<endl;
+                this->usuarioActivo->getInvitaciones()->imprimirCalendarioCompleto();
                 break;
             case 3:
                 this->usuarioActivo->getCalendario()->crearReservacion(this->usuarioActivo,this->usuariosRegistrados);

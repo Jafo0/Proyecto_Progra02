@@ -4,6 +4,7 @@ int Usuario::contadorId = 0;
 Usuario::Usuario(std::string nom, int ced, std::string nomUs,std::string pues, std::string pass, int id)
     :nombre(nom),cedula(ced), nomUsuario(nomUs),puesto(pues),contrasena(pass), id(id){
         this->calendario = new Calendario();
+        this->invitaciones = new Calendario();
         ++contadorId;
 }
 
@@ -33,3 +34,5 @@ void Usuario::setID(int _id){this->id = _id;}
 std::string Usuario::infoUsuario() const{
     return puesto + "," + nombre + "," + std::to_string(cedula) + "," + nomUsuario + "," + contrasena + "," + std::to_string(id);
 }
+
+Calendario* Usuario::getInvitaciones() {return this->invitaciones;}

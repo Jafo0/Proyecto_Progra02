@@ -30,6 +30,14 @@ ListaUsuario::~ListaUsuario(){
     }
 }
 
+void ListaUsuario::invitar(Reservacion* reservacion){
+    Nodo* temp = this->head;
+    while(temp){
+        temp->getUsuario()->getInvitaciones()->ordenarReservacion(reservacion);
+        temp = temp->getNext();
+    }
+}
+
 bool ListaUsuario::vacia(){return !this->head;}
 
 bool ListaUsuario::comprobarID(int id){

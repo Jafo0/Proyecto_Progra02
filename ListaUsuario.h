@@ -26,6 +26,9 @@ public:
     ListaUsuario();
     ~ListaUsuario();
 
+    //Getters
+    void invitar(Reservacion*);
+
     //Métodos para comprobar cosas
     bool vacia();
     bool comprobarID(int);
