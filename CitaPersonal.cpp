@@ -1,8 +1,8 @@
 #include "CitaPersonal.h"
 
-CitaPersonal::CitaPersonal(struct tm _fechaInicio, struct tm _fechaFin) : Reservacion(_fechaInicio, _fechaFin){}
+CitaPersonal::CitaPersonal(struct tm _fechaInicio, struct tm _fechaFin) : Reservacion(_fechaInicio, _fechaFin,"CitaPersonal"){}
 
-CitaPersonal::CitaPersonal(struct tm _fechaInicio, struct tm _fechaFin, time_t _idReservacion) : Reservacion(_fechaInicio, _fechaFin, _idReservacion){}
+CitaPersonal::CitaPersonal(struct tm _fechaInicio, struct tm _fechaFin, time_t _idReservacion) : Reservacion(_fechaInicio, _fechaFin, "CitaPersonal", _idReservacion){}
 
 CitaPersonal::~CitaPersonal(){}
 

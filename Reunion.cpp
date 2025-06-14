@@ -3,10 +3,10 @@
 #include "Usuario.h"
 
 Reunion::Reunion(struct tm _fechaInicio, struct tm _fechaFin, std::string _lugar, time_t _idReservacion) 
-        : Reservacion(_fechaInicio, _fechaFin, _idReservacion), lugar(_lugar){}
+        : Reservacion(_fechaInicio, _fechaFin, "Reunion",_idReservacion), lugar(_lugar){}
 
 Reunion::Reunion(struct tm _fechaInicio, struct tm _fechaFin, std::string _lugar,Usuario* user,ListaUsuario* listus) 
-        : Reservacion(_fechaInicio, _fechaFin), lugar(_lugar), organizador(user), lista_invitados(listus){
+        : Reservacion(_fechaInicio, _fechaFin,"Reunion"), lugar(_lugar), organizador(user), lista_invitados(listus){
             this->lista_invitados->invitar(this);
         }
         //aun no se imprime este puntero a usuario

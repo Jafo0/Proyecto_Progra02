@@ -1,16 +1,20 @@
 #include "Reservacion.h"
 
-Reservacion::Reservacion (struct tm _fechaInicio, struct tm _fechaFin) 
-        : fechaInicio(_fechaInicio), fechaFin(_fechaFin) {this->idReservacion = time(nullptr);}
+Reservacion::Reservacion (struct tm _fechaInicio, struct tm _fechaFin,string tipo_e) 
+        : fechaInicio(_fechaInicio), fechaFin(_fechaFin),tipo(tipo_e) {this->idReservacion = time(nullptr);}
 
-Reservacion::Reservacion (struct tm _fechaInicio, struct tm _fechaFin, time_t _idReservacion) 
-        : fechaInicio(_fechaInicio), fechaFin(_fechaFin), idReservacion(_idReservacion) {}
+Reservacion::Reservacion (struct tm _fechaInicio, struct tm _fechaFin,string tipo_e, time_t _idReservacion) 
+        : fechaInicio(_fechaInicio), fechaFin(_fechaFin),tipo(tipo_e), idReservacion(_idReservacion) {}
 
-Reservacion::~Reservacion () {}
+Reservacion::~Reservacion(){}
 
- struct tm& Reservacion::getFechaInicio ()  {return this->fechaInicio;}
+struct tm& Reservacion::getFechaInicio ()  {return this->fechaInicio;}
 
- struct tm& Reservacion::getFechaFin ()  {return this->fechaFin;}
+struct tm& Reservacion::getFechaFin ()  {return this->fechaFin;}
+
+std::string Reservacion::getTipo(){return this->tipo;} 
+
+void  Reservacion::setTipo(string tipo_e){this->tipo = tipo_e;}
 
 void Reservacion::setFechaInicio(struct tm _fechaInicio){this->fechaInicio = _fechaInicio;}
 

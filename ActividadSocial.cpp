@@ -3,11 +3,11 @@
 #include "Usuario.h"
 
 ActividadSocial::ActividadSocial(struct tm _fechaInicio, struct tm _fecha_fin, Usuario* _organizador, ListaUsuario* lista):
-Reservacion(_fechaInicio,_fecha_fin), organizador(_organizador), lista_org(lista){
+Reservacion(_fechaInicio,_fecha_fin,"ActividadSocial"), organizador(_organizador), lista_org(lista){
     this->lista_org->invitar(this);
 }
 
-ActividadSocial::ActividadSocial(struct tm _fechaInicio, struct tm _fecha_fin, time_t _idReservacion) : Reservacion(_fechaInicio, _fecha_fin, _idReservacion){}
+ActividadSocial::ActividadSocial(struct tm _fechaInicio, struct tm _fecha_fin, time_t _idReservacion) : Reservacion(_fechaInicio, _fecha_fin,"ActividadSocial", _idReservacion){}
 
 ActividadSocial::~ActividadSocial(){}
 

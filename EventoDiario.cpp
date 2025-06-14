@@ -1,8 +1,8 @@
 #include "EventoDiario.h"
 
-EventoDiario::EventoDiario(struct tm _fecha_inicio, struct tm _fecha_fin) : Reservacion(_fecha_inicio, _fecha_fin){}
+EventoDiario::EventoDiario(struct tm _fecha_inicio, struct tm _fecha_fin) : Reservacion(_fecha_inicio, _fecha_fin, "EventoDiario"){}
 
-EventoDiario::EventoDiario(struct tm _fecha_inicio, struct tm _fecha_fin, time_t _idReservacion) : Reservacion(_fecha_inicio, _fecha_fin, _idReservacion){}
+EventoDiario::EventoDiario(struct tm _fecha_inicio, struct tm _fecha_fin, time_t _idReservacion) : Reservacion(_fecha_inicio, _fecha_fin,"EventoDiario", _idReservacion){}
 
 EventoDiario::~EventoDiario(){}
 
