@@ -250,53 +250,38 @@ void Calendario::crearReservacion(Usuario* usuarioActivo, ListaUsuario* usuarios
 ListaUsuario* Calendario::printParaAgregarId(Usuario* usuarioActivo,ListaUsuario* usuariosRegistrados){//podria retornar ListaUsuarios*,
     //que esta sea la lista que entra como parametro para la reunion / actividad
     string id;
-    string cantidad;
+    int contador =1;
     ListaUsuario* aux = new ListaUsuario();
     while(true){
-        cout<<"Cuantos asistentes desea agregar?: ";
-        getline(cin,cantidad);
-
-        if(!numero_entero_sin_rango(cantidad)){
-            cout<<"\033[31m"<<"\nError: numero invalido\n"<<"\033[0m"<<endl;
+        if(contador>(usuarioActivo->contadorId-1)){ //si es mayor que la cantidad de ids que se han creado
+            cout << "\033[31mLimite de usuarios creados alcanzado\033[0m" << endl;
+            return aux;
+        }
+        cout<<"Ingrese Id de los asistentes / organizadores, #id "<< (contador) <<" (Ingrese -1 para salir): ";
+        getline(cin,id);
+        if(!numero_entero_sin_rango(id)) {
+            cout << "\033[31mError: ID debe ser numerico\033[0m" << endl;
+            // repetir
             continue;
         }
-        int numAsistente = stoi(cantidad);
-        if(numAsistente == 0){
-            delete aux;
-            return nullptr;
+        int idNum=stoi(id);
+        if(idNum==-1){
+            break;
         }
-        if(numAsistente < 0) {
-            cout << "\033[31mError: El número debe ser positivo\033[0m" << endl;
+        if(usuarioActivo->getID() == stoi(id)) {
+            cout << "\033[31mError: No puede agregarse a si mismo\033[0m" << endl;
+            // repetir
             continue;
         }
 
-        for(int i=0;i<stoi(cantidad);i++){
-            cout<<"Ingrese Id de los asistentes / organizadores, #id"<< (i+1) <<": ";
-            getline(cin,id);
-            if(!numero_entero_sin_rango(id)) {
-                cout << "\033[31mError: ID debe ser numérico\033[0m" << endl;
-                i--; // Repeat this iteration
-                continue;
-            
-            }
-            int idNum = stoi(id);
-            if(usuarioActivo->getID() == idNum) {
-                cout << "\033[31mError: No puede agregarse a sí mismo\033[0m" << endl;
-                i--;
-                continue;
-            }
-            if(!usuariosRegistrados->comprobarID(idNum)) {
-                cout << "\033[31mError: ID no encontrado\033[0m" << endl;
-                i--;
-                continue;
-            }
-            Usuario* usuario = usuariosRegistrados->UsuarioPorID(idNum);
-            if(usuario && !aux->comprobarID(idNum)) {
-                aux->agregarUsuario(usuario);
-            }
+        Usuario* usuario = usuariosRegistrados->UsuarioPorID(idNum);
+        if(usuario && !aux->comprobarID(idNum)){
+            aux->agregarUsuario(usuario);
+            contador++;
+            continue;
         }
-        return aux;
     }
+    return aux;
 }
 
 void Calendario::ordenarReservacion(Reservacion* nueva_reservacion){
